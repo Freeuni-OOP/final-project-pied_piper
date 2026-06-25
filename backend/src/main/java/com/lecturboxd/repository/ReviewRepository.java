@@ -1,1 +1,5 @@
-// Spring Data JPA repository for LectureLog and Review entity persistence and lookups.
+package com.lecturboxd.repository;
+
+@SuppressWarnings("unused")
+interface ReviewRepository {
+}

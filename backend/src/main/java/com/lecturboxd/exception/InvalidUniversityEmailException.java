@@ -1,1 +1,8 @@
-// Custom exception thrown when a registration email is not from an allowed university domain.
+package com.lecturboxd.exception;
+
+public class InvalidUniversityEmailException extends RuntimeException {
+
+    public InvalidUniversityEmailException(String message) {
+        super(message);
+    }
+}

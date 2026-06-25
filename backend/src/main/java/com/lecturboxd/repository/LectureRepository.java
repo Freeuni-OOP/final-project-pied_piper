@@ -1,1 +1,5 @@
-// Spring Data JPA repository for Lecture syllabus entity queries and full-text search.
+package com.lecturboxd.repository;
+
+@SuppressWarnings("unused")
+interface LectureRepository {
+}

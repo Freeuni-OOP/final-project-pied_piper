@@ -1,1 +1,16 @@
-# Git ignore rules for Maven target directory, IDE files, and sensitive environment configuration.
+# Maven
+target/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.class
+
+# Secrets — never commit
+.env
+.env.local
+*.env
+!*.env.example
+application-local.properties
+**/application-local.properties

@@ -1,1 +1,5 @@
-// Service layer for building paginated activity feeds from followed users' lecture actions.
+package com.lecturboxd.service;
+
+@SuppressWarnings("unused")
+class FeedService {
+}

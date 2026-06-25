@@ -1,1 +1,8 @@
-// Custom exception thrown when an OTP code is wrong, expired, or already consumed.
+package com.lecturboxd.exception;
+
+public class InvalidOtpException extends RuntimeException {
+
+    public InvalidOtpException(String message) {
+        super(message);
+    }
+}

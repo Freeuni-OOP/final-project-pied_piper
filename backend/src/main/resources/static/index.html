@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LecturBoxd Auth Test</title>
+  <style>
+    body { font-family: sans-serif; max-width: 480px; margin: 2rem auto; padding: 0 1rem; }
+    section { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; }
+    label { display: block; margin: 0.5rem 0 0.2rem; }
+    input { width: 100%; padding: 0.4rem; box-sizing: border-box; }
+    button { margin-top: 0.6rem; padding: 0.5rem 1rem; }
+    pre { background: #f4f4f4; padding: 0.8rem; overflow: auto; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <h1>Auth Test</h1>
+  <p>API: <code id="api"></code></p>
+
+  <section>
+    <h2>1. Register</h2>
+    <label>Name <input id="reg-name" value="Test User"></label>
+    <label>Email <input id="reg-email" type="email" placeholder="you@freeuni.edu.ge"></label>
+    <label>Password <input id="reg-pass" type="password" value="password123"></label>
+    <button onclick="register()">Send OTP</button>
+  </section>
+
+  <section>
+    <h2>2. Verify OTP</h2>
+    <label>Email <input id="ver-email" type="email"></label>
+    <label>Code <input id="ver-code" maxlength="6" placeholder="123456"></label>
+    <button onclick="verify()">Verify &amp; create account</button>
+  </section>
+
+  <section>
+    <h2>3. Login</h2>
+    <label>Email <input id="log-email" type="email"></label>
+    <label>Password <input id="log-pass" type="password"></label>
+    <button onclick="login()">Login</button>
+  </section>
+
+  <section>
+    <h2>Dev: Reset email</h2>
+    <label>Email <input id="del-email" type="email" placeholder="you@freeuni.edu.ge"></label>
+    <button onclick="deleteUser()">Delete user &amp; codes</button>
+  </section>
+
+  <p>Token: <code id="token">none</code></p>
+  <pre id="out">Ready.</pre>
+
+  <script>
+    const API = location.origin;
+    document.getElementById('api').textContent = API;
+
+    function show(data) {
+      document.getElementById('out').textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+    }
+
+    function setToken(t) {
+      if (t) localStorage.setItem('jwt', t);
+      document.getElementById('token').textContent = t || localStorage.getItem('jwt') || 'none';
+    }
+    setToken();
+
+    async function post(path, body) {
+      const res = await fetch(API + path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch { data = text; }
+      if (!res.ok) throw data;
+      return data;
+    }
+
+    async function register() {
+      const email = document.getElementById('reg-email').value.trim();
+      document.getElementById('ver-email').value = email;
+      document.getElementById('log-email').value = email;
+      try {
+        const data = await post('/api/auth/register', {
+          name: document.getElementById('reg-name').value,
+          email,
+          password: document.getElementById('reg-pass').value
+        });
+        if (data.devCode) document.getElementById('ver-code').value = data.devCode;
+        show(data);
+      } catch (e) { show(e); }
+    }
+
+    async function verify() {
+      try {
+        const data = await post('/api/auth/verify', {
+          email: document.getElementById('ver-email').value.trim(),
+          code: document.getElementById('ver-code').value.trim()
+        });
+        setToken(data.token);
+        show(data);
+      } catch (e) { show(e); }
+    }
+
+    async function login() {
+      try {
+        const data = await post('/api/auth/login', {
+          email: document.getElementById('log-email').value.trim(),
+          password: document.getElementById('log-pass').value
+        });
+        setToken(data.token);
+        show(data);
+      } catch (e) { show(e); }
+    }
+
+    async function deleteUser() {
+      const email = document.getElementById('del-email').value.trim()
+        || document.getElementById('reg-email').value.trim();
+      document.getElementById('del-email').value = email;
+      try {
+        show(await post('/api/auth/dev/delete-user', { email }));
+        localStorage.removeItem('jwt');
+        setToken(null);
+      } catch (e) { show(e); }
+    }
+  </script>
+</body>
+</html>

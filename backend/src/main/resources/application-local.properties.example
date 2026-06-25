@@ -1,0 +1,12 @@
+# Copy this file to application-local.properties and fill in your secrets.
+# application-local.properties is gitignored and must never be committed.
+
+spring.datasource.password=YOUR_PASSWORD
+
+spring.mail.username=your@gmail.com
+spring.mail.password=your-gmail-app-password
+
+jwt.secret=change-this-to-a-random-secret-at-least-32-characters-long
+
+# Local testing only — enables delete-user button on test UI
+lecturboxd.dev.enabled=true

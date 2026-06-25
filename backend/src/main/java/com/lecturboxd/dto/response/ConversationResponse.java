@@ -1,1 +1,5 @@
-// Outgoing DTO exposing a chat conversation summary with participant and last message preview.
+package com.lecturboxd.dto.response;
+
+@SuppressWarnings("unused")
+class ConversationResponse {
+}

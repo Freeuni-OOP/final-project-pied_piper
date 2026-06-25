@@ -1,1 +1,5 @@
-// Service layer for user profile management, stats, and account settings updates.
+package com.lecturboxd.service;
+
+@SuppressWarnings("unused")
+class UserService {
+}

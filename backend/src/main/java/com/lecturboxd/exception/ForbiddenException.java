@@ -1,1 +1,8 @@
-// Custom exception thrown when a user attempts an action they are not permitted to perform.
+package com.lecturboxd.exception;
+
+public class ForbiddenException extends RuntimeException {
+
+    public ForbiddenException(String message) {
+        super(message);
+    }
+}

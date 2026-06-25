@@ -1,1 +1,5 @@
-// JPA entity mapping a star-rated written review optionally linked to a lecture log.
+package com.lecturboxd.entity;
+
+@SuppressWarnings("unused")
+class Review {
+}

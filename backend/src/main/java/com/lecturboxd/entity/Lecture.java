@@ -1,1 +1,5 @@
-// JPA entity mapping lectures from the university syllabus catalog.
+package com.lecturboxd.entity;
+
+@SuppressWarnings("unused")
+class Lecture {
+}

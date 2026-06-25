@@ -1,1 +1,8 @@
-// Custom exception thrown when a requested resource (user, lecture, review) is not found.
+package com.lecturboxd.exception;
+
+public class ResourceNotFoundException extends RuntimeException {
+
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}

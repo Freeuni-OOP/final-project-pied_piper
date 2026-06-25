@@ -1,1 +1,5 @@
-// Mapper converting between Lecture entity and LectureResponse/LectureSearchRequest DTOs.
+package com.lecturboxd.dto.mapper;
+
+@SuppressWarnings("unused")
+interface LectureMapper {
+}

@@ -1,1 +1,5 @@
-// REST controller for fetching the social activity feed of followed users.
+package com.lecturboxd.controller;
+
+@SuppressWarnings("unused")
+class FeedController {
+}

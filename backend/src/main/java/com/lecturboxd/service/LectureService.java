@@ -1,1 +1,5 @@
-// Service layer for lecture syllabus queries, search, filtering, and detail aggregation.
+package com.lecturboxd.service;
+
+@SuppressWarnings("unused")
+class LectureService {
+}

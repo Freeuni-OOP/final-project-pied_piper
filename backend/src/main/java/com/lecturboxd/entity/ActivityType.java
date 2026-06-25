@@ -1,1 +1,5 @@
-// Enum defining possible activity types displayed in the social feed (LOG, REVIEW, RATING, FOLLOW).
+package com.lecturboxd.entity;
+
+@SuppressWarnings("unused")
+class ActivityType {
+}

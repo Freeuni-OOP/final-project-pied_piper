@@ -1,1 +1,5 @@
-// Spring Data JPA repository for ChatMessage entity persistence and conversation history queries.
+package com.lecturboxd.repository;
+
+@SuppressWarnings("unused")
+interface ChatMessageRepository {
+}

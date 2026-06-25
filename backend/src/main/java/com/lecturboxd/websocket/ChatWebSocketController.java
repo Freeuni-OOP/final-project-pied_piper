@@ -1,1 +1,5 @@
-// STOMP message-mapping controller handling real-time inbound and outbound chat messages.
+package com.lecturboxd.websocket;
+
+@SuppressWarnings("unused")
+class ChatWebSocketController {
+}

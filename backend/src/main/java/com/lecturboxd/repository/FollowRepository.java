@@ -1,1 +1,5 @@
-// Spring Data JPA repository for Follow relationship entity between users.
+package com.lecturboxd.repository;
+
+@SuppressWarnings("unused")
+interface FollowRepository {
+}

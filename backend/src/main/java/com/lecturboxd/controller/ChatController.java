@@ -1,1 +1,5 @@
-// REST controller for chat conversation listing and historical message retrieval.
+package com.lecturboxd.controller;
+
+@SuppressWarnings("unused")
+class ChatController {
+}

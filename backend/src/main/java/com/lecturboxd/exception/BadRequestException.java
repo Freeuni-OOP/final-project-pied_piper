@@ -1,1 +1,8 @@
-// Custom exception thrown for malformed requests and failed input validation.
+package com.lecturboxd.exception;
+
+public class BadRequestException extends RuntimeException {
+
+    public BadRequestException(String message) {
+        super(message);
+    }
+}

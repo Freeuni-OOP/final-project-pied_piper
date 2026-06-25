@@ -1,1 +1,10 @@
-// JPA auditing and timezone configuration for consistent created/updated timestamps across entities.
+package com.lecturboxd.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@Configuration
+@EnableJpaAuditing
+public class JpaConfig {
+}

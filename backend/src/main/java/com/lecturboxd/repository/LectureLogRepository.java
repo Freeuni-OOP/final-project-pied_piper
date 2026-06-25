@@ -1,1 +1,5 @@
-// Spring Data JPA repository for LectureLog entity persistence separate from written reviews.
+package com.lecturboxd.repository;
+
+@SuppressWarnings("unused")
+interface LectureLogRepository {
+}

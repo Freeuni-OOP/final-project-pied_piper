@@ -1,1 +1,5 @@
-// JPA entity mapping pending 6-digit OTP codes for university email verification.
+package com.lecturboxd.entity;
+
+@SuppressWarnings("unused")
+class OtpVerification {
+}

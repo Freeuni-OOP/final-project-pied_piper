@@ -1,1 +1,5 @@
-// JPA entity mapping the directed follow relationship between two users.
+package com.lecturboxd.entity;
+
+@SuppressWarnings("unused")
+class Follow {
+}

@@ -1,1 +1,5 @@
-// Spring Data JPA repository for OtpVerification entity storing pending email verification codes.
+package com.lecturboxd.repository;
+
+@SuppressWarnings("unused")
+interface OtpVerificationRepository {
+}
