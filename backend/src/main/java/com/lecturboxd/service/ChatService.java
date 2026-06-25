@@ -1,1 +1,5 @@
-// Service layer for persisting chat messages, managing conversations, and broadcasting via WebSocket.
+package com.lecturboxd.service;
+
+@SuppressWarnings("unused")
+class ChatService {
+}

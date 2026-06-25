@@ -1,1 +1,5 @@
-// Mapper converting between ChatMessage/Conversation entities and chat response DTOs.
+package com.lecturboxd.dto.mapper;
+
+@SuppressWarnings("unused")
+interface ChatMapper {
+}

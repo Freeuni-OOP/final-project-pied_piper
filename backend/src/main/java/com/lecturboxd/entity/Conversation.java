@@ -1,1 +1,5 @@
-// JPA entity mapping a chat conversation thread between two LecturBoxd users.
+package com.lecturboxd.entity;
+
+@SuppressWarnings("unused")
+class Conversation {
+}

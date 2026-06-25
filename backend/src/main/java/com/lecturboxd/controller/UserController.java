@@ -1,1 +1,5 @@
-// REST controller for user profile retrieval, profile updates, and public user lookup.
+package com.lecturboxd.controller;
+
+@SuppressWarnings("unused")
+class UserController {
+}

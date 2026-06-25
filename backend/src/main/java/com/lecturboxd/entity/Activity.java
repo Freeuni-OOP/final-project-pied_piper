@@ -1,1 +1,5 @@
-// JPA entity mapping feed activity events such as logs, ratings, reviews, and follows.
+package com.lecturboxd.entity;
+
+@SuppressWarnings("unused")
+class Activity {
+}

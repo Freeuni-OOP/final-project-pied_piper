@@ -1,1 +1,5 @@
-// Incoming DTO for follow/unfollow actions targeting another user's ID.
+package com.lecturboxd.dto.request;
+
+@SuppressWarnings("unused")
+class FollowRequest {
+}

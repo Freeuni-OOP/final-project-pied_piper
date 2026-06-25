@@ -1,1 +1,5 @@
-// STOMP WebSocket broker configuration for real-time chat messaging endpoints.
+package com.lecturboxd.config;
+
+@SuppressWarnings("unused")
+class WebSocketConfig {
+}

@@ -1,1 +1,5 @@
-// Outgoing DTO exposing lecture syllabus details and aggregate community rating.
+package com.lecturboxd.dto.response;
+
+@SuppressWarnings("unused")
+class LectureResponse {
+}

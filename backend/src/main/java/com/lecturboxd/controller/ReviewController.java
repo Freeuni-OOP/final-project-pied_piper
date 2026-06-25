@@ -1,1 +1,5 @@
-// REST controller for creating lecture logs, star ratings, and written reviews.
+package com.lecturboxd.controller;
+
+@SuppressWarnings("unused")
+class ReviewController {
+}

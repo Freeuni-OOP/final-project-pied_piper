@@ -1,1 +1,5 @@
-// Spring Data JPA repository for Conversation entity linking two users in a chat thread.
+package com.lecturboxd.repository;
+
+@SuppressWarnings("unused")
+interface ConversationRepository {
+}

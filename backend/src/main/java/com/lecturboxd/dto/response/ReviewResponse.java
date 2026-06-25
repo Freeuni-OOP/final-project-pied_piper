@@ -1,1 +1,5 @@
-// Outgoing DTO exposing a user's written review with star rating and timestamp.
+package com.lecturboxd.dto.response;
+
+@SuppressWarnings("unused")
+class ReviewResponse {
+}

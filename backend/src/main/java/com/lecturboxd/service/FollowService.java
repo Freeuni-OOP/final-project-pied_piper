@@ -1,1 +1,5 @@
-// Service layer for follow/unfollow relationships and follower graph queries.
+package com.lecturboxd.service;
+
+@SuppressWarnings("unused")
+class FollowService {
+}

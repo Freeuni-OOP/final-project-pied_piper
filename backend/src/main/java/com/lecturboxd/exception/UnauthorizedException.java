@@ -1,1 +1,8 @@
-// Custom exception thrown when authentication fails or JWT token is invalid or expired.
+package com.lecturboxd.exception;
+
+public class UnauthorizedException extends RuntimeException {
+
+    public UnauthorizedException(String message) {
+        super(message);
+    }
+}

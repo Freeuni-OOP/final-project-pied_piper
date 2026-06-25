@@ -1,1 +1,5 @@
-// OpenAPI/Swagger documentation configuration exposing interactive API docs for development.
+package com.lecturboxd.config;
+
+@SuppressWarnings("unused")
+class SwaggerConfig {
+}

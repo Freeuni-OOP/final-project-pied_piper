@@ -1,1 +1,5 @@
-// Outgoing DTO representing a single item in the social activity feed.
+package com.lecturboxd.dto.response;
+
+@SuppressWarnings("unused")
+class FeedItemResponse {
+}

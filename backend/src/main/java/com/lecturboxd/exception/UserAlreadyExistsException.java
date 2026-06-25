@@ -1,1 +1,8 @@
-// Custom exception thrown when registering with an email or username that already exists.
+package com.lecturboxd.exception;
+
+public class UserAlreadyExistsException extends RuntimeException {
+
+    public UserAlreadyExistsException(String message) {
+        super(message);
+    }
+}

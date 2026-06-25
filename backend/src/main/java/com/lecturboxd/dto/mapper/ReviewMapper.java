@@ -1,1 +1,5 @@
-// Mapper converting between Review/LectureLog entities and their response/request DTOs.
+package com.lecturboxd.dto.mapper;
+
+@SuppressWarnings("unused")
+interface ReviewMapper {
+}
