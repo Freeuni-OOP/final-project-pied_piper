@@ -1,5 +1,6 @@
 package com.lecturboxd.config;
 
+import com.lecturboxd.auth.AdminApiKeyFilter;
 import com.lecturboxd.auth.JwtAuthenticationFilter;
 import com.lecturboxd.auth.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -21,15 +22,18 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final AdminApiKeyFilter adminApiKeyFilter;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsServiceImpl userDetailsService;
     private final CorsConfigurationSource corsConfigurationSource;
 
     public SecurityConfig(
+            AdminApiKeyFilter adminApiKeyFilter,
             JwtAuthenticationFilter jwtAuthenticationFilter,
             UserDetailsServiceImpl userDetailsService,
             CorsConfigurationSource corsConfigurationSource
     ) {
+        this.adminApiKeyFilter = adminApiKeyFilter;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.userDetailsService = userDetailsService;
         this.corsConfigurationSource = corsConfigurationSource;
@@ -45,9 +49,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/admin/**").permitAll()
+                        .requestMatchers("/api/syllabus/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
+                .addFilterBefore(adminApiKeyFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
