@@ -10,3 +10,6 @@ jwt.secret=change-this-to-a-random-secret-at-least-32-characters-long
 
 # Local testing only — enables delete-user button on test UI
 lecturboxd.dev.enabled=true
+
+# Admin import / CRUD endpoints (header: X-Admin-Api-Key)
+lecturboxd.admin.api-key=change-me-to-a-secure-random-key

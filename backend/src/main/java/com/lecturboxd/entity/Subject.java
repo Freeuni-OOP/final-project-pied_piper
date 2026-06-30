@@ -3,8 +3,6 @@ package com.lecturboxd.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,36 +17,29 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "lectures")
+@Table(name = "subjects")
 @EntityListeners(AuditingEntityListener.class)
-public class Lecture {
+public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Integer week;
+    private String name;
 
     @Column(nullable = false)
-    private Integer lectureNumber;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private LectureType type;
+    private String lecturer;
 
     @Column(nullable = false)
-    private String title;
+    private String type;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(columnDefinition = "TEXT")
-    private String reading;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "subject_id", nullable = false)
-    private Subject subject;
+    @JoinColumn(name = "semester_id", nullable = false)
+    private Semester semester;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -66,36 +57,28 @@ public class Lecture {
         this.id = id;
     }
 
-    public Integer getWeek() {
-        return week;
+    public String getName() {
+        return name;
     }
 
-    public void setWeek(Integer week) {
-        this.week = week;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getLectureNumber() {
-        return lectureNumber;
+    public String getLecturer() {
+        return lecturer;
     }
 
-    public void setLectureNumber(Integer lectureNumber) {
-        this.lectureNumber = lectureNumber;
+    public void setLecturer(String lecturer) {
+        this.lecturer = lecturer;
     }
 
-    public LectureType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(LectureType type) {
+    public void setType(String type) {
         this.type = type;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
@@ -106,20 +89,12 @@ public class Lecture {
         this.description = description;
     }
 
-    public String getReading() {
-        return reading;
+    public Semester getSemester() {
+        return semester;
     }
 
-    public void setReading(String reading) {
-        this.reading = reading;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 
     public LocalDateTime getCreatedAt() {

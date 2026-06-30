@@ -1,0 +1,290 @@
+﻿{
+  "faculty": "ელექტრო და კომპიუტერული ინჟინერია",
+  "semesters": [
+    {
+      "number": "V",
+      "subjects": [
+        {
+          "name": "Electric Circuits II",
+          "lecturer": "ალი ფარსაიანი",
+          "type": "ძირითადი",
+          "description": "კურსი მოიცავს ცვლადი დენის (AC) წრედების ანალიზს, ფაზორებს, ანალოგური ფილტრების ანალიზსა და დიზაინის პრინციპებს.",
+          "lectures": [
+            { "week": 1, "lectureNumber": 1, "type": "LECTURE", "title": "შესავალი კომპლექსურ ცვლადთან თეორიაში, AC წრედები, სინუსოიდები და ფაზორები", "description": "", "reading": "[1] - თავი 9" },
+            { "week": 1, "lectureNumber": 1, "type": "SEMINAR", "title": "შესავალი კომპლექსურ ცვლადთან თეორიაში, AC წრედები", "description": "", "reading": "[1] - თავი 9" },
+            { "week": 1, "lectureNumber": 1, "type": "LAB", "title": "დიფერენციალური მაძლიერებლის კვლევა — Difference Amp, Differentiator, Integrator (Multisim მოდელირება)", "description": "", "reading": "მეთოდური მითითება N1" },
+
+            { "week": 2, "lectureNumber": 2, "type": "LECTURE", "title": "AC წრედები, ნოდების და მეშების ანალიზი, დამყარებული მდგომარეობის ანალიზი", "description": "", "reading": "[1] - თავი 9, 10" },
+            { "week": 2, "lectureNumber": 2, "type": "SEMINAR", "title": "AC წრედები, ნოდების და მეშების ანალიზი — პრაქტიკული ამოცანები", "description": "", "reading": "[1] - თავი 9, 10" },
+            { "week": 2, "lectureNumber": 2, "type": "LAB", "title": "დიფერენციალური მაძლიერებლის კვლევა — Difference Amp (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N1" },
+
+            { "week": 3, "lectureNumber": 3, "type": "LECTURE", "title": "სიმძლავრე AC წრედებში, პრაქტიკული ამოცანები", "description": "", "reading": "[1] - თავი 11" },
+            { "week": 3, "lectureNumber": 3, "type": "SEMINAR", "title": "AC წრედები, ნოდების და მეშების ანალიზი — პრაქტიკული ამოცანები", "description": "", "reading": "[1] - თავი 11" },
+            { "week": 3, "lectureNumber": 3, "type": "LAB", "title": "მაძლიერებელი მადიფერენცირებელი და მაინტეგრირებელი წრედით — Differentiator, Integrator (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N1" },
+
+            { "week": 4, "lectureNumber": 4, "type": "LECTURE", "title": "სიხშირული მახასიათებელი", "description": "", "reading": "[1] - თავი 14" },
+            { "week": 4, "lectureNumber": 4, "type": "SEMINAR", "title": "სიხშირული მახასიათებელი — ამოცანები", "description": "", "reading": "[1] - თავი 14" },
+            { "week": 4, "lectureNumber": 4, "type": "LAB", "title": "სინუსოიდური დენის მარტივი ელექტრული წრედის გამოკვლევა — მიმდევრობით და პარალელურად შეერთებული RLC წინაღობები (Multisim მოდელირება)", "description": "", "reading": "მეთოდური მითითება N2" },
+
+            { "week": 5, "lectureNumber": 5, "type": "LECTURE", "title": "სხვადასხვა ტიპის AC წრედების მიმოხილვა — დაბალსიხშირული, მაღალსიხშირული და ზოლოვანი ფილტრები", "description": "", "reading": "[1] - თავი 14" },
+            { "week": 5, "lectureNumber": 5, "type": "SEMINAR", "title": "სხვადასხვა ტიპის AC წრედების მიმოხილვა — ამოცანები", "description": "", "reading": "[1] - თავი 14" },
+            { "week": 5, "lectureNumber": 5, "type": "LAB", "title": "სინუსოიდური დენის მარტივი ელექტრული წრედის გამოკვლევა — მიმდევრობით შეერთებული RLC წინაღობები (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N2" },
+
+            { "week": 6, "lectureNumber": 6, "type": "LECTURE", "title": "გავლილი მასალის შესაბამისი ამოცანები", "description": "", "reading": "[1] - თავები 9, 10, 11, 14" },
+            { "week": 6, "lectureNumber": 6, "type": "SEMINAR", "title": "გავლილი მასალის შესაბამისი ამოცანები", "description": "", "reading": "[1] - თავები 9, 10, 11, 14" },
+            { "week": 6, "lectureNumber": 6, "type": "LAB", "title": "სინუსოიდური დენის მარტივი ელექტრული წრედის გამოკვლევა — პარალელურად შეერთებული RLC წინაღობები (Multisim მოდელირება და ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N3" },
+
+            { "week": 7, "lectureNumber": 7, "type": "LECTURE", "title": "ლაპლასის გარდაქმნა და ტრანსფერ ფუნქცია", "description": "", "reading": "[1] - თავი 15" },
+            { "week": 7, "lectureNumber": 7, "type": "SEMINAR", "title": "ლაპლასის გარდაქმნა და ტრანსფერ ფუნქცია — ამოცანები", "description": "", "reading": "[1] - თავი 15" },
+            { "week": 7, "lectureNumber": 7, "type": "LAB", "title": "ძაბვების და დენების მახასიათებლების გადაღება სიხშირის ცვლილების დროს (Multisim მოდელირება)", "description": "", "reading": "მეთოდური მითითება N4" },
+
+            { "week": 8, "lectureNumber": 8, "type": "LECTURE", "title": "ლაპლასის გარდაქმნა და ტრანსფერ ფუნქცია — გამოყენება", "description": "", "reading": "[1] - თავი 16" },
+            { "week": 8, "lectureNumber": 8, "type": "SEMINAR", "title": "ლაპლასის გარდაქმნა და ტრანსფერ ფუნქცია — გამოყენება, ამოცანები", "description": "", "reading": "[1] - თავი 16" },
+            { "week": 8, "lectureNumber": 8, "type": "LAB", "title": "ძაბვების და დენების მახასიათებლების გადაღება სიხშირის ცვლილების დროს (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N4" },
+
+            { "week": 9, "lectureNumber": 9, "type": "LECTURE", "title": "ფურია მწკრივები", "description": "", "reading": "[1] - თავი 17" },
+            { "week": 9, "lectureNumber": 9, "type": "SEMINAR", "title": "ფურია მწკრივები — ამოცანები", "description": "", "reading": "[1] - თავი 17" },
+            { "week": 9, "lectureNumber": 9, "type": "LAB", "title": "სამფაზიანი სინუსოიდური ცვლადი დენის წრედის გამოკვლევა — ვარსკვლავად და სამკუთხედად შეერთებული მომხმარებლები (Multisim მოდელირება)", "description": "", "reading": "მეთოდური მითითება N5" },
+
+            { "week": 10, "lectureNumber": 10, "type": "LECTURE", "title": "ფურია მწკრივები", "description": "", "reading": "[1] - თავი 17" },
+            { "week": 10, "lectureNumber": 10, "type": "SEMINAR", "title": "ფურია მწკრივები — ამოცანები", "description": "", "reading": "[1] - თავი 17" },
+            { "week": 10, "lectureNumber": 10, "type": "LAB", "title": "სამფაზიანი სინუსოიდური ცვლადი დენის წრედის გამოკვლევა — ვარსკვლავად შეერთებული მომხმარებლები (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N5" },
+
+            { "week": 11, "lectureNumber": 11, "type": "LECTURE", "title": "ფურიე გარდაქმნები", "description": "", "reading": "[1] - თავი 18" },
+            { "week": 11, "lectureNumber": 11, "type": "SEMINAR", "title": "ფურიე გარდაქმნები — ამოცანები", "description": "", "reading": "[1] - თავი 18" },
+            { "week": 11, "lectureNumber": 11, "type": "LAB", "title": "სამფაზიანი სინუსოიდური ცვლადი დენის წრედის გამოკვლევა — სამკუთხედად შეერთებული მომხმარებლები (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N5" },
+
+            { "week": 12, "lectureNumber": 12, "type": "LECTURE", "title": "ფურიე გარდაქმნები", "description": "", "reading": "[1] - თავი 18" },
+            { "week": 12, "lectureNumber": 12, "type": "SEMINAR", "title": "ფურიე გარდაქმნები — ამოცანები", "description": "", "reading": "[1] - თავი 18" },
+            { "week": 12, "lectureNumber": 12, "type": "LAB", "title": "დაბალსიხშირული და მაღალსიხშირული RC ფილტრები (Multisim მოდელირება)", "description": "", "reading": "მეთოდური მითითება N6" },
+
+            { "week": 13, "lectureNumber": 13, "type": "LECTURE", "title": "სამფაზიანი წრედები", "description": "", "reading": "თავი 12" },
+            { "week": 13, "lectureNumber": 13, "type": "SEMINAR", "title": "სამფაზიანი წრედები — ამოცანები", "description": "", "reading": "[1] - თავი 12" },
+            { "week": 13, "lectureNumber": 13, "type": "LAB", "title": "დაბალსიხშირული და მაღალსიხშირული RC ფილტრები (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N6" },
+
+            { "week": 14, "lectureNumber": 14, "type": "LECTURE", "title": "გავლილი მასალის შესაბამისი ამოცანები", "description": "", "reading": "[1] - თავები 12, 15, 16, 17, 18" },
+            { "week": 14, "lectureNumber": 14, "type": "SEMINAR", "title": "გავლილი მასალის შესაბამისი ამოცანები", "description": "", "reading": "[1] - თავები 12, 15, 16, 17, 18" },
+            { "week": 14, "lectureNumber": 14, "type": "LAB", "title": "ზოლოვანი ფილტრი (Multisim მოდელირება)", "description": "", "reading": "მეთოდური მითითება N6" },
+
+            { "week": 15, "lectureNumber": 15, "type": "LECTURE", "title": "ოსცილატორები და სხვადასხვა გამოყენებითი AC წრედები", "description": "", "reading": "ლექტორის მიერ მომზადებული მასალა" },
+            { "week": 15, "lectureNumber": 15, "type": "SEMINAR", "title": "ოსცილატორები და სხვადასხვა გამოყენებითი AC წრედები — ამოცანები", "description": "", "reading": "ლექტორის მიერ მომზადებული მასალა" },
+            { "week": 15, "lectureNumber": 15, "type": "LAB", "title": "ზოლოვანი ფილტრი (ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N6" },
+
+            { "week": 16, "lectureNumber": 16, "type": "LECTURE", "title": "ფინალური გამოცდისთვის მომზადება", "description": "", "reading": "" },
+            { "week": 16, "lectureNumber": 16, "type": "SEMINAR", "title": "ფინალური გამოცდისთვის მომზადება", "description": "", "reading": "" },
+            { "week": 16, "lectureNumber": 16, "type": "LAB", "title": "ფურიეს ანალიზი (Multisim მოდელირება და ლაბორატორიული სტენდი)", "description": "", "reading": "მეთოდური მითითება N7" },
+
+            { "week": 16, "lectureNumber": 17, "type": "EXAM", "title": "დასკვნითი გამოცდა", "description": "", "reading": "" }
+          ]
+        },
+
+        {
+          "name": "Programming Paradigms",
+          "lecturer": "გიორგი ლეკვეიშვილი, ანდრია კილასონია, თემურ არუსტაშვილი",
+          "type": "ძირითადი",
+          "description": "შესავალი კურსი პროგრამირების პარადიგმებში: C/C++ მეხსიერების მართვის მექანიზმები, იმპერატიული და ობიექტზე ორიენტირებული პარადიგმები, ფუნქციონალური პარადიგმა (Scheme/Lisp), კონკურენტული პროგრამირება და თანამედროვე პროგრამული ენები (Python, Objective C, C#).",
+          "lectures": [
+            { "week": 1, "lectureNumber": 1, "type": "LECTURE", "title": "შესავალი. ადმინისტრაციული და ლოგისტიკური საკითხები", "description": "", "reading": "" },
+            { "week": 1, "lectureNumber": 2, "type": "LECTURE", "title": "C/C++ მონაცემთა ტიპები, მათი ზომა. ბიტი. ბაიტი", "description": "", "reading": "Handouts: Introducing the STL; Unix Basics; Computer Architecture; Arrays the full story" },
+
+            { "week": 2, "lectureNumber": 3, "type": "LECTURE", "title": "ტიპების კონვერტაცია. მასივები. მიმთითებლების არითმეტიკა", "description": "", "reading": "Handout: Unix Development" },
+            { "week": 2, "lectureNumber": 4, "type": "LECTURE", "title": "Generic Swap ფუნქცია", "description": "საშინაო დავალება 1", "reading": "" },
+
+            { "week": 3, "lectureNumber": 5, "type": "LECTURE", "title": "Generic Lsearch ფუნქცია. შედარების ფუნქციები", "description": "", "reading": "Handout: Memory" },
+            { "week": 3, "lectureNumber": 6, "type": "LECTURE", "title": "სტეკის იმპლემენტაცია ინტეჯერის ტიპის ცვლადებისთვის", "description": "", "reading": "Handout: Stack Implementation" },
+
+            { "week": 4, "lectureNumber": 7, "type": "LECTURE", "title": "Generic Stack-ის იმპლემენტაცია", "description": "", "reading": "" },
+            { "week": 4, "lectureNumber": 8, "type": "LECTURE", "title": "მეხსიერების მართვა. memmove ფუნქცია", "description": "საშინაო დავალება 2", "reading": "Handouts: Computer Architecture; Simple Code Generation" },
+
+            { "week": 5, "lectureNumber": 9, "type": "LECTURE", "title": "როგორ არის ჰიპი მოწყობილი. მეხსიერების ბლოკების გათავისუფლების სხვადასხვა ალგორითმები", "description": "", "reading": "" },
+            { "week": 5, "lectureNumber": 10, "type": "LECTURE", "title": "ასემბლერი. შენახვა. ჩატვირთვა. ALU ოპერაციები. რეგისტრები", "description": "", "reading": "" },
+
+            { "week": 6, "lectureNumber": 11, "type": "LECTURE", "title": "Activation Records. ფუნქციები. RET ინსტრუქცია. როგორ ითარგმნება რეკურსია ასემბლერზე", "description": "საშინაო დავალება 3", "reading": "Handouts: Function Call and Return; Factorial Trace; Code Generation Examples" },
+            { "week": 6, "lectureNumber": 12, "type": "LECTURE", "title": "განსხვავებები C და C++ შორის. this მიმთითებელი", "description": "", "reading": "" },
+
+            { "week": 7, "lectureNumber": 13, "type": "LECTURE", "title": "პრეპროცესორი. მაკროსები", "description": "", "reading": "" },
+            { "week": 7, "lectureNumber": 14, "type": "LECTURE", "title": "კომპილაციის პროცესი", "description": "", "reading": "" },
+
+            { "week": 8, "lectureNumber": 15, "type": "LECTURE", "title": "შეცდომების მაგალითები", "description": "საშინაო დავალება 4", "reading": "" },
+            { "week": 8, "lectureNumber": 16, "type": "LECTURE", "title": "შესავალი კონკურენტულ პროგრამირებაში", "description": "", "reading": "Handouts: Thread package docs; Concurrency example" },
+
+            { "week": 9, "lectureNumber": 17, "type": "LECTURE", "title": "Threads. Multithreading", "description": "", "reading": "" },
+            { "week": 9, "lectureNumber": 18, "type": "LECTURE", "title": "სემაფორები. სემაფორების გამოყენების მაგალითები. Deadlock", "description": "", "reading": "More Concurrency" },
+            { "week": 9, "lectureNumber": 19, "type": "EXAM", "title": "შუალედური გამოცდა", "description": "", "reading": "" },
+
+            { "week": 10, "lectureNumber": 19, "type": "LECTURE", "title": "მაგალითები. ფაილების ჩამოტვირთვის მაგალითი", "description": "საშინაო დავალება 5", "reading": "" },
+            { "week": 10, "lectureNumber": 20, "type": "LECTURE", "title": "მაღაზიის მაგალითი", "description": "", "reading": "" },
+
+            { "week": 11, "lectureNumber": 21, "type": "LECTURE", "title": "იმპერატიული პარადიგმა. ობიექტზე ორიენტირებული პარადიგმა. ფუნქციური პარადიგმა. პროგრამული ენა Scheme", "description": "საშინაო დავალება 6", "reading": "Introduction to Scheme; Scheme Examples" },
+            { "week": 11, "lectureNumber": 22, "type": "LECTURE", "title": "Scheme. რეკურსია. მონაცემთა ტიპების მართვა. ფუნქციები. მიმთითებლები ფუნქციებზე", "description": "", "reading": "" },
+
+            { "week": 12, "lectureNumber": 23, "type": "LECTURE", "title": "Kawa. Mapping Functions. ლამბდა ფუნქცია", "description": "", "reading": "" },
+            { "week": 12, "lectureNumber": 24, "type": "LECTURE", "title": "რეკურსია ლამბდა ფუნქციის გამოყენებით. Let* Keyword. პერმუტაციები", "description": "", "reading": "" },
+
+            { "week": 13, "lectureNumber": 25, "type": "LECTURE", "title": "Scheme მეხსიერების მოდელი. Garbage Collection in Scheme", "description": "", "reading": "" },
+            { "week": 13, "lectureNumber": 26, "type": "LECTURE", "title": "პროგრამული ენა პითონი. თვისებები: სკრიპტულობა, იმპერატიულობა, ობიექტზე ორიენტირებულობა, ფუნქციონალურობა", "description": "საშინაო დავალება 7", "reading": "Python Basics" },
+
+            { "week": 14, "lectureNumber": 27, "type": "LECTURE", "title": "დინამიური ტიპები. String. ფუნქციები", "description": "", "reading": "" },
+            { "week": 14, "lectureNumber": 28, "type": "LECTURE", "title": "ობიექტები პითონში. ლექსიკონის იმპლემენტაცია (Dictionary)", "description": "", "reading": "Networking with Python" },
+
+            { "week": 15, "lectureNumber": 29, "type": "LECTURE", "title": "XML და პითონი. XML პარსერი. RSS Feed Reader", "description": "", "reading": "" },
+            { "week": 15, "lectureNumber": 30, "type": "LECTURE", "title": "დამატებითი საკითხები", "description": "", "reading": "" },
+
+            { "week": 16, "lectureNumber": 31, "type": "LECTURE", "title": "ხედი მომავლისკენ", "description": "საშინაო დავალება 8", "reading": "" },
+            { "week": 16, "lectureNumber": 32, "type": "LECTURE", "title": "გამოცდისთვის მომზადება. მსგავსი ამოცანები", "description": "", "reading": "" },
+            { "week": 16, "lectureNumber": 33, "type": "EXAM", "title": "დასკვნითი შეფასება", "description": "", "reading": "" }
+          ]
+        },
+
+        {
+          "name": "Numerical Methods (with MATLAB)",
+          "lecturer": "გუგა ვარდიაშვილი",
+          "type": "ძირითადი",
+          "description": "კურსი მოიცავს რიცხვითი ანალიზის და MATLAB-ის ძირითად მეთოდებს, რომელთა გამოყენებითაც სტუდენტი ხსნის რეალურ ამოცანებს.",
+          "lectures": [
+            { "week": 1, "lectureNumber": 1, "type": "LECTURE", "title": "მათემატიკური მოდელირება და გამოთვლების პრობლემები", "description": "", "reading": "თავი 1, თავი 4" },
+            { "week": 1, "lectureNumber": 1, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 2, "lectureNumber": 2, "type": "LECTURE", "title": "მათლაბის შესავალი და ძირითადი ბრძანებები", "description": "", "reading": "თავი 2, თავი 3" },
+            { "week": 2, "lectureNumber": 2, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 3, "lectureNumber": 3, "type": "LECTURE", "title": "ალგებრული და ტრანსცენდენტული არაწრფივი განტოლებები. გრაფიკული მეთოდი. შუაკვეთის მეთოდი", "description": "", "reading": "თავი 5" },
+            { "week": 3, "lectureNumber": 3, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 4, "lectureNumber": 4, "type": "LECTURE", "title": "ნიუტონის მეთოდი (მხების მეთოდი)", "description": "", "reading": "თავი 6" },
+            { "week": 4, "lectureNumber": 4, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 5, "lectureNumber": 5, "type": "LECTURE", "title": "ფესვის პოვნის მოდიფიცირებული მეთოდები. პოლინომის ფესვები", "description": "", "reading": "თავი 6" },
+            { "week": 5, "lectureNumber": 5, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 6, "lectureNumber": 6, "type": "LECTURE", "title": "პოლინომალური ინტერპოლაცია", "description": "", "reading": "თავი 17" },
+            { "week": 6, "lectureNumber": 6, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 7, "lectureNumber": 7, "type": "LECTURE", "title": "სპლაინები", "description": "", "reading": "თავი 18" },
+            { "week": 7, "lectureNumber": 7, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 8, "lectureNumber": 8, "type": "LECTURE", "title": "ინტერპოლაცია უმცირესი კვადრატების მეთოდით", "description": "", "reading": "თავი 14" },
+            { "week": 8, "lectureNumber": 8, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 9, "lectureNumber": 9, "type": "LECTURE", "title": "ინტეგრირება მართკუთხედის და ტრაპეციის მეთოდით", "description": "", "reading": "თავი 19" },
+            { "week": 9, "lectureNumber": 9, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 10, "lectureNumber": 10, "type": "LECTURE", "title": "ინტეგრირება სიმპსონის მეთოდით", "description": "", "reading": "თავი 19" },
+            { "week": 10, "lectureNumber": 10, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 11, "lectureNumber": 11, "type": "LECTURE", "title": "ინტეგრირება გაუსის მეთოდით", "description": "", "reading": "თავი 20" },
+            { "week": 11, "lectureNumber": 11, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 12, "lectureNumber": 12, "type": "LECTURE", "title": "რიცხვითი დიფერენცირება", "description": "", "reading": "თავი 21" },
+            { "week": 12, "lectureNumber": 12, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 13, "lectureNumber": 13, "type": "LECTURE", "title": "დიფერენციალური განტოლებები და მათი ამოხსნის პრობლემები", "description": "", "reading": "თავი 22" },
+            { "week": 13, "lectureNumber": 13, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 14, "lectureNumber": 14, "type": "LECTURE", "title": "დიფერენციალური განტოლებების ამოხსნა ეილერის მეთოდით", "description": "", "reading": "თავი 22" },
+            { "week": 14, "lectureNumber": 14, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 15, "lectureNumber": 15, "type": "LECTURE", "title": "დიფერენციალური განტოლებების ამოხსნა რუნგე-კუტას მეთოდით", "description": "", "reading": "თავი 22" },
+            { "week": 15, "lectureNumber": 15, "type": "SEMINAR", "title": "პრაქტიკული სავარჯიშოების განხილვა", "description": "", "reading": "" },
+
+            { "week": 16, "lectureNumber": 16, "type": "LECTURE", "title": "მასალის განმეორება", "description": "", "reading": "" },
+            { "week": 16, "lectureNumber": 16, "type": "SEMINAR", "title": "მასალის განმეორება", "description": "", "reading": "" },
+            { "week": 16, "lectureNumber": 17, "type": "EXAM", "title": "დასკვნითი შეფასება", "description": "", "reading": "" }
+          ]
+        },
+
+        {
+          "name": "Theory of Complex Variables",
+          "lecturer": "დავით კაპანაძე, ლევან სიგუა",
+          "type": "ძირითადი",
+          "description": "კომპლექსური ცვლადის ფუნქციათა თეორიის საკვანძო საკითხები: ელემენტარული ფუნქციები, კოშის ფორმულა, ნაშთთა თეორია, ფურიეს და ლაპლასის ინტეგრალური გარდაქმნები, ანალიზური გაგრძელება, კონფორმული ასახვები.",
+          "lectures": [
+            { "week": 1, "lectureNumber": 1, "type": "LECTURE", "title": "კომპლექსურ რიცხვთა ველი", "description": "", "reading": "R. V. Churchill: 1; S. D. Fisher: 1.1" },
+            { "week": 1, "lectureNumber": 1, "type": "SEMINAR", "title": "მოქმედებები კომპლექსურ რიცხვებზე, შეუღლებული, შებრუნებული, მუავრის ფორმულა, n-ური ხარისხის ფესვი, რიმანის სფერო", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 2, "lectureNumber": 2, "type": "LECTURE", "title": "ფუნქციები და ზღვრები, უწყვეტობა და წარმოებადობა, ხარისხოვანი მწკრივები", "description": "", "reading": "R. V. Churchill: 2; S. D. Fisher: 1.4, 2.2" },
+            { "week": 2, "lectureNumber": 2, "type": "SEMINAR", "title": "ბმული სიმრავლეები. ხარისხოვანი მწკრივების ჯამის გამოთვლა. ელემენტარული ფუნქციების გაწარმოება. წარმოებულის გეომეტრიული შინაარსი", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 3, "lectureNumber": 3, "type": "LECTURE", "title": "ექსპონენციალური ფუნქცია და მისი ძირითადი თვისებები. ეილერის ფორმულა. ლოგარითმი", "description": "", "reading": "R. V. Churchill: 3; S. D. Fisher: 1.5" },
+            { "week": 3, "lectureNumber": 3, "type": "SEMINAR", "title": "ტრიგონომეტრიული და ჰიპერბოლური ფუნქციები, მრავალსახა ფუნქციები, f(z)=ⁿ√z", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 4, "lectureNumber": 4, "type": "LECTURE", "title": "კავშირი წარმოებადობასა და დიფერენცირებადობას შორის. კოში-რიმანის პირობები", "description": "", "reading": "R. V. Churchill: 2; S. D. Fisher: 2.1" },
+            { "week": 4, "lectureNumber": 4, "type": "SEMINAR", "title": "შეუღლებული ფუნქციების მოძებნა. ლაპლასის განტოლების ამოხსნა", "description": "ამოცანები პარაგრაფის ბოლოს", "reading": "" },
+
+            { "week": 5, "lectureNumber": 5, "type": "LECTURE", "title": "წირითი ინტეგრალი და მისი ძირითადი თვისებები", "description": "", "reading": "R. V. Churchill: 4; S. D. Fisher: 1.6" },
+            { "week": 5, "lectureNumber": 5, "type": "SEMINAR", "title": "წირითი ინტეგრალების გამოთვლა განსაზღვრის საფუძველზე და ნიუტონ-ლაიბნიცის ფორმულით", "description": "ამოცანები პარაგრაფის ბოლოს", "reading": "" },
+
+            { "week": 6, "lectureNumber": 6, "type": "LECTURE", "title": "კოშის თეორემა და კოშის ფორმულა. მორერას თეორემა", "description": "", "reading": "R. V. Churchill: 4; S. D. Fisher: 2.3" },
+            { "week": 6, "lectureNumber": 6, "type": "SEMINAR", "title": "ცალადბმული არეები. წირითი ინტეგრალების გამოთვლა კოშის ფორმულით", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 7, "lectureNumber": 7, "type": "LECTURE", "title": "ჰოლომორფულ ფუნქციათა გაშლა ხარისხოვან მწკრივად. ლიუვილის თეორემა", "description": "", "reading": "R. V. Churchill: 4; S. D. Fisher: 2.4" },
+            { "week": 7, "lectureNumber": 7, "type": "SEMINAR", "title": "ფუნქციის გაშლა ტეილორის მწკრივად", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 8, "lectureNumber": 8, "type": "LECTURE", "title": "ანალიზურ ფუნქციათა ძირითადი თვისებები. ნულები და პოლუსები. მოდულის მაქსიმუმის პრინციპი. ალგებრის ძირითადი თეორემა", "description": "", "reading": "R. V. Churchill: 5; S. D. Fisher: 2.5" },
+            { "week": 8, "lectureNumber": 8, "type": "SEMINAR", "title": "სინგულარული წერტილების კლასიფიკაცია", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 9, "lectureNumber": 9, "type": "LECTURE", "title": "ლორანის მწკრივები", "description": "", "reading": "R. V. Churchill: 5; S. D. Fisher: 2.5" },
+            { "week": 9, "lectureNumber": 9, "type": "SEMINAR", "title": "იზოლირებული სინგულარობის მქონე ფუნქციების გაშლა ლორანის მწკრივად", "description": "ამოცანები პარაგრაფის ბოლოს", "reading": "" },
+
+            { "week": 10, "lectureNumber": 10, "type": "LECTURE", "title": "პოლუსის ნაშთი. ნაშთის ინტეგრალური ფორმულა", "description": "", "reading": "R. V. Churchill: 6; S. D. Fisher: 2.6" },
+            { "week": 10, "lectureNumber": 10, "type": "SEMINAR", "title": "სხვადასხვა განსაზღვრული ინტეგრალების გამოთვლა ნაშთთა თეორიის გამოყენებით", "description": "ამოცანები პარაგრაფის ბოლოს", "reading": "" },
+
+            { "week": 11, "lectureNumber": 11, "type": "LECTURE", "title": "ნაშთთა თეორიის გამოყენება", "description": "", "reading": "R. V. Churchill: 7; S. D. Fisher: 2.6" },
+            { "week": 11, "lectureNumber": 11, "type": "SEMINAR", "title": "სხვადასხვა განსაზღვრული ინტეგრალების გამოთვლა ნაშთთა თეორიის გამოყენებით", "description": "ამოცანები პარაგრაფის ბოლოს", "reading": "" },
+
+            { "week": 12, "lectureNumber": 12, "type": "LECTURE", "title": "არგუმენტის უწყვეტი შტო. რუშეს თეორემა", "description": "", "reading": "R. V. Churchill: 7; S. D. Fisher: 2.6" },
+            { "week": 12, "lectureNumber": 12, "type": "SEMINAR", "title": "სხვადასხვა განსაზღვრული ინტეგრალების გამოთვლა ნაშთთა თეორიის გამოყენებით", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 13, "lectureNumber": 13, "type": "LECTURE", "title": "ჰოლომორფულ ფუნქციათა მიმდევრობები. ნორმალური ოჯახები. ანალიზური გაგრძელება. ეილერის გამა ფუნქცია", "description": "", "reading": "R. V. Churchill: 7; S. D. Fisher: 2.6" },
+            { "week": 13, "lectureNumber": 13, "type": "SEMINAR", "title": "პარამეტრზე დამოკიდებული ინტეგრალის გაწარმოება. რიმანის ზედაპირის აგება. ეილერის ფუნქციის მნიშვნელობების გამოთვლა", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 14, "lectureNumber": 14, "type": "LECTURE", "title": "ფურიეს მწკრივები და ფურიეს გარდაქმნა", "description": "", "reading": "S. D. Fisher: 5.1, 5.2" },
+            { "week": 14, "lectureNumber": 14, "type": "SEMINAR", "title": "მოცემული ფუნქციის გაშლა ფურიეს მწკრივად. ელემენტარული ფუნქციების ფურიეს გარდაქმნის პოვნა", "description": "ამოცანები პარაგრაფების ბოლოს", "reading": "" },
+
+            { "week": 15, "lectureNumber": 15, "type": "LECTURE", "title": "ლაპლასის გარდაქმნა და მისი თვისებები", "description": "", "reading": "R. V. Churchill: 7; S. D. Fisher: 2.6" },
+            { "week": 15, "lectureNumber": 15, "type": "SEMINAR", "title": "გამეორება", "description": "", "reading": "" },
+
+            { "week": 16, "lectureNumber": 16, "type": "LECTURE", "title": "რეზერვი", "description": "", "reading": "" },
+            { "week": 16, "lectureNumber": 16, "type": "SEMINAR", "title": "რეზერვი", "description": "", "reading": "" },
+            { "week": 16, "lectureNumber": 17, "type": "EXAM", "title": "დასკვნითი შეფასება", "description": "", "reading": "" }
+          ]
+        },
+
+        {
+          "name": "Discrete Signal Processing",
+          "lecturer": "გუგა ვარდიაშვილი",
+          "type": "ძირითადი",
+          "description": "...",
+          "lectures": [
+            { "week": 1, "lectureNumber": 1, "type": "LECTURE", "title": "...", "description": "...", "reading": "..." }
+          ]
+        },
+
+        {
+          "name": "Junior Project Preparation",
+          "lecturer": "გუგა ვარდიაშვილი",
+          "type": "ძირითადი",
+          "description": "სტუდენტები ერთვებიან რეალური პროექტის განხორციელებაში ელექტრო და კომპიუტერული ინჟინერიის მიმართულებით — თემის შერჩევიდან საპროექტო წინადადებისა და შესრულების გეგმის მომზადებამდე.",
+          "lectures": [
+            { "week": 1, "lectureNumber": 1, "type": "LECTURE", "title": "პროექტის თემის შერჩევა და არჩეული თემის შესაბამისი ლიტერატურის და ტექნოლოგიის შესწავლა", "description": "კვირები 1-4", "reading": "" },
+            { "week": 2, "lectureNumber": 2, "type": "LECTURE", "title": "პროექტის თემის შერჩევა და არჩეული თემის შესაბამისი ლიტერატურის და ტექნოლოგიის შესწავლა", "description": "კვირები 1-4", "reading": "" },
+            { "week": 3, "lectureNumber": 3, "type": "LECTURE", "title": "პროექტის თემის შერჩევა და არჩეული თემის შესაბამისი ლიტერატურის და ტექნოლოგიის შესწავლა", "description": "კვირები 1-4", "reading": "" },
+            { "week": 4, "lectureNumber": 4, "type": "LECTURE", "title": "პროექტის თემის შერჩევა და არჩეული თემის შესაბამისი ლიტერატურის და ტექნოლოგიის შესწავლა", "description": "კვირები 1-4", "reading": "" },
+
+            { "week": 5, "lectureNumber": 5, "type": "LECTURE", "title": "პროექტის შესრულების პირველადი გეგმის გაწერა", "description": "კვირები 5-6", "reading": "" },
+            { "week": 6, "lectureNumber": 6, "type": "LECTURE", "title": "პროექტის შესრულების პირველადი გეგმის გაწერა", "description": "კვირები 5-6", "reading": "" },
+
+            { "week": 7, "lectureNumber": 7, "type": "DEADLINE", "title": "პირველადი საპროექტო წინადადების განაცხადის დედლაინი", "description": "", "reading": "" },
+
+            { "week": 12, "lectureNumber": 8, "type": "PRESENTATION", "title": "პროექტის მომზადების პრეზენტაცია", "description": "კვირები 12-15", "reading": "" },
+            { "week": 13, "lectureNumber": 9, "type": "PRESENTATION", "title": "პროექტის მომზადების პრეზენტაცია", "description": "კვირები 12-15", "reading": "" },
+            { "week": 14, "lectureNumber": 10, "type": "PRESENTATION", "title": "პროექტის მომზადების პრეზენტაცია", "description": "კვირები 12-15", "reading": "" },
+            { "week": 15, "lectureNumber": 11, "type": "PRESENTATION", "title": "პროექტის მომზადების პრეზენტაცია", "description": "კვირები 12-15", "reading": "" },
+
+            { "week": 16, "lectureNumber": 12, "type": "DEADLINE", "title": "საპროექტო წინადადების განაცხადის გამოგზავნის დედლაინი", "description": "", "reading": "" }
+          ]
+        }
+      ]
+    }
+  ]
+}
