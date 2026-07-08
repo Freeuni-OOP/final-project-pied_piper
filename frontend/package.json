@@ -1,3 +1,23 @@
 {
-  "description": "NPM manifest defining LecturBoxd frontend dependencies (React, TypeScript, React Router, Axios, Tailwind CSS) and build scripts."
+  "name": "lecturboxd-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router-dom": "*"
+  },
+  "devDependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@types/react-router-dom": "*",
+    "typescript": "*",
+    "vite": "*"
+  }
 }

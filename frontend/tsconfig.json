@@ -1,3 +1,10 @@
 {
-  // TypeScript compiler configuration for the LecturBoxd frontend project.
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "lib": ["DOM", "ES2022"],
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
 }
