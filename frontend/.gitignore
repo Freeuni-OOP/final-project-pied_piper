@@ -1,1 +1,18 @@
-# Git ignore rules for Node modules, build output, environment files, and IDE artifacts in the frontend.
+# Node modules and build output
+node_modules/
+dist/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Lockfile
+package-lock.json
+
+# IDE/editor folders
+.idea/
+.vscode/
+
+# Vite cache
+.vite/
