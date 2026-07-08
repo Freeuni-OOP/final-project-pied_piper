@@ -1,48 +1,39 @@
-package com.lecturboxd.dto.response;
+package com.lecturboxd.dto.request;
 
 import com.lecturboxd.entity.LectureType;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-public class LectureResponse {
+public class LectureRequest {
 
-    private Long id;
+    @NotNull
     private Long subjectId;
+
+    @NotNull
+    @Min(1)
+    @Max(30)
     private Integer week;
+
+    @NotNull
+    @Min(1)
+    @Max(10)
     private Integer lectureNumber;
+
+    @NotNull
     private LectureType type;
+
+    @NotBlank
+    @Size(max = 255)
     private String title;
+
+    @Size(max = 10000)
     private String description;
+
+    @Size(max = 10000)
     private String reading;
-
-    public LectureResponse() {
-    }
-
-    public LectureResponse(
-            Long id,
-            Long subjectId,
-            Integer week,
-            Integer lectureNumber,
-            LectureType type,
-            String title,
-            String description,
-            String reading
-    ) {
-        this.id = id;
-        this.subjectId = subjectId;
-        this.week = week;
-        this.lectureNumber = lectureNumber;
-        this.type = type;
-        this.title = title;
-        this.description = description;
-        this.reading = reading;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getSubjectId() {
         return subjectId;
