@@ -1,35 +1,48 @@
-import React from 'react'
-import { Routes, Route, Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
+import useAuth from './auth/useAuth';
 
-const Layout: React.FC = () => (
-  <div className="min-h-screen flex flex-col">
-	<header className="bg-white shadow-sm">
-	  <div className="max-w-4xl mx-auto p-4">
-		<Link to="/" className="text-xl font-semibold">LecturBoxd</Link>
-	  </div>
-	</header>
-	<main className="flex-1 max-w-4xl mx-auto p-4 w-full">
-	  <Outlet />
-	</main>
-	<footer className="bg-white border-t">
-	  <div className="max-w-4xl mx-auto p-4 text-sm text-slate-500">© LecturBoxd</div>
-	</footer>
-  </div>
-)
+function App() {
+  const auth = useAuth();
 
-const Home: React.FC = () => (
-  <div>
-	<h1 className="text-2xl font-bold mb-2">Welcome to LecturBoxd</h1>
-	<p className="text-slate-600">This is the minimal frontend baseline. Navigate to other features when available.</p>
-  </div>
-)
-
-export default function App() {
   return (
-	<Routes>
-	  <Route path="/" element={<Layout />}>
-		<Route index element={<Home />} />
-	  </Route>
-	</Routes>
-  )
+    <div className="app-shell" style={{ fontFamily: 'sans-serif', minHeight: '100vh', background: '#f7f8fb' }}>
+      <header style={{ padding: '1rem 2rem', background: '#fff', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <Link to="/" style={{ marginRight: 16, fontWeight: 700, textDecoration: 'none', color: '#111' }}>
+            LecturBoxd
+          </Link>
+          <Link to="/lectures" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
+            Syllabus
+          </Link>
+          {auth.token && (
+            <Link to={`/profile/${auth.user?.id}`} style={{ textDecoration: 'none', color: '#374151' }}>
+              Profile
+            </Link>
+          )}
+        </div>
+        <nav>
+          {auth.token ? (
+            <button onClick={auth.logout} style={{ padding: '0.5rem 1rem', borderRadius: 6, border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer' }}>
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link to="/login" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
+                Login
+              </Link>
+              <Link to="/register" style={{ textDecoration: 'none', color: '#374151' }}>
+                Register
+              </Link>
+            </>
+          )}
+        </nav>
+      </header>
+      <main style={{ padding: '2rem' }}>
+        <AppRoutes />
+      </main>
+    </div>
+  );
 }
+
+export default App;
