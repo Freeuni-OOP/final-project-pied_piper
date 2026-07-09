@@ -1,5 +1,6 @@
 package com.lecturboxd.entity;
 
-@SuppressWarnings("unused")
-class ActivityType {
+public enum ActivityType {
+    REVIEW_CREATED,
+    LECTURE_LOGGED
 }
