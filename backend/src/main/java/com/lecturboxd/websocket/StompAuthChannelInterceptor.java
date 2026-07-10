@@ -1,22 +1,22 @@
 package com.lecturboxd.websocket;
 
 import com.lecturboxd.auth.JwtTokenProvider;
-import com.lecturboxd.auth.LecturboxdUserPrincipal;
 import com.lecturboxd.auth.UserDetailsServiceImpl;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 /**
- * Intercepts STOMP messages to authenticate via JWT token passed in the Authorization header.
+ * Intercepts STOMP CONNECT to authenticate via JWT and attach the user Principal.
+ * Must use MessageHeaderAccessor.getAccessor (not wrap) so setUser persists on the session —
+ * otherwise convertAndSendToUser never delivers to /user/queue/messages.
  */
 @Component
 public class StompAuthChannelInterceptor implements ChannelInterceptor {
@@ -31,7 +31,10 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+        if (accessor == null) {
+            return message;
+        }
 
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
             String authHeader = accessor.getFirstNativeHeader("Authorization");
@@ -53,7 +56,7 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
                         accessor.setUser(authentication);
                     }
                 } catch (Exception ex) {
-                    // Token validation failed - will be rejected by auth
+                    // Token validation failed - connection proceeds without a user principal
                 }
             }
         }
@@ -61,4 +64,3 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
         return message;
     }
 }
-

@@ -24,6 +24,10 @@ export function useWebSocket(callbacks?: WebSocketCallbacks) {
   const [state, setState] = useState<WebSocketState>({ connected: false, error: null });
   const clientRef = useRef<Client | null>(null);
   const subscriptionsRef = useRef<StompSubscription[]>([]);
+  const retryRef = useRef<number | null>(null);
+  // Invalidate in-flight onConnect after disconnect (Strict Mode remount / teardown races).
+  const connectGenerationRef = useRef(0);
+  // Always call the latest handlers — never close over `callbacks` from connect().
   const callbacksRef = useRef(callbacks);
   callbacksRef.current = callbacks;
 
@@ -31,7 +35,19 @@ export function useWebSocket(callbacks?: WebSocketCallbacks) {
     try {
       const token = getToken();
       if (!token) {
+        // No token yet (user not logged in). Retry shortly so connection is established
+        // automatically after login without requiring a page refresh.
         setState({ connected: false, error: 'No authentication token' });
+        try {
+          if (retryRef.current) {
+            window.clearTimeout(retryRef.current);
+          }
+        } catch (e) {
+          /* ignore in non-browser env */
+        }
+        retryRef.current = window.setTimeout(() => {
+          connect();
+        }, 2000) as unknown as number;
         return;
       }
 
@@ -43,13 +59,29 @@ export function useWebSocket(callbacks?: WebSocketCallbacks) {
       // SockJS handshake uses HTTP, not ws://
       const sockJsUrl = `${baseUrl}/ws`;
 
+      const generation = ++connectGenerationRef.current;
+
       const client = new Client({
         webSocketFactory: () => new SockJS(sockJsUrl),
         connectHeaders: {
           Authorization: `Bearer ${token}`,
         },
         onConnect: () => {
+          // Ignore connect callbacks from a client that was already torn down.
+          if (generation !== connectGenerationRef.current) {
+            return;
+          }
+
           setState({ connected: true, error: null });
+
+          // Drop prior subs before re-subscribing (STOMP reconnects re-run onConnect).
+          subscriptionsRef.current.forEach((sub) => {
+            try {
+              sub.unsubscribe();
+            } catch {
+              /* ignore */
+            }
+          });
 
           const messageSub = client.subscribe('/user/queue/messages', (frame: Frame) => {
             try {
@@ -73,6 +105,9 @@ export function useWebSocket(callbacks?: WebSocketCallbacks) {
           callbacksRef.current?.onConnect?.();
         },
         onDisconnect: () => {
+          if (generation !== connectGenerationRef.current) {
+            return;
+          }
           setState({ connected: false, error: null });
           subscriptionsRef.current = [];
           callbacksRef.current?.onDisconnect?.();
@@ -102,6 +137,16 @@ export function useWebSocket(callbacks?: WebSocketCallbacks) {
   }, []);
 
   const disconnect = useCallback(() => {
+    // Bump generation so any late onConnect from the old client is ignored.
+    connectGenerationRef.current += 1;
+    try {
+      if (retryRef.current) {
+        window.clearTimeout(retryRef.current);
+        retryRef.current = null;
+      }
+    } catch (e) {
+      /* ignore in non-browser env */
+    }
     subscriptionsRef.current.forEach((sub) => {
       try {
         sub.unsubscribe();

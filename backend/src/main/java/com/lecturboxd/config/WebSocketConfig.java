@@ -32,11 +32,25 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Register WebSocket endpoint at /ws with SockJS fallback
-        // Allow origins from CORS configuration (defaults to localhost:5173 for development)
-        String[] origins = allowedOrigins.split(",");
+        // Patterns match CorsConfig so LAN / alternate Vite ports work in local dev.
+        java.util.LinkedHashSet<String> patterns = new java.util.LinkedHashSet<>();
+        patterns.add("http://localhost:*");
+        patterns.add("http://127.0.0.1:*");
+        patterns.add("http://192.168.*.*:*");
+        patterns.add("http://10.*.*.*:*");
+        patterns.add("http://172.*.*.*:*");
+        // Allow Vite dev server default alternate port used during HMR
+        patterns.add("http://localhost:5174");
+        if (allowedOrigins != null && !allowedOrigins.isBlank()) {
+            for (String origin : allowedOrigins.split(",")) {
+                String trimmed = origin.trim();
+                if (!trimmed.isEmpty()) {
+                    patterns.add(trimmed);
+                }
+            }
+        }
         registry.addEndpoint("/ws")
-                .setAllowedOrigins(origins)
+                .setAllowedOriginPatterns(patterns.toArray(String[]::new))
                 .withSockJS();
     }
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useChat } from '../hooks/useChat';
 import ChatWindow from '../components/ChatWindow';
@@ -6,11 +6,19 @@ import ConversationList from '../components/ConversationList';
 import useAuth from '../../../auth/useAuth';
 import BackButton from '../../../components/BackButton';
 
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 export default function ChatPage() {
   const auth = useAuth();
   const chat = useChat();
   const [searchParams] = useSearchParams();
   const conversationIdParam = searchParams.get('conversationId');
+  const [mobileShowThread, setMobileShowThread] = useState(false);
 
   useEffect(() => {
     if (!conversationIdParam) return;
@@ -20,6 +28,7 @@ export default function ChatPage() {
     const open = async () => {
       await chat.loadConversations();
       await chat.loadChatHistory(id);
+      setMobileShowThread(true);
     };
     open();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,6 +37,8 @@ export default function ChatPage() {
   const activeConversation = chat.conversations.find(
     (c) => c.id === chat.activeConversationId
   );
+
+  const peerName = activeConversation?.otherUser?.name ?? 'Conversation';
 
   const otherUserId =
     activeConversation?.otherUser?.id ??
@@ -39,43 +50,94 @@ export default function ChatPage() {
 
   const handleSelectConversation = async (conversationId: number) => {
     await chat.loadChatHistory(conversationId);
+    setMobileShowThread(true);
   };
 
   const handleSendMessage = async (content: string) => {
-    if (!otherUserId) {
-      return;
-    }
+    if (!otherUserId) return;
     await chat.sendMessage(otherUserId, content);
   };
 
+  const handleBackToList = () => {
+    setMobileShowThread(false);
+  };
+
   return (
-    <div>
-      <div style={{ padding: '0 1rem' }}>
+    <div className="mx-auto max-w-6xl px-3 pb-6 sm:px-4">
+      <div className="mb-3">
         <BackButton to="/" />
       </div>
-      <div className="flex h-[70vh] bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
-        <div className="w-80 bg-white border-r border-gray-200 overflow-y-auto">
-          <div className="p-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Messages</h2>
-          </div>
-          <ConversationList
-            conversations={chat.conversations}
-            activeConversationId={chat.activeConversationId}
-            onSelectConversation={handleSelectConversation}
-            loading={chat.loading && chat.conversations.length === 0 && !chat.activeConversationId}
-          />
-        </div>
 
-        <div className="flex-1 flex flex-col">
+      <div className="flex h-[min(78vh,720px)] overflow-hidden rounded-2xl border border-[#e8e8e8] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+        {/* Conversation list */}
+        <aside
+          className={`w-full flex-col border-r border-[#e8e8e8] bg-white md:flex md:w-[340px] md:shrink-0 ${
+            mobileShowThread ? 'hidden' : 'flex'
+          }`}
+        >
+          <div className="flex items-center justify-between border-b border-[#e8e8e8] bg-gradient-to-r from-[#FFF8E1] to-white px-5 py-4">
+            <div>
+              <h2 className="text-xl font-bold tracking-tight text-[#1a1a1a]">Chats</h2>
+              <p className="text-xs text-[#8a8a8a]">
+                {chat.wsConnected ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-[#7CB342]" />
+                    Live
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-[#c4c4c4]" />
+                    Connecting…
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            <ConversationList
+              conversations={chat.conversations}
+              activeConversationId={chat.activeConversationId}
+              onSelectConversation={handleSelectConversation}
+              loading={chat.loading && chat.conversations.length === 0 && !chat.activeConversationId}
+            />
+          </div>
+        </aside>
+
+        {/* Active thread */}
+        <section
+          className={`min-w-0 flex-1 flex-col bg-[#FAFAFA] ${
+            mobileShowThread ? 'flex' : 'hidden md:flex'
+          }`}
+        >
           {chat.activeConversationId ? (
             <>
-              <div className="px-6 py-4 bg-white border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {activeConversation?.otherUser?.name ?? 'Conversation'}
-                </h3>
-              </div>
+              <header className="flex items-center gap-3 border-b border-[#e8e8e8] bg-white px-3 py-3 sm:px-5">
+                <button
+                  type="button"
+                  onClick={handleBackToList}
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-[#558B2F] hover:bg-[#E8F5E9] md:hidden cursor-pointer"
+                  aria-label="Back to chats"
+                >
+                  ←
+                </button>
 
-              <div className="flex-1 overflow-hidden p-6">
+                <div
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#7CB342] text-sm font-bold text-white"
+                  aria-hidden
+                >
+                  {initials(peerName)}
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <h3 className="truncate text-[16px] font-bold text-[#1a1a1a]">{peerName}</h3>
+                  <p className="text-xs text-[#558B2F]">
+                    {chat.wsConnected ? 'Active now' : 'Saved messages'}
+                  </p>
+                </div>
+              </header>
+
+              <div className="min-h-0 flex-1">
                 <ChatWindow
                   messages={chat.messages}
                   loading={chat.loading}
@@ -84,33 +146,34 @@ export default function ChatPage() {
                   onMarkAsRead={chat.markAsRead}
                   canSend={!!otherUserId}
                   wsConnected={chat.wsConnected}
+                  peerName={peerName}
                 />
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center">
-              <p className="text-gray-500 text-lg">
+            <div className="flex flex-1 flex-col items-center justify-center gap-3 bg-[#FAFAFA] px-8 text-center">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#FFF3C4] text-3xl font-bold text-[#1a1a1a]">
+                ✉
+              </div>
+              <p className="text-lg font-bold text-[#1a1a1a]">Your messages</p>
+              <p className="max-w-sm text-sm text-[#8a8a8a]">
                 {chat.loading
                   ? 'Loading conversations…'
                   : chat.conversations.length === 0
-                    ? 'No conversations yet. Message someone from their profile.'
-                    : 'Select a conversation to start'}
+                    ? 'No conversations yet. Message someone from their profile to get started.'
+                    : 'Select a chat from the left to start messaging.'}
               </p>
             </div>
           )}
 
-          {chat.wsError && (
-            <div className="px-6 py-3 bg-yellow-50 border-t border-yellow-200 text-yellow-700 text-sm">
-              Live updates unavailable: {chat.wsError} (messages still save via API)
+          {(chat.wsError || chat.error) && (
+            <div className="border-t border-[#e8e8e8] bg-[#FFF8E1] px-4 py-2 text-sm text-[#5c4a00]">
+              {chat.wsError
+                ? `Live updates unavailable: ${chat.wsError}`
+                : chat.error}
             </div>
           )}
-
-          {chat.error && (
-            <div className="px-6 py-3 bg-yellow-50 border-t border-yellow-200 text-yellow-700 text-sm">
-              {chat.error}
-            </div>
-          )}
-        </div>
+        </section>
       </div>
     </div>
   );

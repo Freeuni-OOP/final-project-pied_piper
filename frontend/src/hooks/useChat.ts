@@ -37,11 +37,15 @@ export function useChat(options?: UseChatOptions) {
 
   const onMessage = useCallback(
     (incomingMessage: ChatMessage) => {
-      appendMessage(incomingMessage);
       // Refresh sidebar so new/updated conversations appear
       getConversations()
         .then((data) => setConversations(data ?? []))
         .catch(() => undefined);
+
+      // Merge into the open thread (ref avoids a stale null from the first render).
+      if (activeConversationIdRef.current != null) {
+        appendMessage(incomingMessage);
+      }
     },
     [appendMessage]
   );
