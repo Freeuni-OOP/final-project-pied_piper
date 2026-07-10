@@ -1,13 +1,14 @@
 package com.lecturboxd.service;
 
-import com.lecturboxd.dto.request.ReviewRequest;
+import com.lecturboxd.dto.request.LectureLogRequest;
 import com.lecturboxd.entity.Lecture;
-import com.lecturboxd.entity.Review;
+import com.lecturboxd.entity.LectureLog;
 import com.lecturboxd.entity.User;
 import com.lecturboxd.exception.ConflictException;
+import com.lecturboxd.repository.LectureLogRepository;
 import com.lecturboxd.repository.LectureRepository;
-import com.lecturboxd.repository.ReviewRepository;
 import com.lecturboxd.repository.UserRepository;
+import com.lecturboxd.dto.mapper.FeedMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,10 +26,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ReviewServiceTest {
+class LectureLogServiceTest {
 
     @Mock
-    private ReviewRepository reviewRepository;
+    private LectureLogRepository lectureLogRepository;
 
     @Mock
     private LectureRepository lectureRepository;
@@ -39,16 +40,16 @@ class ReviewServiceTest {
     @Mock
     private ActivityService activityService;
 
+    @Mock
+    private FeedMapper feedMapper;
+
     @InjectMocks
-    private ReviewService reviewService;
+    private LectureLogService lectureLogService;
 
     @Test
-    void createReviewThrowsConflictWhenReviewAlreadyExists() {
+    void createLogThrowsConflictWhenLogAlreadyExists() {
         UUID userId = UUID.randomUUID();
         Long lectureId = 1L;
-        ReviewRequest request = new ReviewRequest();
-        request.setRating(5);
-        request.setComment("Excellent");
 
         Lecture lecture = new Lecture();
         lecture.setId(lectureId);
@@ -58,14 +59,14 @@ class ReviewServiceTest {
 
         when(lectureRepository.findById(lectureId)).thenReturn(Optional.of(lecture));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(reviewRepository.findByUserIdAndLectureId(userId, lectureId)).thenReturn(Optional.of(new Review()));
+        when(lectureLogRepository.existsByUserIdAndLectureId(userId, lectureId)).thenReturn(true);
 
         ConflictException exception = assertThrows(
                 ConflictException.class,
-                () -> reviewService.createReview(userId, lectureId, request)
+                () -> lectureLogService.createLog(userId, lectureId, new LectureLogRequest())
         );
 
-        assertEquals("A review for this lecture already exists. Use the update endpoint to modify it.", exception.getMessage());
-        verify(reviewRepository, never()).save(any(Review.class));
+        assertEquals("You have already logged this lecture", exception.getMessage());
+        verify(lectureLogRepository, never()).save(any(LectureLog.class));
     }
 }

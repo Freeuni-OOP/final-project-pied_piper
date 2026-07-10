@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 // HTTP client functions for user profiles, follow/unfollow, and follower listings.
-=======
 import client from './axiosClient';
 
 export interface PublicUser {
@@ -55,4 +53,3 @@ export async function getFollowing(userId: string): Promise<PublicUser[]> {
 }
 
 
->>>>>>> Stashed changes

@@ -1,1 +1,9 @@
-// Centralized route path constants used across navigation and React Router definitions.
+export const routePaths = {
+  home: '/',
+  lectures: '/lectures',
+  lectureDetail: (id: number | string) => `/lectures/${id}`,
+  login: '/login',
+  register: '/register',
+  verify: '/verify',
+  profile: (userId: string) => `/profile/${userId}`,
+};

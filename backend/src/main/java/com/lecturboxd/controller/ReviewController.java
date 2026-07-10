@@ -6,6 +6,7 @@ import com.lecturboxd.dto.response.RatingSummaryResponse;
 import com.lecturboxd.dto.response.ReviewResponse;
 import com.lecturboxd.service.ReviewService;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -59,7 +60,10 @@ public class ReviewController {
     }
 
     @GetMapping("/api/lectures/{lectureId}/reviews")
-    public Page<ReviewResponse> getReviewsForLecture(@PathVariable Long lectureId, Pageable pageable) {
+    public Page<ReviewResponse> getReviewsForLecture(
+            @PathVariable Long lectureId, 
+            @ParameterObject Pageable pageable
+    ) {
         return reviewService.getReviewsForLecture(lectureId, pageable);
     }
 
@@ -69,7 +73,10 @@ public class ReviewController {
     }
 
     @GetMapping("/api/users/{userId}/reviews")
-    public Page<ReviewResponse> getReviewsByUser(@PathVariable UUID userId, Pageable pageable) {
+    public Page<ReviewResponse> getReviewsByUser(
+            @PathVariable UUID userId, 
+            @ParameterObject Pageable pageable
+    ) {
         return reviewService.getReviewsByUser(userId, pageable);
     }
 }

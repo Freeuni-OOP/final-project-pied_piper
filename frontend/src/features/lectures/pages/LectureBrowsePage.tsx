@@ -1,30 +1,4 @@
-<<<<<<< Updated upstream
 // Browse page listing lectures from the university syllabus with pagination and filters.
-=======
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  listFaculties,
-  listSemesters,
-  listSubjects,
-  getSubjectSyllabus,
-  Faculty,
-  Semester,
-  Subject,
-  SubjectSyllabus
-} from '../../../api/lectureApi';
-
-export default function LectureBrowsePage() {
-  const [faculties, setFaculties] = useState<Faculty[]>([]);
-  const [selectedFaculty, setSelectedFaculty] = useState<number | null>(null);
-  const [semesters, setSemesters] = useState<Semester[]>([]);
-  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [selectedSubject, setSelectedSubject] = useState<SubjectSyllabus | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Load faculties on mount
   useEffect(() => {
     const load = async () => {
       setError(null);
@@ -206,4 +180,4 @@ export default function LectureBrowsePage() {
     </div>
   );
 }
->>>>>>> Stashed changes
+

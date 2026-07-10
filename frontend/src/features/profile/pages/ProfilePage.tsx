@@ -1,18 +1,4 @@
-<<<<<<< Updated upstream
 // Authenticated user's own profile page with stats, logs, reviews, and settings link.
-=======
-import { useEffect, useState } from 'react';
-import useAuth from '../../../auth/useAuth';
-import { getFollowers, getFollowing, PublicUser, getUserProfile, UserProfile } from '../../../api/userApi';
-import { getUserLectureLogs } from '../../../api/lectureLogApi';
-import { LectureLog, PageResponse } from '../../../types/lecture';
-
-export default function ProfilePage() {
-  const auth = useAuth();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [followers, setFollowers] = useState<PublicUser[]>([]);
-  const [following, setFollowing] = useState<PublicUser[]>([]);
-  const [lectureLogs, setLectureLogs] = useState<LectureLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -124,4 +110,4 @@ export default function ProfilePage() {
     </div>
   );
 }
->>>>>>> Stashed changes
+

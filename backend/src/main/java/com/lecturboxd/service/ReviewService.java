@@ -26,15 +26,18 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final LectureRepository lectureRepository;
     private final UserRepository userRepository;
+    private final ActivityService activityService;
 
     public ReviewService(
             ReviewRepository reviewRepository,
             LectureRepository lectureRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            ActivityService activityService
     ) {
         this.reviewRepository = reviewRepository;
         this.lectureRepository = lectureRepository;
         this.userRepository = userRepository;
+        this.activityService = activityService;
     }
 
     @Transactional
@@ -54,7 +57,9 @@ public class ReviewService {
         review.setUser(user);
         review.setLecture(lecture);
 
-        return ReviewMapper.toResponse(reviewRepository.save(review));
+        Review saved = reviewRepository.save(review);
+        activityService.recordReviewCreated(saved);
+        return ReviewMapper.toResponse(saved);
     }
 
     @Transactional

@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 // HTTP client functions for lecture browse, search, and detail endpoints.
-=======
 import client from './axiosClient';
 
 export interface Lecture {
@@ -63,4 +61,3 @@ export async function getLecture(id: number): Promise<Lecture> {
 }
 
 
->>>>>>> Stashed changes

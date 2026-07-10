@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 // React Router route tree mapping URLs to feature pages and protected-route wrappers.
-=======
 import { Navigate, Route, Routes } from 'react-router-dom';
 import HomePage from '../features/home/pages/HomePage';
 import LoginPage from '../features/auth-pages/pages/LoginPage';
@@ -63,4 +61,4 @@ export default function AppRoutes() {
     </Routes>
   );
 }
->>>>>>> Stashed changes
+
