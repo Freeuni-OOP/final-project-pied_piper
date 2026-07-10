@@ -15,10 +15,21 @@ function App() {
           <Link to="/lectures" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
             Syllabus
           </Link>
+          <Link to="/search" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
+            Search
+          </Link>
           {auth.token && (
-            <Link to={`/profile/${auth.user?.id}`} style={{ textDecoration: 'none', color: '#374151' }}>
-              Profile
-            </Link>
+            <>
+              <Link to="/feed" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
+                Feed
+              </Link>
+              <Link to="/chat" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
+                Chat
+              </Link>
+              <Link to="/profile" style={{ textDecoration: 'none', color: '#374151' }}>
+                Profile
+              </Link>
+            </>
           )}
         </div>
         <nav>

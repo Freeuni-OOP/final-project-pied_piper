@@ -1,5 +1,5 @@
 {
-  "description": "NPM manifest defining LecturBoxd frontend dependencies (React, TypeScript, React Router, Axios, Tailwind CSS) and build scripts."
+  "description": "NPM manifest defining LecturBoxd frontend dependencies (React, TypeScript, React Router, Axios, Tailwind CSS) and build scripts.",
   "name": "lecturboxd-frontend",
   "version": "0.0.1",
   "private": true,

@@ -22,18 +22,29 @@ export interface VerifyRequest {
   otp: string;
 }
 
+export interface RegisterResponse {
+  message: string;
+  email: string;
+  expiresAt?: string;
+  devCode?: string;
+}
+
 export interface AuthResponse {
   token: string;
   user: UserResponse;
 }
 
-export async function register(data: RegisterRequest) {
+export async function register(data: RegisterRequest): Promise<RegisterResponse> {
   const res = await client.post('/api/auth/register', data);
   return res.data;
 }
 
 export async function verifyOtp(data: VerifyRequest): Promise<AuthResponse> {
-  const res = await client.post('/api/auth/verify', data);
+  // Backend expects field name "code", not "otp"
+  const res = await client.post('/api/auth/verify', {
+    email: data.email,
+    code: data.otp,
+  });
   return res.data;
 }
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as authService from '../../../auth/authService';
+import BackButton from '../../../components/BackButton';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -17,11 +18,13 @@ export default function RegisterPage() {
     setMessage(null);
     setLoading(true);
     try {
-      await authService.register({ name, email, password });
-      setMessage('Registration submitted. Check your university email for OTP and complete verification.');
-      navigate('/verify');
+      const response = await authService.register({ name, email, password });
+      sessionStorage.setItem('pendingVerifyEmail', email);
+      sessionStorage.removeItem('pendingVerifyCode');
+      setMessage(response?.message ?? 'Check your university email for the OTP code.');
+      setTimeout(() => navigate('/verify'), 800);
     } catch (err: any) {
-      setError(err?.message ?? 'Unable to register.');
+      setError(err?.message ?? err?.data?.message ?? 'Unable to register.');
     } finally {
       setLoading(false);
     }
@@ -29,6 +32,7 @@ export default function RegisterPage() {
 
   return (
     <div style={{ maxWidth: 520, margin: '0 auto' }}>
+      <BackButton to="/" />
       <h2>Create Account</h2>
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 12 }}>
         <label>
@@ -37,7 +41,7 @@ export default function RegisterPage() {
         </label>
         <label>
           University Email
-          <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #d1d5db' }} />
+          <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder="you@freeuni.edu.ge" style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #d1d5db' }} />
         </label>
         <label>
           Password

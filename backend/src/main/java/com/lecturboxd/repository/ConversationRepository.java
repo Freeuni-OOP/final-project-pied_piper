@@ -2,6 +2,7 @@ package com.lecturboxd.repository;
 
 import com.lecturboxd.entity.Conversation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -30,4 +31,8 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
      * Find conversations by user with a specific other user
      */
     List<Conversation> findByUser1IdOrUser2Id(UUID user1Id, UUID user2Id);
+
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM Conversation c WHERE c.user1.id = :userId OR c.user2.id = :userId")
+    void deleteAllForUser(@Param("userId") UUID userId);
 }

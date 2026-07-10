@@ -1,12 +1,10 @@
-// TypeScript interfaces and types for lecture entities, syllabus metadata, and search filters.
-
 export interface LectureLog {
   id: number;
   userId: string;
   lectureId: number;
-  lectureName: string;
-  notes?: string;
-  loggedAt: string;
+  lectureTitle: string;
+  watchedAt?: string;
+  createdAt: string;
 }
 
 export interface PageResponse<T> {
@@ -16,5 +14,3 @@ export interface PageResponse<T> {
   number: number;
   size: number;
 }
-
-

@@ -6,6 +6,10 @@
 	<title>LecturBoxd</title>
   </head>
   <body>
+	<script>
+	  // sockjs-client expects Node's `global` in the browser
+	  window.global = window;
+	</script>
 	<div id="root"></div>
 	<script type="module" src="/src/main.tsx"></script>
   </body>

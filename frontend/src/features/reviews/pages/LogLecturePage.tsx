@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { logLecture } from '../../../api/lectureLogApi';
 import useAuth from '../../../auth/useAuth';
+import BackButton from '../../../components/BackButton';
 
 export default function LogLecturePage() {
   const { lectureId } = useParams<{ lectureId: string }>();
@@ -42,6 +43,7 @@ export default function LogLecturePage() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
+      <BackButton to={lectureId ? `/lectures/${lectureId}` : '/lectures'} label="← Back to lecture" />
       <div className="bg-white rounded-lg border border-gray-200 p-8">
         <h1 className="text-2xl font-bold mb-6 text-gray-900">Log Lecture</h1>
 

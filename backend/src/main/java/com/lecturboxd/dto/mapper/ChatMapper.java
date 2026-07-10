@@ -13,11 +13,13 @@ public final class ChatMapper {
     public static ChatMessageResponse toMessageResponse(ChatMessage message) {
         ChatMessageResponse.UserSummary sender = new ChatMessageResponse.UserSummary(
                 message.getSender().getId(),
-                message.getSender().getName()
+                message.getSender().getName(),
+                message.getSender().getEmail()
         );
         ChatMessageResponse.UserSummary receiver = new ChatMessageResponse.UserSummary(
                 message.getReceiver().getId(),
-                message.getReceiver().getName()
+                message.getReceiver().getName(),
+                message.getReceiver().getEmail()
         );
 
         return new ChatMessageResponse(

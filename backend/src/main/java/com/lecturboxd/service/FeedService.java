@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,15 +32,13 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public Page<FeedItemResponse> getFeedForUser(UUID currentUserId, Pageable pageable) {
-        List<UUID> followedUserIds = followRepository.findByFollowerIdOrderByCreatedAtDesc(currentUserId).stream()
+        List<UUID> userIds = new ArrayList<>();
+        userIds.add(currentUserId);
+        followRepository.findByFollowerIdOrderByCreatedAtDesc(currentUserId).stream()
                 .map(follow -> follow.getFollowed().getId())
-                .toList();
+                .forEach(userIds::add);
 
-        if (followedUserIds.isEmpty()) {
-            return Page.empty(pageable);
-        }
-
-        return activityRepository.findByUserIdIn(followedUserIds, pageable)
+        return activityRepository.findByUserIdIn(userIds, pageable)
                 .map(feedMapper::toResponse);
     }
 }

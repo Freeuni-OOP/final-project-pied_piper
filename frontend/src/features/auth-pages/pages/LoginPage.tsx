@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as authService from '../../../auth/authService';
 import useAuth from '../../../auth/useAuth';
+import BackButton from '../../../components/BackButton';
 
 export default function LoginPage() {
   const auth = useAuth();
@@ -28,6 +29,7 @@ export default function LoginPage() {
 
   return (
     <div style={{ maxWidth: 480, margin: '0 auto' }}>
+      <BackButton to="/" />
       <h2>Login</h2>
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 12 }}>
         <label>

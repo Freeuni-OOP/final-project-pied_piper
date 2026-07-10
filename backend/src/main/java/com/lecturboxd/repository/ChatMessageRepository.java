@@ -4,6 +4,7 @@ import com.lecturboxd.entity.ChatMessage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -38,4 +39,12 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
      * Mark a specific message as read
      */
     Optional<ChatMessage> findById(Long messageId);
+
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM ChatMessage m WHERE m.sender.id = :userId OR m.receiver.id = :userId")
+    void deleteAllForUser(@Param("userId") UUID userId);
+
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM ChatMessage m WHERE m.conversation.id IN :conversationIds")
+    void deleteByConversationIdIn(@Param("conversationIds") List<Long> conversationIds);
 }

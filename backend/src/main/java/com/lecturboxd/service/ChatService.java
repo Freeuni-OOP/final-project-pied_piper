@@ -68,6 +68,8 @@ public class ChatService {
 
         // Get or create conversation
         Conversation conversation = getOrCreateConversation(senderId, request.getReceiverId());
+        conversation.setUpdatedAt(LocalDateTime.now());
+        conversationRepository.save(conversation);
 
         // Create and save message
         ChatMessage message = new ChatMessage();
@@ -148,6 +150,19 @@ public class ChatService {
                     return ChatMapper.toConversationResponse(conversation, userId, unreadCount);
                 })
                 .toList();
+    }
+
+    /**
+     * Start or open a conversation with another user
+     */
+    @Transactional
+    public ConversationResponse startConversation(UUID currentUserId, UUID receiverId) {
+        if (currentUserId.equals(receiverId)) {
+            throw new ResourceNotFoundException("Cannot start a conversation with yourself");
+        }
+        Conversation conversation = getOrCreateConversation(currentUserId, receiverId);
+        long unreadCount = chatMessageRepository.countByReceiverIdAndReadFalse(currentUserId);
+        return ChatMapper.toConversationResponse(conversation, currentUserId, unreadCount);
     }
 
     /**

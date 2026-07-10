@@ -19,7 +19,7 @@ export async function getChatHistory(
   page = 0,
   size = 50
 ): Promise<PageResponse<ChatMessage>> {
-  const res = await client.get(`/api/chat/${conversationId}`, {
+  const res = await client.get(`/api/chat/conversations/${conversationId}/messages`, {
     params: { page, size },
   });
   return res.data;
@@ -30,7 +30,7 @@ export async function getChatHistory(
  */
 export async function getConversations(): Promise<Conversation[]> {
   const res = await client.get('/api/chat/conversations');
-  return res.data;
+  return Array.isArray(res.data) ? res.data : [];
 }
 
 /**
@@ -46,6 +46,14 @@ export async function markMessageAsRead(messageId: number): Promise<void> {
  */
 export async function sendMessage(payload: SendMessagePayload): Promise<ChatMessage> {
   const res = await client.post('/api/chat/send', payload);
+  return res.data;
+}
+
+/**
+ * Start or open a conversation with another user
+ */
+export async function startConversation(receiverId: string): Promise<Conversation> {
+  const res = await client.post('/api/chat/conversations', { receiverId });
   return res.data;
 }
 

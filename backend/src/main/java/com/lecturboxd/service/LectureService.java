@@ -7,6 +7,8 @@ import com.lecturboxd.entity.Subject;
 import com.lecturboxd.exception.ResourceNotFoundException;
 import com.lecturboxd.repository.LectureRepository;
 import com.lecturboxd.repository.SubjectRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +47,15 @@ public class LectureService {
         return lectureRepository.findAll().stream()
                 .map(this::toResponse)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<LectureResponse> search(String query, Pageable pageable) {
+        String trimmed = query == null ? "" : query.trim();
+        if (trimmed.isEmpty()) {
+            return Page.empty(pageable);
+        }
+        return lectureRepository.searchByTitleOrDescription(trimmed, pageable).map(this::toResponse);
     }
 
     @Transactional

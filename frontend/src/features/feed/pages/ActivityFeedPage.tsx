@@ -1,9 +1,9 @@
-// Activity feed page showing recent logs, ratings, and reviews from followed users.
-
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getFeed } from '../../../api/feedApi';
 import { FeedItem } from '../../../types/feed';
 import useAuth from '../../../auth/useAuth';
+import BackButton from '../../../components/BackButton';
 
 export default function ActivityFeedPage() {
   const auth = useAuth();
@@ -19,8 +19,9 @@ export default function ActivityFeedPage() {
       setError(null);
       try {
         const response = await getFeed(page);
-        setFeedItems(page === 0 ? response.content : [...feedItems, ...response.content]);
-        setHasMore(page < response.totalPages - 1);
+        const items = response.content ?? [];
+        setFeedItems((prev) => (page === 0 ? items : [...prev, ...items]));
+        setHasMore(page < (response.totalPages ?? 1) - 1);
       } catch (err: any) {
         setError(err?.message ?? 'Failed to load feed');
       } finally {
@@ -45,6 +46,7 @@ export default function ActivityFeedPage() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
+      <BackButton to="/" />
       <h1 className="text-3xl font-bold mb-6 text-gray-900">Activity Feed</h1>
 
       {error && (
@@ -62,7 +64,7 @@ export default function ActivityFeedPage() {
       {feedItems.length === 0 && !loading && (
         <div className="text-center py-12">
           <p className="text-gray-500">
-            Your feed is empty. Start following users to see their activities!
+            Your feed is empty. Log a lecture, write a review, or follow classmates to see activity here.
           </p>
         </div>
       )}
@@ -75,7 +77,13 @@ export default function ActivityFeedPage() {
           >
             <div className="flex justify-between items-start mb-3">
               <div>
-                <h3 className="font-semibold text-gray-900">{item.user.name}</h3>
+                <Link
+                  to={`/profile/${item.actorId}`}
+                  className="font-semibold text-gray-900 hover:text-blue-600"
+                >
+                  {item.actorName}
+                  {item.actorId === auth.userId ? ' (you)' : ''}
+                </Link>
                 <p className="text-sm text-gray-500">
                   {new Date(item.createdAt).toLocaleDateString()}
                 </p>
@@ -85,9 +93,10 @@ export default function ActivityFeedPage() {
               </span>
             </div>
             <p className="text-gray-700 mb-2">
-              <strong>{item.lecture.title}</strong>
+              <Link to={`/lectures/${item.lectureId}`} className="font-semibold text-blue-600">
+                {item.lectureTitle}
+              </Link>
             </p>
-            <p className="text-gray-600 text-sm">{item.message}</p>
           </div>
         ))}
       </div>
@@ -106,4 +115,3 @@ export default function ActivityFeedPage() {
     </div>
   );
 }
-

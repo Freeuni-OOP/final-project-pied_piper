@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { createReview, getRatingSummary, getReviewsForLecture, Review } from '../../../api/reviewApi';
+import { Link, useParams } from 'react-router-dom';
+import { createReview, getRatingSummary, getReviewsForLecture, Review, RatingSummary } from '../../../api/reviewApi';
 import useAuth from '../../../auth/useAuth';
+import BackButton from '../../../components/BackButton';
 
 export default function ReviewPage() {
   const { lectureId } = useParams<{ lectureId: string }>();
   const auth = useAuth();
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [ratingSummary, setRatingSummary] = useState<{ average: number; count: number } | null>(null);
+  const [ratingSummary, setRatingSummary] = useState<RatingSummary | null>(null);
   const [rating, setRating] = useState(5);
-  const [content, setContent] = useState('');
+  const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -17,7 +18,7 @@ export default function ReviewPage() {
 
   useEffect(() => {
     const id = Number(lectureId);
-    if (!id) {
+    if (!Number.isFinite(id) || id <= 0) {
       setError('Invalid lecture ID.');
       setLoading(false);
       return;
@@ -27,11 +28,14 @@ export default function ReviewPage() {
       setError(null);
       setLoading(true);
       try {
-        const page = await getReviewsForLecture(id);
-        setReviews(page.content);
-        setRatingSummary(await getRatingSummary(id));
+        const [page, summary] = await Promise.all([
+          getReviewsForLecture(id),
+          getRatingSummary(id),
+        ]);
+        setReviews(page.content ?? []);
+        setRatingSummary(summary);
       } catch (err: any) {
-        setError(err?.message ?? 'Unable to load reviews.');
+        setError(err?.message ?? err?.data?.message ?? 'Unable to load reviews.');
       } finally {
         setLoading(false);
       }
@@ -50,28 +54,34 @@ export default function ReviewPage() {
     setSubmitError(null);
     setSubmitting(true);
     try {
-      const created = await createReview(id, { rating, content });
+      const created = await createReview(id, { rating, comment });
       setReviews((prev) => [created, ...prev]);
-      setContent('');
+      setComment('');
       setRating(5);
+      setRatingSummary(await getRatingSummary(id));
     } catch (err: any) {
-      setSubmitError(err?.message ?? 'Unable to submit review.');
+      setSubmitError(err?.message ?? err?.data?.message ?? 'Unable to submit review.');
     } finally {
       setSubmitting(false);
     }
   };
 
+  const average = ratingSummary?.averageRating ?? 0;
+  const total = ratingSummary?.totalReviews ?? 0;
+
   return (
     <div style={{ maxWidth: 900, margin: '0 auto' }}>
-      <h2>Lecture Reviews</h2>
+      <BackButton to={`/lectures/${lectureId}`} label="← Back to lecture" />
+      <h2>Write a review</h2>
       {loading && <p>Loading reviews…</p>}
       {error && <div style={{ color: '#b91c1c' }}>{error}</div>}
       {!loading && !error && (
         <>
           <section style={{ marginBottom: 24, padding: 16, background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb' }}>
-            <h3>Submit a review</h3>
             {!auth.token ? (
-              <p>Please login to submit your review.</p>
+              <p>
+                Please <Link to="/login">log in</Link> to submit your review.
+              </p>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 12 }}>
                 <label>
@@ -86,7 +96,7 @@ export default function ReviewPage() {
                 </label>
                 <label>
                   Review
-                  <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={5} required style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #d1d5db' }} />
+                  <textarea value={comment} onChange={(e) => setComment(e.target.value)} rows={5} required style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #d1d5db' }} />
                 </label>
                 {submitError && <div style={{ color: '#b91c1c' }}>{submitError}</div>}
                 <button type="submit" disabled={submitting} style={{ padding: '0.9rem', background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer' }}>
@@ -98,11 +108,9 @@ export default function ReviewPage() {
 
           <section style={{ background: '#fff', borderRadius: 12, padding: 16, border: '1px solid #e5e7eb' }}>
             <h3>Community reviews</h3>
-            {ratingSummary && (
-              <p>
-                Average rating: {ratingSummary.average.toFixed(1)} / 5 ({ratingSummary.count} reviews)
-              </p>
-            )}
+            <p>
+              Average rating: {average.toFixed(1)} / 5 ({total} review{total === 1 ? '' : 's'})
+            </p>
             {reviews.length === 0 ? (
               <p>No reviews yet.</p>
             ) : (
@@ -110,10 +118,10 @@ export default function ReviewPage() {
                 {reviews.map((review) => (
                   <li key={review.id} style={{ padding: 16, borderRadius: 10, background: '#f8fafc', border: '1px solid #e5e7eb' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                      <strong>User {review.authorId}</strong>
+                      <strong>{review.author?.name ?? 'Anonymous'}</strong>
                       <span>{review.rating} ★</span>
                     </div>
-                    <p style={{ margin: 0 }}>{review.content}</p>
+                    <p style={{ margin: 0 }}>{review.comment}</p>
                     <small style={{ display: 'block', marginTop: 10, color: '#6b7280' }}>{new Date(review.createdAt).toLocaleString()}</small>
                   </li>
                 ))}

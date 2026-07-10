@@ -3,8 +3,10 @@ import client from './axiosClient';
 
 export interface Lecture {
 	id: number;
+	subjectId?: number;
 	title: string;
 	description?: string;
+	reading?: string;
 	faculty?: string;
 	week?: number;
 	lectureNumber?: number;
@@ -18,7 +20,8 @@ export interface Faculty {
 
 export interface Semester {
 	id: number;
-	name: string;
+	number: string;
+	name?: string;
 }
 
 export interface Subject {
@@ -57,6 +60,25 @@ export async function getSubjectSyllabus(subjectId: number): Promise<SubjectSyll
 // Individual lecture endpoint (if still used)
 export async function getLecture(id: number): Promise<Lecture> {
 	const res = await client.get(`/api/lectures/${id}`);
+	return res.data;
+}
+
+export interface PageResponse<T> {
+	content: T[];
+	totalElements: number;
+	totalPages: number;
+	number: number;
+	size: number;
+}
+
+export async function searchLectures(
+	q: string,
+	page = 0,
+	size = 20
+): Promise<PageResponse<Lecture>> {
+	const res = await client.get('/api/lectures/search', {
+		params: { q, page, size },
+	});
 	return res.data;
 }
 

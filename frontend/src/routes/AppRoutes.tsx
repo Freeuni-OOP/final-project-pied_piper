@@ -1,4 +1,3 @@
-// React Router route tree mapping URLs to feature pages and protected-route wrappers.
 import { Navigate, Route, Routes } from 'react-router-dom';
 import HomePage from '../features/home/pages/HomePage';
 import LoginPage from '../features/auth-pages/pages/LoginPage';
@@ -10,8 +9,12 @@ import ReviewPage from '../features/reviews/pages/ReviewPage';
 import LogLecturePage from '../features/reviews/pages/LogLecturePage';
 import ProfilePage from '../features/profile/pages/ProfilePage';
 import UserProfilePage from '../features/profile/pages/UserProfilePage';
+import UserReviewsPage from '../features/profile/pages/UserReviewsPage';
+import UserLogsPage from '../features/profile/pages/UserLogsPage';
+import UserNetworkPage from '../features/profile/pages/UserNetworkPage';
 import ChatPage from '../features/chat/pages/ChatPage';
 import ActivityFeedPage from '../features/feed/pages/ActivityFeedPage';
+import SearchPage from '../features/search/pages/SearchPage';
 import ProtectedRoute from '../auth/ProtectedRoute';
 
 export default function AppRoutes() {
@@ -21,6 +24,7 @@ export default function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify" element={<VerifyOtpPage />} />
+      <Route path="/search" element={<SearchPage />} />
       <Route path="/lectures" element={<LectureBrowsePage />} />
       <Route path="/lectures/:lectureId" element={<LectureDetailPage />} />
       <Route path="/lectures/:lectureId/reviews" element={<ReviewPage />} />
@@ -41,6 +45,10 @@ export default function AppRoutes() {
         }
       />
       <Route path="/profile/:userId" element={<UserProfilePage />} />
+      <Route path="/profile/:userId/reviews" element={<UserReviewsPage />} />
+      <Route path="/profile/:userId/logs" element={<UserLogsPage />} />
+      <Route path="/profile/:userId/followers" element={<UserNetworkPage mode="followers" />} />
+      <Route path="/profile/:userId/following" element={<UserNetworkPage mode="following" />} />
       <Route
         path="/chat"
         element={
@@ -61,4 +69,3 @@ export default function AppRoutes() {
     </Routes>
   );
 }
-

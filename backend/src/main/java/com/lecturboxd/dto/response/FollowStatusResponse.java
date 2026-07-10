@@ -1,10 +1,14 @@
 package com.lecturboxd.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 public class FollowStatusResponse {
 
     private UUID userId;
+
+    @JsonProperty("isFollowing")
     private boolean isFollowing;
 
     public FollowStatusResponse() {
@@ -23,6 +27,7 @@ public class FollowStatusResponse {
         this.userId = userId;
     }
 
+    @JsonProperty("isFollowing")
     public boolean isFollowing() {
         return isFollowing;
     }

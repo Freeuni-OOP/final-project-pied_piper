@@ -3,9 +3,11 @@ package com.lecturboxd.config;
 import com.lecturboxd.auth.AdminApiKeyFilter;
 import com.lecturboxd.auth.JwtAuthenticationFilter;
 import com.lecturboxd.auth.UserDetailsServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 
 @Configuration
 @EnableWebSecurity
@@ -45,22 +50,41 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) ->
+                                writeJsonError(response, HttpServletResponse.SC_UNAUTHORIZED, "Authentication required")
+                        )
+                        .accessDeniedHandler((request, response, accessDeniedException) ->
+                                writeJsonError(response, HttpServletResponse.SC_FORBIDDEN, "Access denied")
+                        )
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/api/syllabus/**").permitAll()
+                        .requestMatchers("/ws/**", "/ws").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/lectures/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/lectures/*/reviews").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/lectures/*/rating-summary").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/lectures/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/search").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/*/followers").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/*/following").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/*/reviews").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/*/logs").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/users/me").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/users/*/logs").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/me").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/*/follow").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/*/follow").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/users/*/follow-status").authenticated()
+                        .requestMatchers("/api/chat/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
@@ -68,6 +92,21 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    private static void writeJsonError(HttpServletResponse response, int status, String message) throws java.io.IOException {
+        response.setStatus(status);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.getWriter().write(
+                String.format(
+                        "{\"timestamp\":\"%s\",\"status\":%d,\"error\":\"%s\",\"message\":\"%s\"}",
+                        Instant.now(),
+                        status,
+                        status == 401 ? "Unauthorized" : "Forbidden",
+                        message.replace("\"", "\\\"")
+                )
+        );
     }
 
     @Bean

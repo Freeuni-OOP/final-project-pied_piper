@@ -1,4 +1,27 @@
-// Browse page listing lectures from the university syllabus with pagination and filters.
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  listFaculties,
+  listSemesters,
+  listSubjects,
+  getSubjectSyllabus,
+  Faculty,
+  Semester,
+  Subject,
+  SubjectSyllabus,
+} from '../../../api/lectureApi';
+import BackButton from '../../../components/BackButton';
+
+export default function LectureBrowsePage() {
+  const [faculties, setFaculties] = useState<Faculty[]>([]);
+  const [selectedFaculty, setSelectedFaculty] = useState<number | null>(null);
+  const [semesters, setSemesters] = useState<Semester[]>([]);
+  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [selectedSubject, setSelectedSubject] = useState<SubjectSyllabus | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const load = async () => {
       setError(null);
@@ -15,7 +38,6 @@
     load();
   }, []);
 
-  // Load semesters when faculty is selected
   useEffect(() => {
     if (!selectedFaculty) return;
 
@@ -34,7 +56,6 @@
     load();
   }, [selectedFaculty]);
 
-  // Load subjects when semester is selected
   useEffect(() => {
     if (!selectedSemester) return;
 
@@ -51,22 +72,19 @@
     load();
   }, [selectedSemester]);
 
-  // Load subject syllabus when subject is selected
   useEffect(() => {
-    if (!selectedSubject && subjects.length > 0) return;
+    if (!selectedSubject?.id) return;
 
-    if (selectedSubject?.id) {
-      const load = async () => {
-        setError(null);
-        try {
-          const data = await getSubjectSyllabus(selectedSubject.id);
-          setSelectedSubject(data);
-        } catch (err: any) {
-          setError(err?.message ?? 'Unable to load syllabus.');
-        }
-      };
-      load();
-    }
+    const load = async () => {
+      setError(null);
+      try {
+        const data = await getSubjectSyllabus(selectedSubject.id);
+        setSelectedSubject(data);
+      } catch (err: any) {
+        setError(err?.message ?? 'Unable to load syllabus.');
+      }
+    };
+    load();
   }, [selectedSubject?.id]);
 
   const handleSubjectClick = (subject: Subject) => {
@@ -75,6 +93,7 @@
 
   return (
     <div className="max-w-6xl mx-auto p-6">
+      <BackButton to="/" />
       <h1 className="text-3xl font-bold mb-6 text-gray-900">Browse Lectures</h1>
 
       {error && (
@@ -88,7 +107,6 @@
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Faculty Selection */}
         <div className="lg:col-span-1">
           <h3 className="text-lg font-semibold mb-3 text-gray-900">Faculties</h3>
           <div className="space-y-2">
@@ -108,7 +126,6 @@
           </div>
         </div>
 
-        {/* Semesters & Subjects */}
         <div className="lg:col-span-3">
           {selectedFaculty && (
             <>
@@ -125,7 +142,7 @@
                           : 'bg-white border-gray-200 hover:bg-gray-50'
                       }`}
                     >
-                      {semester.name}
+                      {semester.number || semester.name}
                     </button>
                   ))}
                 </div>
@@ -154,7 +171,9 @@
 
               {selectedSubject && selectedSubject.lectures && selectedSubject.lectures.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-3 text-gray-900">{selectedSubject.name} - Lectures</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900">
+                    {selectedSubject.name} - Lectures
+                  </h3>
                   <div className="space-y-2">
                     {selectedSubject.lectures.map((lecture) => (
                       <Link
@@ -180,4 +199,3 @@
     </div>
   );
 }
-

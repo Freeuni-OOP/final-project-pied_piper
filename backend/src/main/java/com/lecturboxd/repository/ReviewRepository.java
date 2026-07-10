@@ -22,4 +22,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Object[] getRatingSummaryByLectureId(@Param("lectureId") Long lectureId);
 
     long countByUserId(UUID userId);
+
+    void deleteByUserId(UUID userId);
 }

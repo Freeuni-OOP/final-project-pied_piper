@@ -17,4 +17,6 @@ public interface LectureLogRepository extends JpaRepository<LectureLog, Long> {
     long countByUserId(UUID userId);
 
     boolean existsByUserIdAndLectureId(UUID userId, Long lectureId);
+
+    void deleteByUserId(UUID userId);
 }

@@ -59,6 +59,7 @@ public class LecturboxdUserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return verified;
+        // Account access is gated at login/verify; do not block JWT requests via isEnabled
+        return true;
     }
 }
