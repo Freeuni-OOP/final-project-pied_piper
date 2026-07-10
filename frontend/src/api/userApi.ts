@@ -1,3 +1,4 @@
+// HTTP client functions for user profiles, follow/unfollow, and follower listings.
 import client from './axiosClient';
 
 export interface PublicUser {
@@ -6,9 +7,24 @@ export interface PublicUser {
 	email: string;
 }
 
+export interface UserProfile {
+	id: string;
+	name: string;
+	email: string;
+	reviewCount?: number;
+	lectureLogsCount?: number;
+	followersCount?: number;
+	followingCount?: number;
+}
+
 export interface FollowStatus {
 	userId: string;
 	isFollowing: boolean;
+}
+
+export async function getUserProfile(userId: string): Promise<UserProfile> {
+	const res = await client.get(`/api/users/${userId}`);
+	return res.data;
 }
 
 export async function followUser(userId: string): Promise<FollowStatus> {
@@ -35,3 +51,5 @@ export async function getFollowing(userId: string): Promise<PublicUser[]> {
 	const res = await client.get(`/api/users/${userId}/following`);
 	return res.data;
 }
+
+
