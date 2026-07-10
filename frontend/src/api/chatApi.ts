@@ -41,6 +41,13 @@ export async function markMessageAsRead(messageId: number): Promise<void> {
 }
 
 /**
+ * Mark all messages in a conversation as read for the current user
+ */
+export async function markConversationAsRead(conversationId: number): Promise<void> {
+  await client.put(`/api/chat/conversations/${conversationId}/read`);
+}
+
+/**
  * Send a message to a user (REST endpoint for initial send)
  * The WebSocket will handle real-time delivery
  */

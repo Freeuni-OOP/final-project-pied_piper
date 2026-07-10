@@ -35,7 +35,7 @@ export default function UserNetworkPage({ mode }: { mode: Mode }) {
 
   return (
     <div style={{ maxWidth: 840, margin: '0 auto' }}>
-      <BackButton to={userId ? `/profile/${userId}` : '/profile'} />
+      <BackButton fallbackTo={userId ? `/profile/${userId}` : '/profile'} />
       <h1 style={{ marginBottom: 8 }}>{mode === 'followers' ? 'Followers' : 'Following'}</h1>
       {profile && <p style={{ color: '#6b7280', marginBottom: 24 }}>{profile.name}</p>}
       {loading && <p>Loading…</p>}

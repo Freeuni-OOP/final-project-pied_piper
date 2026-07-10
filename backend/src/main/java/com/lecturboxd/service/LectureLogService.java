@@ -74,6 +74,26 @@ public class LectureLogService {
                 .map(feedMapper::toResponse);
     }
 
+    @Transactional(readOnly = true)
+    public LectureLogResponse getMyLog(UUID userId, Long lectureId) {
+        if (!lectureRepository.existsById(lectureId)) {
+            throw new ResourceNotFoundException("Lecture not found with id " + lectureId);
+        }
+        LectureLog lectureLog = lectureLogRepository.findByUserIdAndLectureId(userId, lectureId)
+                .orElseThrow(() -> new ResourceNotFoundException("Lecture is not logged"));
+        return feedMapper.toResponse(lectureLog);
+    }
+
+    @Transactional
+    public void deleteMyLog(UUID userId, Long lectureId) {
+        LectureLog lectureLog = lectureLogRepository.findByUserIdAndLectureId(userId, lectureId)
+                .orElseThrow(() -> new ResourceNotFoundException("Lecture is not logged"));
+        if (!lectureLog.getUser().getId().equals(userId)) {
+            throw new ForbiddenException("You do not have permission to delete this lecture log");
+        }
+        lectureLogRepository.delete(lectureLog);
+    }
+
     @Transactional
     public void deleteLog(UUID userId, Long logId) {
         LectureLog lectureLog = lectureLogRepository.findById(logId)

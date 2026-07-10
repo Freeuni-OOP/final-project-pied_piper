@@ -71,7 +71,7 @@ export default function ReviewPage() {
 
   return (
     <div style={{ maxWidth: 900, margin: '0 auto' }}>
-      <BackButton to={`/lectures/${lectureId}`} label="← Back to lecture" />
+      <BackButton fallbackTo={lectureId ? `/lectures/${lectureId}` : '/lectures'} />
       <h2>Write a review</h2>
       {loading && <p>Loading reviews…</p>}
       {error && <div style={{ color: '#b91c1c' }}>{error}</div>}

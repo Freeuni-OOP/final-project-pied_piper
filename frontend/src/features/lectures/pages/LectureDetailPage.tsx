@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getLecture, Lecture } from '../../../api/lectureApi';
 import { getRatingSummary, getReviewsForLecture, Review, RatingSummary } from '../../../api/reviewApi';
+import { getMyLectureLog, logLecture, unlogLecture } from '../../../api/lectureLogApi';
 import useAuth from '../../../auth/useAuth';
 import BackButton from '../../../components/BackButton';
 
@@ -11,6 +12,9 @@ export default function LectureDetailPage() {
   const [lecture, setLecture] = useState<Lecture | null>(null);
   const [ratingSummary, setRatingSummary] = useState<RatingSummary | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [logged, setLogged] = useState(false);
+  const [logBusy, setLogBusy] = useState(false);
+  const [logError, setLogError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,6 +38,13 @@ export default function LectureDetailPage() {
         setLecture(data);
         setRatingSummary(rating);
         setReviews(reviewPage.content ?? []);
+
+        if (auth.token) {
+          const myLog = await getMyLectureLog(id);
+          setLogged(!!myLog);
+        } else {
+          setLogged(false);
+        }
       } catch (err: any) {
         setError(err?.message ?? err?.data?.message ?? 'Unable to load lecture.');
       } finally {
@@ -42,7 +53,26 @@ export default function LectureDetailPage() {
     };
 
     load();
-  }, [lectureId]);
+  }, [lectureId, auth.token]);
+
+  const toggleLog = async () => {
+    if (!lecture || logBusy) return;
+    setLogBusy(true);
+    setLogError(null);
+    try {
+      if (logged) {
+        await unlogLecture(lecture.id);
+        setLogged(false);
+      } else {
+        await logLecture(lecture.id);
+        setLogged(true);
+      }
+    } catch (err: any) {
+      setLogError(err?.message ?? err?.data?.message ?? 'Unable to update lecture log.');
+    } finally {
+      setLogBusy(false);
+    }
+  };
 
   if (loading) return <p>Loading lecture details…</p>;
   if (error) return <div style={{ color: '#b91c1c' }}>{error}</div>;
@@ -53,7 +83,7 @@ export default function LectureDetailPage() {
 
   return (
     <div style={{ maxWidth: 840, margin: '0 auto' }}>
-      <BackButton to="/lectures" label="← Back to syllabus" />
+      <BackButton fallbackTo="/lectures" />
       <header style={{ marginBottom: 24 }}>
         <h1 style={{ marginBottom: 8 }}>{lecture.title}</h1>
         <p style={{ color: '#4b5563', marginBottom: 16 }}>
@@ -86,7 +116,7 @@ export default function LectureDetailPage() {
         </div>
       </header>
 
-      <div style={{ display: 'flex', gap: 12, marginBottom: 32, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 12, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
         {auth.token ? (
           <Link
             to={`/lectures/${lecture.id}/reviews`}
@@ -108,25 +138,31 @@ export default function LectureDetailPage() {
           </Link>
         )}
         {auth.token && (
-          <Link
-            to={`/lectures/${lecture.id}/log`}
+          <button
+            type="button"
+            onClick={toggleLog}
+            disabled={logBusy}
+            aria-pressed={logged}
             style={{
-              display: 'inline-block',
               padding: '0.75rem 1.25rem',
-              background: '#fff',
-              color: '#2563eb',
+              background: logged ? '#2563eb' : '#fff',
+              color: logged ? '#fff' : '#2563eb',
               border: '1px solid #2563eb',
               borderRadius: 8,
-              textDecoration: 'none',
               fontWeight: 600,
+              cursor: logBusy ? 'not-allowed' : 'pointer',
+              opacity: logBusy ? 0.7 : 1,
             }}
           >
-            Log this lecture
-          </Link>
+            {logBusy ? 'Saving…' : logged ? '✓ Logged' : 'Log lecture'}
+          </button>
         )}
       </div>
+      {logError && (
+        <p style={{ color: '#b91c1c', marginBottom: 24 }}>{logError}</p>
+      )}
 
-      <section>
+      <section style={{ marginTop: 20 }}>
         <h2 style={{ marginBottom: 16 }}>Reviews</h2>
         {reviews.length === 0 ? (
           <p style={{ color: '#6b7280' }}>No reviews yet. Be the first to review this lecture.</p>

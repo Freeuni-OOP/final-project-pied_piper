@@ -87,7 +87,7 @@ public class ChatService {
     /**
      * Get paginated message history for a conversation
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public Page<ChatMessageResponse> getChatHistory(UUID userId, Long conversationId, Pageable pageable) {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Conversation not found with id " + conversationId));
@@ -96,6 +96,9 @@ public class ChatService {
         if (!conversation.getUser1().getId().equals(userId) && !conversation.getUser2().getId().equals(userId)) {
             throw new ResourceNotFoundException("User is not part of this conversation");
         }
+
+        // Opening the thread means the user has seen the messages.
+        chatMessageRepository.markConversationAsRead(conversationId, userId);
 
         return chatMessageRepository.findByConversationIdOrderBySentAtDesc(conversationId, pageable)
                 .map(ChatMapper::toMessageResponse);
@@ -146,7 +149,8 @@ public class ChatService {
 
         return conversations.stream()
                 .map(conversation -> {
-                    long unreadCount = chatMessageRepository.countByReceiverIdAndReadFalse(userId);
+                    long unreadCount = chatMessageRepository
+                            .countByConversationIdAndReceiverIdAndReadFalse(conversation.getId(), userId);
                     return ChatMapper.toConversationResponse(conversation, userId, unreadCount);
                 })
                 .toList();
@@ -161,7 +165,8 @@ public class ChatService {
             throw new ResourceNotFoundException("Cannot start a conversation with yourself");
         }
         Conversation conversation = getOrCreateConversation(currentUserId, receiverId);
-        long unreadCount = chatMessageRepository.countByReceiverIdAndReadFalse(currentUserId);
+        long unreadCount = chatMessageRepository
+                .countByConversationIdAndReceiverIdAndReadFalse(conversation.getId(), currentUserId);
         return ChatMapper.toConversationResponse(conversation, currentUserId, unreadCount);
     }
 

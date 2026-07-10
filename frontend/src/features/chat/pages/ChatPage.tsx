@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, CSSProperties } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useChat } from '../hooks/useChat';
 import ChatWindow from '../components/ChatWindow';
@@ -12,6 +12,13 @@ function initials(name: string) {
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
+
+const panelStyle: CSSProperties = {
+  background: '#fff',
+  border: '1px solid #e5e7eb',
+  borderRadius: 12,
+  overflow: 'hidden',
+};
 
 export default function ChatPage() {
   const auth = useAuth();
@@ -58,43 +65,60 @@ export default function ChatPage() {
     await chat.sendMessage(otherUserId, content);
   };
 
-  const handleBackToList = () => {
-    setMobileShowThread(false);
-  };
-
   return (
-    <div className="mx-auto max-w-6xl px-3 pb-6 sm:px-4">
-      <div className="mb-3">
-        <BackButton to="/" />
+    <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <BackButton />
+
+      <div style={{ ...panelStyle, marginBottom: 16, padding: 24 }}>
+        <h1 style={{ marginBottom: 8 }}>Chats</h1>
+        <p style={{ color: '#6b7280', margin: 0 }}>
+          Search people you’ve already messaged, then open a conversation.
+        </p>
       </div>
 
-      <div className="flex h-[min(78vh,720px)] overflow-hidden rounded-2xl border border-[#e8e8e8] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
-        {/* Conversation list */}
+      <div
+        style={{
+          ...panelStyle,
+          display: 'flex',
+          height: 'min(78vh, 720px)',
+        }}
+      >
         <aside
-          className={`w-full flex-col border-r border-[#e8e8e8] bg-white md:flex md:w-[340px] md:shrink-0 ${
-            mobileShowThread ? 'hidden' : 'flex'
-          }`}
+          style={{
+            width: '100%',
+            maxWidth: 360,
+            borderRight: '1px solid #e5e7eb',
+            display: mobileShowThread ? 'none' : 'flex',
+            flexDirection: 'column',
+            background: '#fff',
+          }}
+          className="chat-aside"
         >
-          <div className="flex items-center justify-between border-b border-[#e8e8e8] bg-gradient-to-r from-[#FFF8E1] to-white px-5 py-4">
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-[#1a1a1a]">Chats</h2>
-              <p className="text-xs text-[#8a8a8a]">
-                {chat.wsConnected ? (
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-[#7CB342]" />
-                    Live
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-[#c4c4c4]" />
-                    Connecting…
-                  </span>
-                )}
-              </p>
-            </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '16px 16px 8px',
+              borderBottom: '1px solid #e5e7eb',
+            }}
+          >
+            <strong style={{ fontSize: 18, color: '#111827' }}>Conversations</strong>
+            <span
+              style={{
+                background: '#eff6ff',
+                color: '#1d4ed8',
+                borderRadius: 8,
+                padding: '4px 10px',
+                fontSize: 12,
+                fontWeight: 700,
+              }}
+            >
+              {chat.conversations.length}
+            </span>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto">
+          <div style={{ minHeight: 0, flex: 1 }}>
             <ConversationList
               conversations={chat.conversations}
               activeConversationId={chat.activeConversationId}
@@ -104,40 +128,75 @@ export default function ChatPage() {
           </div>
         </aside>
 
-        {/* Active thread */}
         <section
-          className={`min-w-0 flex-1 flex-col bg-[#FAFAFA] ${
-            mobileShowThread ? 'flex' : 'hidden md:flex'
-          }`}
+          style={{
+            minWidth: 0,
+            flex: 1,
+            display: mobileShowThread ? 'flex' : undefined,
+            flexDirection: 'column',
+            background: '#f8fafc',
+          }}
+          className="chat-thread"
         >
           {chat.activeConversationId ? (
             <>
-              <header className="flex items-center gap-3 border-b border-[#e8e8e8] bg-white px-3 py-3 sm:px-5">
+              <header
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                  padding: '12px 16px',
+                  borderBottom: '1px solid #e5e7eb',
+                  background: '#fff',
+                }}
+              >
                 <button
                   type="button"
-                  onClick={handleBackToList}
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-[#558B2F] hover:bg-[#E8F5E9] md:hidden cursor-pointer"
+                  onClick={() => setMobileShowThread(false)}
+                  style={{
+                    display: 'none',
+                    width: 36,
+                    height: 36,
+                    borderRadius: 8,
+                    border: '1px solid #e5e7eb',
+                    background: '#fff',
+                    color: '#2563eb',
+                    cursor: 'pointer',
+                    fontWeight: 700,
+                  }}
+                  className="chat-mobile-back"
                   aria-label="Back to chats"
                 >
                   ←
                 </button>
 
                 <div
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#7CB342] text-sm font-bold text-white"
-                  aria-hidden
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: '50%',
+                    background: '#2563eb',
+                    color: '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 700,
+                    fontSize: 14,
+                    flexShrink: 0,
+                  }}
                 >
                   {initials(peerName)}
                 </div>
 
-                <div className="min-w-0 flex-1">
-                  <h3 className="truncate text-[16px] font-bold text-[#1a1a1a]">{peerName}</h3>
-                  <p className="text-xs text-[#558B2F]">
-                    {chat.wsConnected ? 'Active now' : 'Saved messages'}
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <h3 style={{ margin: 0, fontSize: 16, color: '#111827' }}>{peerName}</h3>
+                  <p style={{ margin: 0, fontSize: 12, color: '#6b7280' }}>
+                    {chat.wsConnected ? 'Active now' : 'Messages saved'}
                   </p>
                 </div>
               </header>
 
-              <div className="min-h-0 flex-1">
+              <div style={{ minHeight: 0, flex: 1 }}>
                 <ChatWindow
                   messages={chat.messages}
                   loading={chat.loading}
@@ -151,23 +210,57 @@ export default function ChatPage() {
               </div>
             </>
           ) : (
-            <div className="flex flex-1 flex-col items-center justify-center gap-3 bg-[#FAFAFA] px-8 text-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#FFF3C4] text-3xl font-bold text-[#1a1a1a]">
+            <div
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                padding: 32,
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  width: 72,
+                  height: 72,
+                  borderRadius: '50%',
+                  background: '#eff6ff',
+                  color: '#2563eb',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 28,
+                  fontWeight: 700,
+                }}
+              >
                 ✉
               </div>
-              <p className="text-lg font-bold text-[#1a1a1a]">Your messages</p>
-              <p className="max-w-sm text-sm text-[#8a8a8a]">
+              <p style={{ margin: 0, fontSize: 18, fontWeight: 700, color: '#111827' }}>
+                Your messages
+              </p>
+              <p style={{ margin: 0, maxWidth: 320, color: '#6b7280', fontSize: 14 }}>
                 {chat.loading
                   ? 'Loading conversations…'
                   : chat.conversations.length === 0
                     ? 'No conversations yet. Message someone from their profile to get started.'
-                    : 'Select a chat from the left to start messaging.'}
+                    : 'Select a person on the left to open the chat.'}
               </p>
             </div>
           )}
 
           {(chat.wsError || chat.error) && (
-            <div className="border-t border-[#e8e8e8] bg-[#FFF8E1] px-4 py-2 text-sm text-[#5c4a00]">
+            <div
+              style={{
+                borderTop: '1px solid #e5e7eb',
+                background: '#fffbeb',
+                color: '#92400e',
+                padding: '10px 16px',
+                fontSize: 13,
+              }}
+            >
               {chat.wsError
                 ? `Live updates unavailable: ${chat.wsError}`
                 : chat.error}
@@ -175,6 +268,19 @@ export default function ChatPage() {
           )}
         </section>
       </div>
+
+      <style>{`
+        @media (min-width: 768px) {
+          .chat-aside { display: flex !important; }
+          .chat-thread { display: flex !important; }
+          .chat-mobile-back { display: none !important; }
+        }
+        @media (max-width: 767px) {
+          .chat-aside { max-width: 100% !important; }
+          .chat-thread { display: ${mobileShowThread ? 'flex' : 'none'} !important; }
+          .chat-mobile-back { display: inline-flex !important; align-items: center; justify-content: center; }
+        }
+      `}</style>
     </div>
   );
 }

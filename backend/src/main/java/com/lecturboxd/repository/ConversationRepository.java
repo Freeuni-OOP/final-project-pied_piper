@@ -32,7 +32,7 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
      */
     List<Conversation> findByUser1IdOrUser2Id(UUID user1Id, UUID user2Id);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("DELETE FROM Conversation c WHERE c.user1.id = :userId OR c.user2.id = :userId")
     void deleteAllForUser(@Param("userId") UUID userId);
 }

@@ -7,5 +7,7 @@ export interface FeedItem {
   lectureTitle: string;
   reviewId?: number | null;
   lectureLogId?: number | null;
+  rating?: number | null;
+  comment?: string | null;
   createdAt: string;
 }

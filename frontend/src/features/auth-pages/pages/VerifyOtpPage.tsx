@@ -47,7 +47,7 @@ export default function VerifyOtpPage() {
 
   return (
     <div style={{ maxWidth: 520, margin: '0 auto' }}>
-      <BackButton to="/register" label="← Back to register" />
+      <BackButton fallbackTo="/register" label="← Back" />
       <h2>Verify OTP</h2>
       {email && (
         <p style={{ color: '#6b7280', marginBottom: 16 }}>

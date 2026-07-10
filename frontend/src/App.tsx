@@ -12,14 +12,14 @@ function App() {
           <Link to="/" style={{ marginRight: 16, fontWeight: 700, textDecoration: 'none', color: '#111' }}>
             LecturBoxd
           </Link>
-          <Link to="/lectures" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
-            Syllabus
-          </Link>
-          <Link to="/search" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
-            Search
-          </Link>
           {auth.token && (
             <>
+              <Link to="/lectures" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
+                Syllabus
+              </Link>
+              <Link to="/search" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
+                Search
+              </Link>
               <Link to="/feed" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
                 Feed
               </Link>

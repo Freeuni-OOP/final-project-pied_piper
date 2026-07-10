@@ -102,6 +102,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
 
+        // Order matters because of FKs (activities -> reviews/logs, messages -> conversations, * -> users).
         activityRepository.deleteByUserId(userId);
         reviewRepository.deleteByUserId(userId);
         lectureLogRepository.deleteByUserId(userId);
@@ -110,5 +111,6 @@ public class UserService {
         conversationRepository.deleteAllForUser(userId);
         verificationCodeRepository.deleteAllByEmail(user.getEmail().toLowerCase(Locale.ROOT));
         userRepository.delete(user);
+        userRepository.flush();
     }
 }

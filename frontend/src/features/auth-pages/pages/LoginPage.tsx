@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import * as authService from '../../../auth/authService';
 import useAuth from '../../../auth/useAuth';
 import BackButton from '../../../components/BackButton';
@@ -11,6 +11,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  if (auth.token) {
+    return <Navigate to="/" replace />;
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <div style={{ maxWidth: 480, margin: '0 auto' }}>
-      <BackButton to="/" />
+      <BackButton />
       <h2>Login</h2>
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 12 }}>
         <label>
@@ -50,7 +54,6 @@ export default function LoginPage() {
         <span style={{ margin: '0 8px' }}>/</span>
         <Link to="/verify">Verify OTP</Link>
       </div>
-      {auth.token && <p style={{ marginTop: 16 }}>Already logged in as {auth.user?.email}</p>}
     </div>
   );
 }

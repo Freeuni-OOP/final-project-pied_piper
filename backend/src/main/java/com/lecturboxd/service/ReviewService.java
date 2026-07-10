@@ -115,20 +115,11 @@ public class ReviewService {
             throw new ResourceNotFoundException("Lecture not found with id " + lectureId);
         }
 
-        Object[] result = reviewRepository.getRatingSummaryByLectureId(lectureId);
-        Double averageRating = 0.0;
-        Long totalReviews = 0L;
-
-        if (result != null && result.length >= 2) {
-            if (result[0] != null) {
-                averageRating = ((Number) result[0]).doubleValue();
-            }
-            if (result[1] != null) {
-                totalReviews = ((Number) result[1]).longValue();
-            }
-        }
-
-        if (totalReviews == 0L) {
+        long totalReviews = reviewRepository.countByLectureId(lectureId);
+        Double averageRating = totalReviews == 0
+                ? 0.0
+                : reviewRepository.findAverageRatingByLectureId(lectureId);
+        if (averageRating == null) {
             averageRating = 0.0;
         }
 

@@ -1,17 +1,26 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface BackButtonProps {
-  to?: string;
+  /** Used only when there is no previous in-app page to return to. */
+  fallbackTo?: string;
   label?: string;
 }
 
-export default function BackButton({ to, label = '← Back' }: BackButtonProps) {
+export default function BackButton({ fallbackTo = '/', label = '← Back' }: BackButtonProps) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <button
       type="button"
-      onClick={() => (to ? navigate(to) : navigate(-1))}
+      onClick={() => {
+        // React Router sets key to "default" on the first entry in the stack.
+        if (location.key !== 'default') {
+          navigate(-1);
+        } else {
+          navigate(fallbackTo);
+        }
+      }}
       style={{
         marginBottom: 16,
         padding: '0.45rem 0.9rem',

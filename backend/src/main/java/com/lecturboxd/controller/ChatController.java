@@ -91,6 +91,15 @@ public class ChatController {
         return chatService.getChatHistory(principal.getId(), conversationId, pageable);
     }
 
+    @PutMapping("/conversations/{conversationId}/read")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void markConversationAsRead(
+            @AuthenticationPrincipal LecturboxdUserPrincipal principal,
+            @PathVariable Long conversationId
+    ) {
+        chatService.markMessagesAsRead(principal.getId(), conversationId);
+    }
+
     @PutMapping("/{messageId}/read")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void markMessageAsRead(

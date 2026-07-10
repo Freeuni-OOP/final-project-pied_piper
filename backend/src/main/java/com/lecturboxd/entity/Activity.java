@@ -38,8 +38,9 @@ public class Activity {
     @JoinColumn(name = "lecture_id", nullable = false)
     private Lecture lecture;
 
-    @Column(name = "review_id")
-    private Long reviewId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
 
     @Column(name = "lecture_log_id")
     private Long lectureLogId;
@@ -81,11 +82,15 @@ public class Activity {
     }
 
     public Long getReviewId() {
-        return reviewId;
+        return review != null ? review.getId() : null;
     }
 
-    public void setReviewId(Long reviewId) {
-        this.reviewId = reviewId;
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 
     public Long getLectureLogId() {

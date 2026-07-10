@@ -3,6 +3,7 @@ import { ChatMessage, Conversation } from '../types/chat';
 import {
   getChatHistory,
   getConversations,
+  markConversationAsRead,
   markMessageAsRead,
   sendMessage as sendMessageApi,
 } from '../api/chatApi';
@@ -37,15 +38,35 @@ export function useChat(options?: UseChatOptions) {
 
   const onMessage = useCallback(
     (incomingMessage: ChatMessage) => {
-      // Refresh sidebar so new/updated conversations appear
-      getConversations()
-        .then((data) => setConversations(data ?? []))
-        .catch(() => undefined);
+      const openId = activeConversationIdRef.current;
 
-      // Merge into the open thread (ref avoids a stale null from the first render).
-      if (activeConversationIdRef.current != null) {
-        appendMessage(incomingMessage);
-      }
+      setConversations((prev) => {
+        const open = openId != null ? prev.find((c) => c.id === openId) : undefined;
+        const belongsToOpen =
+          open != null &&
+          (incomingMessage.sender?.id === open.otherUser?.id ||
+            incomingMessage.receiver?.id === open.otherUser?.id);
+
+        if (belongsToOpen && openId != null) {
+          queueMicrotask(() => {
+            appendMessage(incomingMessage);
+            markConversationAsRead(openId).catch(() => undefined);
+          });
+          return prev.map((c) => (c.id === openId ? { ...c, unreadCount: 0 } : c));
+        }
+        return prev;
+      });
+
+      getConversations()
+        .then((data) => {
+          const list = data ?? [];
+          if (openId != null) {
+            setConversations(list.map((c) => (c.id === openId ? { ...c, unreadCount: 0 } : c)));
+          } else {
+            setConversations(list);
+          }
+        })
+        .catch(() => undefined);
     },
     [appendMessage]
   );
@@ -79,10 +100,19 @@ export function useChat(options?: UseChatOptions) {
     setLoading(true);
     setError(null);
     setActiveConversationId(conversationId);
+    // Clear badge immediately in the UI.
+    setConversations((prev) =>
+      prev.map((c) => (c.id === conversationId ? { ...c, unreadCount: 0 } : c))
+    );
     try {
       const response = await getChatHistory(conversationId, page, size);
       const items = response?.content ?? [];
       setMessages([...items].reverse());
+      // Backend also marks as read on history load; keep an explicit call for older servers.
+      await markConversationAsRead(conversationId).catch(() => undefined);
+      setConversations((prev) =>
+        prev.map((c) => (c.id === conversationId ? { ...c, unreadCount: 0 } : c))
+      );
     } catch (err: any) {
       const errorMsg = err?.message ?? err?.data?.message ?? 'Failed to load chat history';
       setError(errorMsg);

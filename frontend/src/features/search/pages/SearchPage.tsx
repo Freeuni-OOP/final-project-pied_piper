@@ -44,7 +44,7 @@ export default function SearchPage() {
 
   return (
     <div style={{ maxWidth: 840, margin: '0 auto' }}>
-      <BackButton to="/" />
+      <BackButton />
       <h1 style={{ marginBottom: 16 }}>Search</h1>
 
       <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>

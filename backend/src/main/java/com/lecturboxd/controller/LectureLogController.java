@@ -39,6 +39,23 @@ public class LectureLogController {
         return lectureLogService.createLog(principal.getId(), lectureId, body);
     }
 
+    @GetMapping("/api/lectures/{lectureId}/logs/me")
+    public LectureLogResponse getMyLog(
+            @AuthenticationPrincipal LecturboxdUserPrincipal principal,
+            @PathVariable Long lectureId
+    ) {
+        return lectureLogService.getMyLog(principal.getId(), lectureId);
+    }
+
+    @DeleteMapping("/api/lectures/{lectureId}/logs/me")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMyLog(
+            @AuthenticationPrincipal LecturboxdUserPrincipal principal,
+            @PathVariable Long lectureId
+    ) {
+        lectureLogService.deleteMyLog(principal.getId(), lectureId);
+    }
+
     @GetMapping("/api/users/{userId}/logs")
     public Page<LectureLogResponse> getLogsByUser(@PathVariable UUID userId, Pageable pageable) {
         return lectureLogService.getLogsByUser(userId, pageable);

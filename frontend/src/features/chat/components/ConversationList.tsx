@@ -1,3 +1,4 @@
+import { useMemo, useState, CSSProperties } from 'react';
 import { Conversation } from '../../../types/chat';
 
 interface ConversationListProps {
@@ -18,24 +19,31 @@ function formatListTime(iso: string) {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return '';
   const now = new Date();
-  const sameDay =
-    d.getFullYear() === now.getFullYear() &&
-    d.getMonth() === now.getMonth() &&
-    d.getDate() === now.getDate();
-  if (sameDay) {
-    return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  }
-  const yesterday = new Date(now);
-  yesterday.setDate(now.getDate() - 1);
-  if (
-    d.getFullYear() === yesterday.getFullYear() &&
-    d.getMonth() === yesterday.getMonth() &&
-    d.getDate() === yesterday.getDate()
-  ) {
-    return 'Yesterday';
-  }
+  const diffMs = now.getTime() - d.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+  if (diffMin < 1) return 'now';
+  if (diffMin < 60) return `${diffMin}m`;
+  const diffHr = Math.floor(diffMin / 60);
+  if (diffHr < 24) return `${diffHr}h`;
+  const diffDay = Math.floor(diffHr / 24);
+  if (diffDay < 7) return `${diffDay}d`;
   return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
 }
+
+const rowStyle = (active: boolean): CSSProperties => ({
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  gap: 12,
+  padding: 12,
+  textAlign: 'left',
+  cursor: 'pointer',
+  border: '1px solid #e5e7eb',
+  borderRadius: 10,
+  background: active ? '#eff6ff' : '#f8fafc',
+  color: '#111827',
+  font: 'inherit',
+});
 
 export default function ConversationList({
   conversations,
@@ -43,86 +51,127 @@ export default function ConversationList({
   onSelectConversation,
   loading,
 }: ConversationListProps) {
-  if (loading) {
-    return (
-      <div className="px-5 py-8 text-sm text-[#5c5c5c]">Loading conversations…</div>
-    );
-  }
+  const [query, setQuery] = useState('');
 
-  if (conversations.length === 0) {
-    return (
-      <div className="px-5 py-10 text-center text-sm text-[#5c5c5c]">
-        No conversations yet.
-        <p className="mt-2 text-xs text-[#8a8a8a]">
-          Message someone from their profile to start chatting.
-        </p>
-      </div>
-    );
-  }
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return conversations;
+    return conversations.filter((c) => (c.otherUser?.name ?? '').toLowerCase().includes(q));
+  }, [conversations, query]);
 
   return (
-    <ul className="py-1">
-      {conversations.map((conv) => {
-        const active = activeConversationId === conv.id;
-        const unread = conv.unreadCount > 0;
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+      <div style={{ padding: 12 }}>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search chats"
+          aria-label="Search chats"
+          style={{
+            width: '100%',
+            padding: '10px 12px',
+            borderRadius: 8,
+            border: '1px solid #e5e7eb',
+            background: '#fff',
+            color: '#111827',
+            fontSize: 14,
+            outline: 'none',
+            boxSizing: 'border-box',
+          }}
+        />
+      </div>
 
-        return (
-          <li key={conv.id}>
-            <button
-              type="button"
-              onClick={() => onSelectConversation(conv.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors cursor-pointer ${
-                active
-                  ? 'bg-[#E8F5E9]'
-                  : 'bg-transparent hover:bg-[#FFF8E1]'
-              }`}
-            >
-              <div
-                className={`relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                  active
-                    ? 'bg-[#7CB342] text-white'
-                    : 'bg-[#F5B800] text-[#1a1a1a]'
-                }`}
-                aria-hidden
+      <div style={{ minHeight: 0, flex: 1, overflowY: 'auto', padding: '0 12px 12px' }}>
+        {loading && <p style={{ color: '#6b7280', fontSize: 14 }}>Loading conversations…</p>}
+
+        {!loading && conversations.length === 0 && (
+          <p style={{ color: '#6b7280', fontSize: 14, textAlign: 'center', paddingTop: 24 }}>
+            No conversations yet.
+          </p>
+        )}
+
+        {!loading && conversations.length > 0 && filtered.length === 0 && (
+          <p style={{ color: '#6b7280', fontSize: 14, textAlign: 'center', paddingTop: 24 }}>
+            No chats match “{query.trim()}”.
+          </p>
+        )}
+
+        <div style={{ display: 'grid', gap: 8 }}>
+          {filtered.map((conv) => {
+            const active = activeConversationId === conv.id;
+            const unread = conv.unreadCount > 0;
+
+            return (
+              <button
+                key={conv.id}
+                type="button"
+                onClick={() => onSelectConversation(conv.id)}
+                style={rowStyle(active)}
               >
-                {initials(conv.otherUser.name)}
-                {unread && (
-                  <span className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-[#558B2F]" />
-                )}
-              </div>
+                <div
+                  style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: '50%',
+                    background: active ? '#2563eb' : '#dbeafe',
+                    color: active ? '#fff' : '#1d4ed8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 700,
+                    fontSize: 13,
+                    flexShrink: 0,
+                  }}
+                >
+                  {initials(conv.otherUser.name)}
+                </div>
 
-              <div className="min-w-0 flex-1">
-                <div className="flex items-baseline justify-between gap-2">
-                  <p
-                    className={`truncate text-[15px] ${
-                      unread ? 'font-bold text-[#1a1a1a]' : 'font-semibold text-[#2d2d2d]'
-                    }`}
-                  >
-                    {conv.otherUser.name}
-                  </p>
-                  <span className="shrink-0 text-[11px] text-[#8a8a8a]">
-                    {formatListTime(conv.updatedAt)}
-                  </span>
-                </div>
-                <div className="mt-0.5 flex items-center justify-between gap-2">
-                  <p
-                    className={`truncate text-[13px] ${
-                      unread ? 'font-medium text-[#3d3d3d]' : 'text-[#8a8a8a]'
-                    }`}
-                  >
-                    {unread ? 'New message' : 'Tap to open chat'}
-                  </p>
-                  {unread && (
-                    <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-[#558B2F] px-1.5 text-[11px] font-bold text-white">
-                      {conv.unreadCount > 99 ? '99+' : conv.unreadCount}
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+                    <strong
+                      style={{
+                        fontSize: 14,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {conv.otherUser.name}
+                    </strong>
+                    <span style={{ fontSize: 12, color: '#6b7280', flexShrink: 0 }}>
+                      {formatListTime(conv.updatedAt)}
                     </span>
-                  )}
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginTop: 2 }}>
+                    <span style={{ fontSize: 13, color: '#6b7280' }}>
+                      {unread ? 'New message' : 'Open conversation'}
+                    </span>
+                    {unread && (
+                      <span
+                        style={{
+                          minWidth: 20,
+                          height: 20,
+                          borderRadius: 999,
+                          background: '#2563eb',
+                          color: '#fff',
+                          fontSize: 11,
+                          fontWeight: 700,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '0 6px',
+                        }}
+                      >
+                        {conv.unreadCount > 99 ? '99+' : conv.unreadCount}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }

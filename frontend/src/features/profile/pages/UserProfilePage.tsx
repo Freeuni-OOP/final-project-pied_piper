@@ -113,7 +113,7 @@ export default function UserProfilePage() {
 
   return (
     <div style={{ maxWidth: 900, margin: '0 auto' }}>
-      <BackButton to="/" />
+      <BackButton />
       {loading && <p>Loading profile…</p>}
       {error && <div style={{ color: '#b91c1c' }}>{error}</div>}
       {!loading && !error && profile && (

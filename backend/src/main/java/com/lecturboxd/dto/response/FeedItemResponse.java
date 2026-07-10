@@ -15,6 +15,8 @@ public class FeedItemResponse {
     private String lectureTitle;
     private Long reviewId;
     private Long lectureLogId;
+    private Integer rating;
+    private String comment;
     private LocalDateTime createdAt;
 
     public FeedItemResponse() {
@@ -29,6 +31,8 @@ public class FeedItemResponse {
             String lectureTitle,
             Long reviewId,
             Long lectureLogId,
+            Integer rating,
+            String comment,
             LocalDateTime createdAt
     ) {
         this.id = id;
@@ -39,6 +43,8 @@ public class FeedItemResponse {
         this.lectureTitle = lectureTitle;
         this.reviewId = reviewId;
         this.lectureLogId = lectureLogId;
+        this.rating = rating;
+        this.comment = comment;
         this.createdAt = createdAt;
     }
 
@@ -104,6 +110,22 @@ public class FeedItemResponse {
 
     public void setLectureLogId(Long lectureLogId) {
         this.lectureLogId = lectureLogId;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public LocalDateTime getCreatedAt() {

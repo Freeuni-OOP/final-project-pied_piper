@@ -32,7 +32,7 @@ export default function RegisterPage() {
 
   return (
     <div style={{ maxWidth: 520, margin: '0 auto' }}>
-      <BackButton to="/" />
+      <BackButton />
       <h2>Create Account</h2>
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 12 }}>
         <label>

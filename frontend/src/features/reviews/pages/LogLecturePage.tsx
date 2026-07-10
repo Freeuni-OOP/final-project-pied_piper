@@ -43,7 +43,7 @@ export default function LogLecturePage() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <BackButton to={lectureId ? `/lectures/${lectureId}` : '/lectures'} label="← Back to lecture" />
+      <BackButton fallbackTo={lectureId ? `/lectures/${lectureId}` : '/lectures'} />
       <div className="bg-white rounded-lg border border-gray-200 p-8">
         <h1 className="text-2xl font-bold mb-6 text-gray-900">Log Lecture</h1>
 

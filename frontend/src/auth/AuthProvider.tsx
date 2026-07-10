@@ -4,15 +4,11 @@ import { getToken, getUser, setToken, setUser, clearAuth } from './tokenStorage'
 import { AUTH_CLEARED_EVENT } from '../api/axiosClient';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [token, setTokenState] = useState<string | null>(null);
-  const [user, setUserState] = useState<AuthUser | null>(null);
+  // Restore from localStorage synchronously so refresh does not flash/redirect to login.
+  const [token, setTokenState] = useState<string | null>(() => getToken());
+  const [user, setUserState] = useState<AuthUser | null>(() => getUser());
 
   useEffect(() => {
-    const existingToken = getToken();
-    const existingUser = getUser();
-    if (existingToken) setTokenState(existingToken);
-    if (existingUser) setUserState(existingUser);
-
     const syncLogout = () => {
       setTokenState(null);
       setUserState(null);

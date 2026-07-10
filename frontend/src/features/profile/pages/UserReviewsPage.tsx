@@ -34,7 +34,7 @@ export default function UserReviewsPage() {
 
   return (
     <div style={{ maxWidth: 840, margin: '0 auto' }}>
-      <BackButton to={userId ? `/profile/${userId}` : '/profile'} />
+      <BackButton fallbackTo={userId ? `/profile/${userId}` : '/profile'} />
       <h1 style={{ marginBottom: 8 }}>Reviews</h1>
       {profile && <p style={{ color: '#6b7280', marginBottom: 24 }}>by {profile.name}</p>}
       {loading && <p>Loading…</p>}

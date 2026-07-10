@@ -17,6 +17,26 @@ export async function logLecture(
 }
 
 /**
+ * Get the current user's log for a lecture, or null if not logged
+ */
+export async function getMyLectureLog(lectureId: number): Promise<LectureLog | null> {
+  try {
+    const res = await client.get(`/api/lectures/${lectureId}/logs/me`);
+    return res.data;
+  } catch (err: any) {
+    if (err?.status === 404) return null;
+    throw err;
+  }
+}
+
+/**
+ * Remove the current user's log for a lecture
+ */
+export async function unlogLecture(lectureId: number): Promise<void> {
+  await client.delete(`/api/lectures/${lectureId}/logs/me`);
+}
+
+/**
  * Get lecture logs for a specific user (paginated)
  */
 export async function getUserLectureLogs(
@@ -36,4 +56,3 @@ export async function getUserLectureLogs(
 export async function deleteLectureLog(logId: number): Promise<void> {
   await client.delete(`/api/logs/${logId}`);
 }
-

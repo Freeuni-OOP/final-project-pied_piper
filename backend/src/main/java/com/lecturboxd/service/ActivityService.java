@@ -23,7 +23,7 @@ public class ActivityService {
         activity.setUser(review.getUser());
         activity.setType(ActivityType.REVIEW_CREATED);
         activity.setLecture(review.getLecture());
-        activity.setReviewId(review.getId());
+        activity.setReview(review);
         activityRepository.save(activity);
     }
 

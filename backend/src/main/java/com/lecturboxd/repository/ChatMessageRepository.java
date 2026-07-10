@@ -25,26 +25,27 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     List<ChatMessage> findByReceiverIdAndReadFalse(UUID receiverId);
 
     /**
-     * Get unread count for a specific receiver
+     * Get unread count for a receiver in a specific conversation
      */
-    long countByReceiverIdAndReadFalse(UUID receiverId);
+    long countByConversationIdAndReceiverIdAndReadFalse(Long conversationId, UUID receiverId);
 
     /**
      * Mark all messages in a conversation as read for a specific receiver
      */
+    @Modifying(clearAutomatically = true)
     @Query("UPDATE ChatMessage m SET m.read = true WHERE m.conversation.id = :conversationId AND m.receiver.id = :receiverId AND m.read = false")
-    void markConversationAsRead(@Param("conversationId") Long conversationId, @Param("receiverId") UUID receiverId);
+    int markConversationAsRead(@Param("conversationId") Long conversationId, @Param("receiverId") UUID receiverId);
 
     /**
      * Mark a specific message as read
      */
     Optional<ChatMessage> findById(Long messageId);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("DELETE FROM ChatMessage m WHERE m.sender.id = :userId OR m.receiver.id = :userId")
     void deleteAllForUser(@Param("userId") UUID userId);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("DELETE FROM ChatMessage m WHERE m.conversation.id IN :conversationIds")
     void deleteByConversationIdIn(@Param("conversationIds") List<Long> conversationIds);
 }
