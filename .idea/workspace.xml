@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7e851c82-8363-4450-b968-43483d8fe027" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/mapper/ChatMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/mapper/ChatMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/request/ChatMessageRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/request/ChatMessageRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/response/ChatMessageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/response/ChatMessageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/response/ConversationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/dto/response/ConversationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/entity/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/entity/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/entity/Conversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/entity/Conversation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/repository/ChatMessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/repository/ConversationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/repository/ConversationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/service/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/websocket/ChatWebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/websocket/ChatWebSocketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/websocket/WebSocketEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lecturboxd/websocket/WebSocketEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/V008__create_chat_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/V008__create_chat_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/chatApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/chatApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/feedApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/feedApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/lectureApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/lectureApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/userApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/userApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/auth/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/auth/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/layout/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/layout/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/chat/components/ChatWindow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/chat/components/ChatWindow.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/chat/components/ConversationList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/chat/components/ConversationList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/chat/hooks/useChat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/chat/hooks/useChat.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/chat/pages/ChatPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/chat/pages/ChatPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/feed/pages/ActivityFeedPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/feed/pages/ActivityFeedPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/lectures/pages/LectureBrowsePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/lectures/pages/LectureBrowsePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/profile/pages/ProfilePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/profile/pages/ProfilePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/features/reviews/pages/LogLecturePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/reviews/pages/LogLecturePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/routes/AppRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/routes/AppRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/chat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/chat.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/feed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/feed.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/lecture.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/lecture.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/User/IdeaProjects/final-project-pied_piper" value="3GHe5imZ6EJUN470EUiB6MzMHDw" />
+      <entry key="_C:/Users/User/IdeaProjects/final-project-pied_piper/backend" value="3GIHl4hO27gE1mdIrNXdM2VqSyn" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3GHe5imZ6EJUN470EUiB6MzMHDw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.lecturboxd-backend [org.springframework.boot:spring-boot-maven-plugin:3.3.5:run].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "bgrt",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2026.1.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7e851c82-8363-4450-b968-43483d8fe027" name="Changes" comment="" />
+      <created>1783632742667</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1783632742667</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
