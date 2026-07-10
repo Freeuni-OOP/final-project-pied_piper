@@ -1,5 +1,9 @@
 package com.lecturboxd.dto.response;
 
+/**
+ * EN: Compact subject summary (id, name, lecturer, type) for list views.
+ * KA: საგნის კომპაქტური შეჯამება (id, სახელი, ლექტორი, ტიპი) სიებისთვის.
+ */
 public class SubjectSummaryResponse {
 
     private Long id;

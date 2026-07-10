@@ -1,5 +1,9 @@
 package com.lecturboxd.dto.response;
 
+/**
+ * EN: Response summarizing a development-only user deletion (user and OTP cleanup).
+ * KA: პასუხი, რომელიც აჯამებს მხოლოდ დეველოპმენტის მომხმარებლის წაშლას (მომხმარებელი და OTP გასუფთავება).
+ */
 public class DevDeleteResponse {
 
     private String message;

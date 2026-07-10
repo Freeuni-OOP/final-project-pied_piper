@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+/**
+ * EN: Request body for creating or updating a lecture review (rating and optional comment).
+ * KA: მოთხოვნის სხეული ლექციის მიმოხილვის შესაქმნელად ან განსაახლებლად (რეიტინგი და სურვილისამებრ კომენტარი).
+ */
 public class ReviewRequest {
 
     @NotNull(message = "Rating is required")

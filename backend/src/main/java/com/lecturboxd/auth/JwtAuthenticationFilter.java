@@ -18,6 +18,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * EN: Once-per-request filter that authenticates HTTP requests using a Bearer JWT.
+ * KA: ერთჯერადი ფილტრი, რომელიც HTTP მოთხოვნებს ავთენტიფიცირებს Bearer JWT-ით.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -26,6 +30,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
 
+    /**
+     * EN: Creates the filter with JWT provider and user details service dependencies.
+     * KA: ქმნის ფილტრს JWT პროვაიდერისა და მომხმარებლის დეტალების სერვისის დამოკიდებულებებით.
+     */
     public JwtAuthenticationFilter(
             JwtTokenProvider jwtTokenProvider,
             UserDetailsServiceImpl userDetailsService
@@ -34,6 +42,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * EN: Extracts and validates the Bearer token, then sets SecurityContext authentication when needed.
+     * KA: ამოიღებს და ამოწმებს Bearer ტოკენს, შემდეგ საჭიროებისას აყენებს SecurityContext-ის ავთენტიფიკაციას.
+     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -42,9 +54,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
+        // EN: Only process Authorization headers that use the Bearer scheme | KA: მხოლოდ Bearer სქემის Authorization ჰედერების დამუშავება
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             Authentication existing = SecurityContextHolder.getContext().getAuthentication();
+            // EN: Authenticate only when context is empty or anonymous | KA: ავთენტიფიკაცია მხოლოდ ცარიელი ან ანონიმური კონტექსტისას
             boolean needsAuth = existing == null || existing instanceof AnonymousAuthenticationToken;
 
             if (needsAuth && jwtTokenProvider.validateToken(token)) {
@@ -61,6 +75,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 } catch (Exception ex) {
+                    // EN: Clear context on failure so a bad token does not leave partial auth | KA: წარუმატებლობისას კონტექსტის გასუფთავება, რომ ცუდი ტოკენი ნაწილობრივ ავთენტიფიკაციას არ დატოვოს
                     log.warn("JWT authentication failed for {}: {}", request.getRequestURI(), ex.getMessage());
                     SecurityContextHolder.clearContext();
                 }

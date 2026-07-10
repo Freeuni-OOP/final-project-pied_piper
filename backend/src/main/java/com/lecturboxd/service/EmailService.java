@@ -8,6 +8,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+/**
+ * EN: Sends verification emails (or logs OTP in development when mail is log-only).
+ * KA: აგზავნის ვერიფიკაციის ელფოსტებს (ან ლოგავს OTP-ს დეველოპმენტში, როცა მეილი მხოლოდ ლოგია).
+ */
 @Service
 public class EmailService {
 
@@ -30,12 +34,18 @@ public class EmailService {
         this.logOnly = logOnly;
     }
 
+    /**
+     * EN: Delivers a verification OTP to the given email address.
+     * KA: აგზავნის ვერიფიკაციის OTP-ს მოცემულ ელფოსტის მისამართზე.
+     */
     public void sendVerificationCode(String toEmail, String code) {
+        // EN: Dev mode — log OTP instead of sending mail | KA: დევ რეჟიმი — OTP-ის ლოგირება მეილის ნაცვლად
         if (logOnly) {
             log.info("DEV OTP for {}: {} (expires in {} min)", toEmail, code, expirationMinutes);
             return;
         }
 
+        // EN: Build and send verification email | KA: ვერიფიკაციის ელფოსტის აგება და გაგზავნა
         log.info("Sending verification email to {}", toEmail);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromAddress);
@@ -46,6 +56,7 @@ public class EmailService {
                         + "This code expires in " + expirationMinutes + " minutes."
         );
         try {
+            // EN: Side effect — SMTP send | KA: გვერდითი ეფექტი — SMTP გაგზავნა
             mailSender.send(message);
             log.info("Verification email sent to {}", toEmail);
         } catch (MailException ex) {

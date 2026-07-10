@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * EN: Root payload for bulk-importing a faculty tree (semesters, subjects, lectures).
+ * KA: ძირითადი პეილოდი ფაკულტეტის ხის მასობრივი იმპორტისთვის (სემესტრები, საგნები, ლექციები).
+ */
 public class FacultyImportRequest {
 
+    /** EN: Faculty display name used as the import root key. KA: ფაკულტეტის საჩვენებელი სახელი იმპორტის ძირითად გასაღებად. */
     @NotBlank(message = "Faculty name is required")
     private String faculty;
 

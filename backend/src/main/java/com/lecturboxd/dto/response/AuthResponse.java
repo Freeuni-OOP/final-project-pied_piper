@@ -1,5 +1,9 @@
 package com.lecturboxd.dto.response;
 
+/**
+ * EN: Authentication success response containing a JWT and the authenticated user summary.
+ * KA: ავთენტიფიკაციის წარმატების პასუხი JWT-ითა და ავთენტიფიცირებული მომხმარებლის შეჯამებით.
+ */
 public class AuthResponse {
 
     private String token;

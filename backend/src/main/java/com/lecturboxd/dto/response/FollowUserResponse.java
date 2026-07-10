@@ -2,6 +2,10 @@ package com.lecturboxd.dto.response;
 
 import java.util.UUID;
 
+/**
+ * EN: Lightweight user summary used in follower/following lists.
+ * KA: მსუბუქი მომხმარებლის შეჯამება გამომყოლების/მიყოლების სიებში გამოსაყენებლად.
+ */
 public class FollowUserResponse {
 
     private UUID id;

@@ -4,6 +4,10 @@ import com.lecturboxd.entity.LectureType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * EN: Nested import payload describing a single lecture/session within a subject.
+ * KA: ჩადგმული იმპორტის პეილოდი, რომელიც საგანში ერთ ლექციას/სესიას აღწერს.
+ */
 public class ImportLectureRequest {
 
     @NotNull(message = "Week is required")
@@ -20,6 +24,7 @@ public class ImportLectureRequest {
 
     private String description;
 
+    /** EN: Optional assigned reading / materials for the session. KA: სესიის სურვილისამებრი საკითხავი / მასალები. */
     private String reading;
 
     public Integer getWeek() {

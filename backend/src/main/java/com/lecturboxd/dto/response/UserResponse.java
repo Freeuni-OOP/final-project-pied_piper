@@ -2,6 +2,10 @@ package com.lecturboxd.dto.response;
 
 import java.util.UUID;
 
+/**
+ * EN: Basic authenticated-user summary returned after login and similar flows.
+ * KA: ავთენტიფიცირებული მომხმარებლის საბაზისო შეჯამება შესვლისა და მსგავსი ნაკადების შემდეგ.
+ */
 public class UserResponse {
 
     private UUID id;

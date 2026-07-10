@@ -4,6 +4,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * EN: Request body for user login with email and password.
+ * KA: მოთხოვნის სხეული მომხმარებლის შესვლისთვის ელფოსტითა და პაროლით.
+ */
 public class LoginRequest {
 
     @NotBlank(message = "Email is required")

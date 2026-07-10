@@ -18,6 +18,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * EN: Syllabus lecture/session entry belonging to a subject (week, number, type, content).
+ * KA: სილაბუსის ლექციის/სესიის ჩანაწერი, რომელიც ეკუთვნის საგანს (კვირა, ნომერი, ტიპი, შინაარსი).
+ */
 @Entity
 @Table(name = "lectures")
 @EntityListeners(AuditingEntityListener.class)
@@ -27,12 +31,15 @@ public class Lecture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // EN: Week number within the semester syllabus | KA: კვირის ნომერი სემესტრის სილაბუსში
     @Column(nullable = false)
     private Integer week;
 
+    // EN: Ordering number of the lecture within the week/subject | KA: ლექციის რიგითი ნომერი კვირაში/საგანში
     @Column(nullable = false)
     private Integer lectureNumber;
 
+    // EN: Session kind (LECTURE, SEMINAR, LAB, etc.) | KA: სესიის ტიპი (LECTURE, SEMINAR, LAB და სხვ.)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LectureType type;
@@ -43,9 +50,11 @@ public class Lecture {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    // EN: Optional reading materials / homework text | KA: არასავალდებულო საკითხავი მასალა / საშინაო დავალების ტექსტი
     @Column(columnDefinition = "TEXT")
     private String reading;
 
+    // EN: FK to the parent subject | KA: FK მშობელ საგანზე
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;

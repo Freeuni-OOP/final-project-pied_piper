@@ -19,6 +19,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * EN: User review of a lecture — rating and optional comment (one review per user+lecture).
+ * KA: მომხმარებლის მიმოხილვა ლექციაზე — რეიტინგი და არასავალდებულო კომენტარი (ერთი მიმოხილვა user+lecture წყვილზე).
+ */
 @Entity
 @Table(name = "reviews", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "lecture_id"}))
 @EntityListeners(AuditingEntityListener.class)
@@ -28,6 +32,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // EN: Star rating from 1 to 5 | KA: ვარსკვლავური რეიტინგი 1-დან 5-მდე
     @Min(1)
     @Max(5)
     @Column(nullable = false)
@@ -36,10 +41,12 @@ public class Review {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
+    // EN: FK to the reviewing user (unique with lecture_id) | KA: FK მიმომხილველ მომხმარებელზე (უნიკალური lecture_id-თან ერთად)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    // EN: FK to the reviewed lecture (unique with user_id) | KA: FK მიმოხილულ ლექციაზე (უნიკალური user_id-თან ერთად)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "lecture_id", nullable = false)
     private Lecture lecture;

@@ -1,6 +1,6 @@
 package com.lecturboxd.websocket;
 
- import org.slf4j.Logger;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -10,7 +10,8 @@ import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 /**
- * Listens to WebSocket session events for connect/disconnect logging.
+ * EN: Listens to WebSocket session connect/disconnect events for logging.
+ * KA: უსმენს WebSocket სესიის დაკავშირების/გათიშვის მოვლენებს ლოგირებისთვის.
  */
 @Component
 public class WebSocketEventListener {
@@ -19,10 +20,18 @@ public class WebSocketEventListener {
 
     private final SimpMessagingTemplate messagingTemplate;
 
+    /**
+     * EN: Injects messaging template (available for future presence broadcasts).
+     * KA: ინჯექციას უკეთებს მესიჯინგის შაბლონს (ხელმისაწვდომია მომავალი presence ბროდკასტებისთვის).
+     */
     public WebSocketEventListener(SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
 
+    /**
+     * EN: Logs when a WebSocket client successfully connects.
+     * KA: ლოგავს, როცა WebSocket კლიენტი წარმატებით უკავშირდება.
+     */
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
@@ -30,6 +39,10 @@ public class WebSocketEventListener {
         LOGGER.info("WebSocket client connected with session ID: {}", sessionId);
     }
 
+    /**
+     * EN: Logs when a WebSocket client disconnects.
+     * KA: ლოგავს, როცა WebSocket კლიენტი გათიშულია.
+     */
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());

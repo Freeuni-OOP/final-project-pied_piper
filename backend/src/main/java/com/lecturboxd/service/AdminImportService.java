@@ -16,6 +16,10 @@ import com.lecturboxd.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * EN: Idempotent admin import of faculty → semester → subject → lecture hierarchy.
+ * KA: ადმინის იდემპოტენტური იმპორტი: ფაკულტეტი → სემესტრი → საგანი → ლექცია იერარქია.
+ */
 @Service
 public class AdminImportService {
 
@@ -36,12 +40,18 @@ public class AdminImportService {
         this.lectureRepository = lectureRepository;
     }
 
+    /**
+     * EN: Imports nested faculty data, creating missing nodes and skipping existing ones.
+     * KA: იმპორტებს ჩადგმულ ფაკულტეტის მონაცემებს — ქმნის გამოტოვებულებს და ტოვებს არსებულებს.
+     */
     @Transactional
     public ImportSummaryResponse importFacultyData(FacultyImportRequest request) {
         ImportSummaryResponse summary = new ImportSummaryResponse();
+        // EN: Resolve or create faculty root | KA: ფაკულტეტის ფესვის მოძიება ან შექმნა
         String facultyName = FacultyService.normalizeName(request.getFaculty());
         Faculty faculty = resolveOrCreateFaculty(facultyName, summary);
 
+        // EN: Walk semester → subject → lecture tree | KA: სემესტრი → საგანი → ლექცია ხის გავლა
         for (ImportSemesterRequest semesterRequest : request.getSemesters()) {
             Semester semester = resolveOrCreateSemester(faculty, semesterRequest, summary);
 
@@ -58,6 +68,7 @@ public class AdminImportService {
     }
 
     private Faculty resolveOrCreateFaculty(String facultyName, ImportSummaryResponse summary) {
+        // EN: Skip if faculty exists; otherwise create | KA: გამოტოვება თუ ფაკულტეტი არსებობს; წინააღმდეგ შემთხვევაში შექმნა
         return facultyRepository.findByNameIgnoreCase(facultyName)
                 .map(existing -> {
                     summary.getFaculties().incrementSkipped();
@@ -76,6 +87,7 @@ public class AdminImportService {
             ImportSemesterRequest semesterRequest,
             ImportSummaryResponse summary
     ) {
+        // EN: Skip if semester exists under faculty; otherwise create | KA: გამოტოვება თუ სემესტრი არსებობს ფაკულტეტში; წინააღმდეგ შემთხვევაში შექმნა
         String number = SemesterService.normalizeNumber(semesterRequest.getNumber());
         return semesterRepository.findByNumberAndFacultyId(number, faculty.getId())
                 .map(existing -> {
@@ -96,6 +108,7 @@ public class AdminImportService {
             ImportSubjectRequest subjectRequest,
             ImportSummaryResponse summary
     ) {
+        // EN: Skip if subject exists under semester; otherwise create | KA: გამოტოვება თუ საგანი არსებობს სემესტრში; წინააღმდეგ შემთხვევაში შექმნა
         String name = normalizeSubjectName(subjectRequest.getName());
         return subjectRepository.findByNameIgnoreCaseAndSemesterId(name, semester.getId())
                 .map(existing -> {
@@ -119,6 +132,7 @@ public class AdminImportService {
             ImportLectureRequest lectureRequest,
             ImportSummaryResponse summary
     ) {
+        // EN: Skip if matching lecture already exists under subject | KA: გამოტოვება თუ შესაბამისი ლექცია უკვე არსებობს საგანში
         String title = normalizeLectureTitle(lectureRequest.getTitle());
         boolean exists = lectureRepository
                 .findByTitleAndWeekAndTypeAndSubjectId(
@@ -134,6 +148,7 @@ public class AdminImportService {
             return;
         }
 
+        // EN: Persist new lecture under subject | KA: ახალი ლექციის შენახვა საგნის ქვეშ
         Lecture lecture = new Lecture();
         lecture.setWeek(lectureRequest.getWeek());
         lecture.setLectureNumber(lectureRequest.getLectureNumber());

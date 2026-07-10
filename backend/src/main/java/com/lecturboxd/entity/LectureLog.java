@@ -17,6 +17,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * EN: User diary entry that a lecture was watched/attended (one log per user+lecture).
+ * KA: მომხმარებლის დღიურის ჩანაწერი, რომ ლექცია ნახა/დაესწრო (ერთი ლოგი user+lecture წყვილზე).
+ */
 @Entity
 @Table(name = "lecture_logs", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "lecture_id"}))
 @EntityListeners(AuditingEntityListener.class)
@@ -26,14 +30,17 @@ public class LectureLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // EN: FK to the user who logged the lecture | KA: FK მომხმარებელზე, რომელმაც ლექცია დაალოგა
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    // EN: FK to the logged lecture (unique with user_id) | KA: FK დალოგებულ ლექციაზე (უნიკალური user_id-თან ერთად)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "lecture_id", nullable = false)
     private Lecture lecture;
 
+    // EN: Calendar date the user marked as watched | KA: კალენდარული თარიღი, როცა მომხმარებელმა ნახვა მონიშნა
     @Column(name = "watched_at", nullable = false)
     private LocalDate watchedAt;
 

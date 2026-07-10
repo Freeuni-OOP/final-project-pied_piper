@@ -10,16 +10,24 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EN: Configures Cross-Origin Resource Sharing (CORS) for the LecturBoxd REST API.
+ * KA: აკონფიგურირებს Cross-Origin Resource Sharing (CORS) LecturBoxd REST API-სთვის.
+ */
 @Configuration
 public class CorsConfig {
 
     @Value("${lecturboxd.cors.allowed-origins:http://localhost:5173}")
     private String allowedOrigins;
 
+    /**
+     * EN: Builds a CORS source allowing local/LAN Vite origins plus configured extra origins.
+     * KA: აგებს CORS წყაროს, რომელიც უშვებს ლოკალურ/LAN Vite წარმოშობებს და კონფიგურირებულ დამატებით წარმოშობებს.
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Patterns cover Vite on any port and LAN IPs (host: true), which exact origins miss.
+        // EN: Patterns cover Vite on any port and LAN IPs (host: true), which exact origins miss | KA: პატერნები ფარავს Vite-ს ნებისმიერ პორტზე და LAN IP-ებს, რასაც ზუსტი origins ვერ ფარავს
         List<String> patterns = new ArrayList<>(List.of(
                 "http://localhost:*",
                 "http://127.0.0.1:*",

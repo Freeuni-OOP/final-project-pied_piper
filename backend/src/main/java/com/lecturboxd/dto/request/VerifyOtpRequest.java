@@ -4,6 +4,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+/**
+ * EN: Request body for verifying a registration email with a 6-digit OTP code.
+ * KA: მოთხოვნის სხეული რეგისტრაციის ელფოსტის 6-ნიშნა OTP კოდით დასადასტურებლად.
+ */
 public class VerifyOtpRequest {
 
     @NotBlank(message = "Email is required")

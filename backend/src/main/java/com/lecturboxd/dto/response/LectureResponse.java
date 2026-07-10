@@ -2,6 +2,10 @@ package com.lecturboxd.dto.response;
 
 import com.lecturboxd.entity.LectureType;
 
+/**
+ * EN: Full lecture response including subject id and session metadata.
+ * KA: სრული ლექციის პასუხი საგნის id-ითა და სესიის მეტამონაცემებით.
+ */
 public class LectureResponse {
 
     private Long id;

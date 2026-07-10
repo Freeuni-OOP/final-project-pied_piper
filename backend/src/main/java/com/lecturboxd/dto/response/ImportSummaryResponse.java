@@ -1,5 +1,9 @@
 package com.lecturboxd.dto.response;
 
+/**
+ * EN: Aggregate import result with per-level created/skipped summaries for the faculty tree.
+ * KA: იმპორტის აგრეგირებული შედეგი დონეების მიხედვით შექმნილი/გამოტოვებული შეჯამებებით ფაკულტეტის ხისთვის.
+ */
 public class ImportSummaryResponse {
 
     private ImportLevelSummary faculties = new ImportLevelSummary();

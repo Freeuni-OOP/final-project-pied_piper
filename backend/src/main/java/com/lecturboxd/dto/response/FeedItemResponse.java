@@ -5,15 +5,21 @@ import com.lecturboxd.entity.ActivityType;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * EN: Response DTO for a single activity-feed item (review or lecture-log activity).
+ * KA: პასუხის DTO აქტივობის ფიდის ერთი ელემენტისთვის (მიმოხილვა ან ლექციის ლოგის აქტივობა).
+ */
 public class FeedItemResponse {
 
     private Long id;
     private ActivityType type;
+    /** EN: User who performed the activity. KA: მომხმარებელი, რომელმაც აქტივობა შეასრულა. */
     private UUID actorId;
     private String actorName;
     private Long lectureId;
     private String lectureTitle;
     private Long reviewId;
+    /** EN: Present when the activity is a lecture-log event. KA: არსებობს, როცა აქტივობა ლექციის ლოგის მოვლენაა. */
     private Long lectureLogId;
     private Integer rating;
     private String comment;

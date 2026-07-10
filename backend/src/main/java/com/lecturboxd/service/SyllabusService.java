@@ -20,6 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EN: Read-only syllabus navigation: faculties, semesters, subjects, and typed session lists.
+ * KA: მხოლოდ წაკითხვადი სილაბუსის ნავიგაცია: ფაკულტეტები, სემესტრები, საგნები და ტიპიზებული სესიების სიები.
+ */
 @Service
 public class SyllabusService {
 
@@ -49,40 +53,64 @@ public class SyllabusService {
         this.lectureMapper = lectureMapper;
     }
 
+    /**
+     * EN: Lists all faculties for syllabus browsing.
+     * KA: აბრუნებს ყველა ფაკულტეტს სილაბუსის დათვალიერებისთვის.
+     */
     @Transactional(readOnly = true)
     public List<FacultyResponse> listFaculties() {
+        // EN: Load all faculties from DB | KA: ყველა ფაკულტეტის ჩატვირთვა ბაზიდან
         return facultyRepository.findAll().stream()
                 .map(facultyMapper::toResponse)
                 .toList();
     }
 
+    /**
+     * EN: Lists semesters for a faculty ordered by number.
+     * KA: აბრუნებს ფაკულტეტის სემესტრებს ნომრით დალაგებით.
+     */
     @Transactional(readOnly = true)
     public List<SemesterResponse> listSemesters(Long facultyId) {
+        // EN: Ensure faculty exists | KA: ფაკულტეტის არსებობის შემოწმება
         if (!facultyRepository.existsById(facultyId)) {
             throw new ResourceNotFoundException("Faculty not found with id " + facultyId);
         }
+        // EN: Query semesters by faculty | KA: სემესტრების მოთხოვნა ფაკულტეტით
         return semesterRepository.findByFacultyIdOrderByNumberAsc(facultyId).stream()
                 .map(semesterMapper::toResponse)
                 .toList();
     }
 
+    /**
+     * EN: Lists subject summaries for a semester ordered by name.
+     * KA: აბრუნებს სემესტრის საგნების შეჯამებებს სახელით დალაგებით.
+     */
     @Transactional(readOnly = true)
     public List<SubjectSummaryResponse> listSubjects(Long semesterId) {
+        // EN: Ensure semester exists | KA: სემესტრის არსებობის შემოწმება
         if (!semesterRepository.existsById(semesterId)) {
             throw new ResourceNotFoundException("Semester not found with id " + semesterId);
         }
+        // EN: Query subjects by semester | KA: საგნების მოთხოვნა სემესტრით
         return subjectRepository.findBySemesterIdOrderByNameAsc(semesterId).stream()
                 .map(this::toSummary)
                 .toList();
     }
 
+    /**
+     * EN: Builds a full subject syllabus with sessions grouped by type.
+     * KA: აგებს სრულ საგნის სილაბუსს სესიებით ტიპის მიხედვით დაჯგუფებით.
+     */
     @Transactional(readOnly = true)
     public SubjectSyllabusResponse getSubjectSyllabus(Long subjectId) {
+        // EN: Load subject from DB | KA: საგნის ჩატვირთვა ბაზიდან
         Subject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id " + subjectId));
 
+        // EN: Load ordered sessions for the subject | KA: საგნის დალაგებული სესიების ჩატვირთვა
         List<Lecture> sessions = lectureRepository.findBySubjectIdOrderByWeekAscLectureNumberAscTypeAsc(subjectId);
 
+        // EN: Initialize typed session buckets | KA: ტიპიზებული სესიების ჯგუფების ინიციალიზაცია
         SubjectSyllabusResponse response = new SubjectSyllabusResponse();
         response.setId(subject.getId());
         response.setName(subject.getName());
@@ -97,6 +125,7 @@ public class SyllabusService {
         response.setDeadlines(new ArrayList<>());
         response.setPresentations(new ArrayList<>());
 
+        // EN: Bucket each session by LectureType | KA: თითოეული სესიის დაჯგუფება LectureType-ის მიხედვით
         for (Lecture session : sessions) {
             LectureSessionResponse item = lectureMapper.toSessionResponse(session);
             switch (session.getType()) {

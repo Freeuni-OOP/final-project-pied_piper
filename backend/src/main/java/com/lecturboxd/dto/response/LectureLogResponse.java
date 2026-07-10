@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * EN: Response DTO for a user's lecture watch/attendance log entry.
+ * KA: პასუხის DTO მომხმარებლის ლექციის ნახვის/დასწრების ლოგის ჩანაწერისთვის.
+ */
 public class LectureLogResponse {
 
     private Long id;

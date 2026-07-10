@@ -3,6 +3,10 @@ package com.lecturboxd.dto.response;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * EN: Response DTO representing a single chat message with sender and receiver summaries.
+ * KA: პასუხის DTO, რომელიც ერთ ჩატის შეტყობინებას წარმოადგენს გამგზავნისა და მიმღების შეჯამებით.
+ */
 public class ChatMessageResponse {
 
     private Long id;
@@ -25,6 +29,10 @@ public class ChatMessageResponse {
         this.read = read;
     }
 
+    /**
+     * EN: Minimal user info embedded in a chat message response.
+     * KA: მინიმალური მომხმარებლის ინფორმაცია ჩატის შეტყობინების პასუხში.
+     */
     // Nested UserSummary class
     public static class UserSummary {
         private UUID id;

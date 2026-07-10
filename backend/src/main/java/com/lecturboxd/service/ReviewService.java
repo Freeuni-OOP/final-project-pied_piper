@@ -117,7 +117,7 @@ public class ReviewService {
 
         long totalReviews = reviewRepository.countByLectureId(lectureId);
         Double averageRating = totalReviews == 0
-                ? 0.0
+                ? Double.valueOf(0.0)
                 : reviewRepository.findAverageRatingByLectureId(lectureId);
         if (averageRating == null) {
             averageRating = 0.0;

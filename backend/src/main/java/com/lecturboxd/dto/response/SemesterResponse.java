@@ -2,6 +2,10 @@ package com.lecturboxd.dto.response;
 
 import java.time.LocalDateTime;
 
+/**
+ * EN: Response DTO for a semester, including faculty id and subject count.
+ * KA: პასუხის DTO სემესტრისთვის, ფაკულტეტის id-ისა და საგნების რაოდენობის ჩათვლით.
+ */
 public class SemesterResponse {
 
     private Long id;

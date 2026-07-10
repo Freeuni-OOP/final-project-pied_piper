@@ -23,6 +23,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
+/**
+ * EN: Central Spring Security setup: stateless JWT filter chain, CORS, and public route rules.
+ * KA: ცენტრალური Spring Security კონფიგურაცია: უსესიო JWT ფილტრების ჯაჭვი, CORS და საჯარო მარშრუტების წესები.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -32,6 +36,10 @@ public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final CorsConfigurationSource corsConfigurationSource;
 
+    /**
+     * EN: Injects auth filters, user details service, and CORS configuration source.
+     * KA: ინჯექციას უკეთებს ავთენტიფიკაციის ფილტრებს, მომხმარებლის დეტალების სერვისს და CORS კონფიგურაციის წყაროს.
+     */
     public SecurityConfig(
             AdminApiKeyFilter adminApiKeyFilter,
             JwtAuthenticationFilter jwtAuthenticationFilter,
@@ -44,9 +52,14 @@ public class SecurityConfig {
         this.corsConfigurationSource = corsConfigurationSource;
     }
 
+    /**
+     * EN: Builds the HTTP security filter chain with permit-all paths and JWT/admin filters.
+     * KA: აგებს HTTP უსაფრთხოების ფილტრების ჯაჭვს permit-all გზებით და JWT/ადმინ ფილტრებით.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // EN: Stateless API — CSRF disabled; sessions are not used | KA: უსესიო API — CSRF გამორთულია; სესიები არ გამოიყენება
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -59,6 +72,7 @@ public class SecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth -> auth
+                        // EN: Public auth, admin (key-checked in filter), WebSocket, and Swagger paths | KA: საჯარო auth, ადმინი (გასაღები ფილტრში), WebSocket და Swagger გზები
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
@@ -76,6 +90,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * EN: Writes a JSON error body for authentication or authorization failures.
+     * KA: წერს JSON შეცდომის სხეულს ავთენტიფიკაციის ან ავტორიზაციის წარუმატებლობისას.
+     */
     private static void writeJsonError(HttpServletResponse response, int status, String message) throws java.io.IOException {
         response.setStatus(status);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -91,11 +109,19 @@ public class SecurityConfig {
         );
     }
 
+    /**
+     * EN: Provides BCrypt password hashing for registration and login.
+     * KA: უზრუნველყოფს BCrypt პაროლის ჰეშირებას რეგისტრაციისა და ლოგინისთვის.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * EN: Exposes the AuthenticationManager bean used by auth services.
+     * KA: აქვეყნებს AuthenticationManager bean-ს, რომელსაც auth სერვისები იყენებენ.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

@@ -19,6 +19,10 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * EN: Central REST advice that maps domain and framework exceptions to consistent ApiErrorResponse payloads.
+ * KA: ცენტრალური REST რჩევა, რომელიც დომენურ და ფრეიმვორკის გამონაკლისებს ApiErrorResponse პასუხებად გარდაქმნის.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

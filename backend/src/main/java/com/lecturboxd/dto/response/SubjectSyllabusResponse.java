@@ -3,6 +3,10 @@ package com.lecturboxd.dto.response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EN: Full subject syllabus response with sessions grouped by type (lecture, seminar, lab, etc.).
+ * KA: საგნის სრული სილაბუსის პასუხი სესიებით დაჯგუფებული ტიპის მიხედვით (ლექცია, სემინარი, ლაბი და სხვ.).
+ */
 public class SubjectSyllabusResponse {
 
     private Long id;
@@ -11,11 +15,17 @@ public class SubjectSyllabusResponse {
     private String type;
     private String description;
     private Long semesterId;
+    /** EN: Sessions of type lecture. KA: ლექციის ტიპის სესიები. */
     private List<LectureSessionResponse> lectures = new ArrayList<>();
+    /** EN: Sessions of type seminar. KA: სემინარის ტიპის სესიები. */
     private List<LectureSessionResponse> seminars = new ArrayList<>();
+    /** EN: Sessions of type lab. KA: ლაბორატორიის ტიპის სესიები. */
     private List<LectureSessionResponse> labs = new ArrayList<>();
+    /** EN: Sessions of type exam. KA: გამოცდის ტიპის სესიები. */
     private List<LectureSessionResponse> exams = new ArrayList<>();
+    /** EN: Sessions of type deadline. KA: ვადის (deadline) ტიპის სესიები. */
     private List<LectureSessionResponse> deadlines = new ArrayList<>();
+    /** EN: Sessions of type presentation. KA: პრეზენტაციის ტიპის სესიები. */
     private List<LectureSessionResponse> presentations = new ArrayList<>();
 
     public Long getId() {

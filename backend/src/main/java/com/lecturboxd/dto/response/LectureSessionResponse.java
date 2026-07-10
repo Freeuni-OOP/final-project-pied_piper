@@ -2,6 +2,10 @@ package com.lecturboxd.dto.response;
 
 import com.lecturboxd.entity.LectureType;
 
+/**
+ * EN: Compact lecture/session DTO used inside syllabus groupings (without subject id).
+ * KA: კომპაქტური ლექციის/სესიის DTO სილაბუსის დაჯგუფებებში გამოსაყენებლად (საგნის id-ის გარეშე).
+ */
 public class LectureSessionResponse {
 
     private Long id;

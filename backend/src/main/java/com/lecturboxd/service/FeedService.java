@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * EN: Builds the social activity feed for a user and the people they follow.
+ * KA: აგებს სოციალური აქტივობის ფიდს მომხმარებლისა და მისი გამოწერილებისთვის.
+ */
 @Service
 public class FeedService {
 
@@ -37,14 +41,20 @@ public class FeedService {
         this.feedMapper = feedMapper;
     }
 
+    /**
+     * EN: Returns a paginated feed of activities for the current user and followed users.
+     * KA: აბრუნებს გვერდებად დაყოფილ აქტივობების ფიდს მიმდინარე მომხმარებლისა და გამოწერილებისთვის.
+     */
     @Transactional(readOnly = true)
     public Page<FeedItemResponse> getFeedForUser(UUID currentUserId, Pageable pageable) {
+        // EN: Include self plus followed user IDs | KA: საკუთარი და გამოწერილი მომხმარებლების ID-ების ჩართვა
         List<UUID> userIds = new ArrayList<>();
         userIds.add(currentUserId);
         followRepository.findByFollowerIdOrderByCreatedAtDesc(currentUserId).stream()
                 .map(follow -> follow.getFollowed().getId())
                 .forEach(userIds::add);
 
+        // EN: Load activities and map to feed items (resolve review when needed) | KA: აქტივობების ჩატვირთვა და ფიდის ელემენტებზე მაპინგი
         return activityRepository.findByUserIdIn(userIds, pageable)
                 .map(activity -> feedMapper.toResponse(activity, resolveReview(activity)));
     }
@@ -56,7 +66,7 @@ public class FeedService {
         if (activity.getReview() != null) {
             return activity.getReview();
         }
-        // Fallback for older activity rows that may not have review_id set.
+        // EN: Fallback for older activity rows that may not have review_id set | KA: ძველი აქტივობებისთვის, სადაც review_id შეიძლება არ იყოს
         return reviewRepository
                 .findByUserIdAndLectureId(activity.getUser().getId(), activity.getLecture().getId())
                 .orElse(null);

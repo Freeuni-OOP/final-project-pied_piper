@@ -3,6 +3,10 @@ package com.lecturboxd.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * EN: Request body for creating a semester under a faculty.
+ * KA: მოთხოვნის სხეული ფაკულტეტის ქვეშ სემესტრის შესაქმნელად.
+ */
 public class SemesterCreateRequest {
 
     @NotBlank(message = "Semester number is required")

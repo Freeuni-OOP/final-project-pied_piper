@@ -22,6 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * EN: Manages user profile reads/updates, search, and full account deletion with FK-safe cascade order.
+ * KA: მართავს პროფილის წაკითხვას/განახლებას, ძებნას და ანგარიშის სრულ წაშლას FK-უსაფრთხო კასკადური რიგით.
+ */
 @Service
 public class UserService {
 
@@ -57,26 +61,43 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+    /**
+     * EN: Returns the authenticated user's basic profile DTO.
+     * KA: აბრუნებს ავთენტიფიცირებული მომხმარებლის ძირითად პროფილის DTO-ს.
+     */
     @Transactional(readOnly = true)
     public UserResponse getCurrentUser(UUID userId) {
+        // EN: Load user from DB | KA: მომხმარებლის ჩატვირთვა ბაზიდან
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
         return userMapper.toResponse(user);
     }
 
+    /**
+     * EN: Updates the authenticated user's display name.
+     * KA: განაახლებს ავთენტიფიცირებული მომხმარებლის სახელს.
+     */
     @Transactional
     public UserResponse updateCurrentUser(UUID userId, UpdateProfileRequest request) {
+        // EN: Load user from DB | KA: მომხმარებლის ჩატვირთვა ბაზიდან
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
+        // EN: Persist updated name | KA: განახლებული სახელის შენახვა
         user.setName(request.getName().trim());
         return userMapper.toResponse(userRepository.save(user));
     }
 
+    /**
+     * EN: Returns a public profile with follower, following, review, and log counts.
+     * KA: აბრუნებს საჯარო პროფილს გამომწერების, გამოწერილების, რევიუებისა და ლოგების რაოდენობით.
+     */
     @Transactional(readOnly = true)
     public UserProfileResponse getUserProfile(UUID userId) {
+        // EN: Load user from DB | KA: მომხმარებლის ჩატვირთვა ბაზიდან
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
 
+        // EN: Aggregate related counts from DB | KA: დაკავშირებული რაოდენობების აგრეგაცია ბაზიდან
         return new UserProfileResponse(
                 user.getId(),
                 user.getName(),
@@ -88,21 +109,33 @@ public class UserService {
         );
     }
 
+    /**
+     * EN: Searches users by name or email with pagination.
+     * KA: ეძებს მომხმარებლებს სახელით ან ელფოსტით გვერდებად დაყოფით.
+     */
     @Transactional(readOnly = true)
     public Page<UserResponse> searchUsers(String query, Pageable pageable) {
+        // EN: Empty query returns empty page | KA: ცარიელი მოთხოვნა აბრუნებს ცარიელ გვერდს
         String trimmed = query == null ? "" : query.trim();
         if (trimmed.isEmpty()) {
             return Page.empty(pageable);
         }
+        // EN: DB search by name or email | KA: ბაზაში ძებნა სახელით ან ელფოსტით
         return userRepository.searchByNameOrEmail(trimmed, pageable).map(userMapper::toResponse);
     }
 
+    /**
+     * EN: Permanently deletes a user and all dependent data in FK-safe order.
+     * KA: სამუდამოდ შლის მომხმარებელს და ყველა დამოკიდებულ მონაცემს FK-უსაფრთხო რიგით.
+     */
     @Transactional
     public void deleteAccount(UUID userId) {
+        // EN: Load user from DB | KA: მომხმარებლის ჩატვირთვა ბაზიდან
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
 
-        // Order matters because of FKs (activities -> reviews/logs, messages -> conversations, * -> users).
+        // EN: Cascade delete order (FK-safe): activities → reviews/logs → follows → messages → conversations → OTP codes → user
+        // KA: კასკადური წაშლის რიგი (FK-უსაფრთხო): აქტივობები → რევიუები/ლოგები → გამოწერები → შეტყობინებები → საუბრები → OTP კოდები → მომხმარებელი
         activityRepository.deleteByUserId(userId);
         reviewRepository.deleteByUserId(userId);
         lectureLogRepository.deleteByUserId(userId);

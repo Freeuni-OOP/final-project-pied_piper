@@ -3,6 +3,10 @@ package com.lecturboxd.dto.response;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * EN: Response DTO for a lecture review including author and lecture summaries.
+ * KA: პასუხის DTO ლექციის მიმოხილვისთვის ავტორისა და ლექციის შეჯამებით.
+ */
 public class ReviewResponse {
 
     private Long id;
@@ -90,6 +94,10 @@ public class ReviewResponse {
         this.updatedAt = updatedAt;
     }
 
+    /**
+     * EN: Nested summary of the review author.
+     * KA: მიმოხილვის ავტორის ჩადგმული შეჯამება.
+     */
     public static class AuthorSummary {
 
         private UUID id;
@@ -120,6 +128,10 @@ public class ReviewResponse {
         }
     }
 
+    /**
+     * EN: Nested summary of the reviewed lecture.
+     * KA: განხილული ლექციის ჩადგმული შეჯამება.
+     */
     public static class LectureSummary {
 
         private Long id;

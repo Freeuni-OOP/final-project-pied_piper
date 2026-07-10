@@ -14,9 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 /**
- * Intercepts STOMP CONNECT to authenticate via JWT and attach the user Principal.
- * Must use MessageHeaderAccessor.getAccessor (not wrap) so setUser persists on the session —
- * otherwise convertAndSendToUser never delivers to /user/queue/messages.
+ * EN: Intercepts STOMP CONNECT to authenticate via JWT and attach the user Principal (use getAccessor, not wrap).
+ * KA: იჭერს STOMP CONNECT-ს JWT ავთენტიფიკაციისთვის და მომხმარებლის Principal-ის მისამაგრებლად (გამოიყენე getAccessor, არა wrap).
  */
 @Component
 public class StompAuthChannelInterceptor implements ChannelInterceptor {
@@ -24,13 +23,22 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
 
+    /**
+     * EN: Injects JWT provider and user details service for CONNECT authentication.
+     * KA: ინჯექციას უკეთებს JWT პროვაიდერს და მომხმარებლის დეტალების სერვისს CONNECT ავთენტიფიკაციისთვის.
+     */
     public StompAuthChannelInterceptor(JwtTokenProvider jwtTokenProvider, UserDetailsServiceImpl userDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * EN: On CONNECT, validates Bearer JWT from native headers and sets the session user.
+     * KA: CONNECT-ზე ამოწმებს Bearer JWT-ს native ჰედერებიდან და აყენებს სესიის მომხმარებელს.
+     */
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
+        // EN: Must use getAccessor so setUser persists on the session for convertAndSendToUser | KA: უნდა გამოიყენო getAccessor, რომ setUser სესიაზე შენარჩუნდეს convertAndSendToUser-ისთვის
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
         if (accessor == null) {
             return message;
@@ -56,7 +64,7 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
                         accessor.setUser(authentication);
                     }
                 } catch (Exception ex) {
-                    // Token validation failed - connection proceeds without a user principal
+                    // EN: Token validation failed — connection proceeds without a user principal | KA: ტოკენის ვალიდაცია ჩაიშალა — კავშირი გრძელდება მომხმარებლის პრინციპალის გარეშე
                 }
             }
         }

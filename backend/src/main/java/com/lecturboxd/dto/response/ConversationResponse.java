@@ -3,11 +3,17 @@ package com.lecturboxd.dto.response;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * EN: Response DTO for a chat conversation as seen by the current user.
+ * KA: პასუხის DTO ჩატის საუბრისთვის მიმდინარე მომხმარებლის თვალსაზრისით.
+ */
 public class ConversationResponse {
 
     private Long id;
+    /** EN: The other participant relative to the current user. KA: მეორე მონაწილე მიმდინარე მომხმარებელთან მიმართებით. */
     private UserSummary otherUser;
     private LocalDateTime updatedAt;
+    /** EN: Number of unread messages in this conversation for the current user. KA: ამ საუბრში წაუკითხავი შეტყობინებების რაოდენობა მიმდინარე მომხმარებლისთვის. */
     private Long unreadCount;
 
     public ConversationResponse() {
@@ -20,6 +26,10 @@ public class ConversationResponse {
         this.unreadCount = unreadCount;
     }
 
+    /**
+     * EN: Minimal summary of the other conversation participant.
+     * KA: საუბრის მეორე მონაწილის მინიმალური შეჯამება.
+     */
     // Nested UserSummary class
     public static class UserSummary {
         private UUID id;

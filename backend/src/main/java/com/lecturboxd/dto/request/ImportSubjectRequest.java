@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * EN: Nested import payload for a subject and its lecture sessions under a semester.
+ * KA: ჩადგმული იმპორტის პეილოდი საგნისა და მისი ლექციების სესიებისთვის სემესტრის ქვეშ.
+ */
 public class ImportSubjectRequest {
 
     @NotBlank(message = "Subject name is required")

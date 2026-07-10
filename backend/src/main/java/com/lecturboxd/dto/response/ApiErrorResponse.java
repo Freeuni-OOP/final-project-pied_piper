@@ -3,6 +3,10 @@ package com.lecturboxd.dto.response;
 import java.time.Instant;
 import java.util.Map;
 
+/**
+ * EN: Standard error payload returned by the API for failed requests.
+ * KA: სტანდარტული შეცდომის პეილოდი, რომელსაც API აბრუნებს წარუმატებელ მოთხოვნებზე.
+ */
 public class ApiErrorResponse {
 
     private Instant timestamp;
@@ -10,6 +14,7 @@ public class ApiErrorResponse {
     private String error;
     private String message;
     private String path;
+    /** EN: Optional per-field validation messages (field name → message). KA: სურვილისამებრი ველების ვალიდაციის შეტყობინებები (ველის სახელი → შეტყობინება). */
     private Map<String, String> fieldErrors;
 
     public ApiErrorResponse() {

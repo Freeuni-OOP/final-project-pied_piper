@@ -1,5 +1,9 @@
 package com.lecturboxd.dto.response;
 
+/**
+ * EN: Aggregated rating statistics for a lecture (average and total review count).
+ * KA: ლექციის აგრეგირებული რეიტინგის სტატისტიკა (საშუალო და მიმოხილვების საერთო რაოდენობა).
+ */
 public class RatingSummaryResponse {
 
     private Long lectureId;

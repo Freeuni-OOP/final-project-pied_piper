@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * EN: Direct messaging API — conversations, send/history, read receipts; also pushes live updates over WebSocket.
+ * KA: პირადი შეტყობინებების API — საუბრები, გაგზავნა/ისტორია, წაკითხვის დადასტურება; ასევე ცოცხალი განახლებები WebSocket-ით.
+ */
 @RestController
 @RequestMapping("/api/chat")
 public class ChatController {
@@ -36,6 +40,10 @@ public class ChatController {
         this.messagingTemplate = messagingTemplate;
     }
 
+    /**
+     * EN: GET /api/chat/conversations — lists conversations for the current user (JWT required).
+     * KA: GET /api/chat/conversations — აბრუნებს მიმდინარე მომხმარებლის საუბრებს (საჭიროა JWT).
+     */
     @GetMapping("/conversations")
     public List<ConversationResponse> getConversations(
             @AuthenticationPrincipal LecturboxdUserPrincipal principal
@@ -43,6 +51,10 @@ public class ChatController {
         return chatService.getUserConversations(principal.getId());
     }
 
+    /**
+     * EN: POST /api/chat/conversations — starts (or returns) a conversation with a receiver (JWT required).
+     * KA: POST /api/chat/conversations — იწყებს (ან აბრუნებს) საუბარს მიმღებთან (საჭიროა JWT).
+     */
     @PostMapping("/conversations")
     @ResponseStatus(HttpStatus.CREATED)
     public ConversationResponse startConversation(
@@ -52,6 +64,10 @@ public class ChatController {
         return chatService.startConversation(principal.getId(), request.getReceiverId());
     }
 
+    /**
+     * EN: POST /api/chat/send — sends a chat message and pushes it to both users via WebSocket (JWT required).
+     * KA: POST /api/chat/send — აგზავნის შეტყობინებას და უბიძგებს ორივე მომხმარებელს WebSocket-ით (საჭიროა JWT).
+     */
     @PostMapping("/send")
     @ResponseStatus(HttpStatus.CREATED)
     public ChatMessageResponse sendMessage(
@@ -60,7 +76,7 @@ public class ChatController {
     ) {
         ChatMessageResponse messageResponse = chatService.sendMessage(principal.getId(), request);
 
-        // Push live updates when possible (Principal name = email)
+        // EN: Push live updates when possible (Principal name = email) | KA: ცოცხალი განახლებების გაგზავნა შესაძლებლობისას (Principal-ის სახელი = ელფოსტა)
         String receiverEmail = messageResponse.getReceiver().getEmail();
         String senderEmail = messageResponse.getSender().getEmail();
         if (receiverEmail != null) {
@@ -73,6 +89,10 @@ public class ChatController {
         return messageResponse;
     }
 
+    /**
+     * EN: GET /api/chat/conversations/{conversationId}/messages — paginated chat history (JWT required).
+     * KA: GET /api/chat/conversations/{conversationId}/messages — ჩატის ისტორია გვერდებად (საჭიროა JWT).
+     */
     @GetMapping("/conversations/{conversationId}/messages")
     public Page<ChatMessageResponse> getChatHistory(
             @AuthenticationPrincipal LecturboxdUserPrincipal principal,
@@ -82,6 +102,10 @@ public class ChatController {
         return chatService.getChatHistory(principal.getId(), conversationId, pageable);
     }
 
+    /**
+     * EN: GET /api/chat/{conversationId} — legacy alias for chat history (JWT required).
+     * KA: GET /api/chat/{conversationId} — ჩატის ისტორიის ძველი ალიასი (საჭიროა JWT).
+     */
     @GetMapping("/{conversationId}")
     public Page<ChatMessageResponse> getChatHistoryLegacy(
             @AuthenticationPrincipal LecturboxdUserPrincipal principal,
@@ -91,6 +115,10 @@ public class ChatController {
         return chatService.getChatHistory(principal.getId(), conversationId, pageable);
     }
 
+    /**
+     * EN: PUT /api/chat/conversations/{conversationId}/read — marks all messages in a conversation as read (JWT required).
+     * KA: PUT /api/chat/conversations/{conversationId}/read — მონიშნავს საუბრის ყველა შეტყობინებას წაკითხულად (საჭიროა JWT).
+     */
     @PutMapping("/conversations/{conversationId}/read")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void markConversationAsRead(
@@ -100,6 +128,10 @@ public class ChatController {
         chatService.markMessagesAsRead(principal.getId(), conversationId);
     }
 
+    /**
+     * EN: PUT /api/chat/{messageId}/read — marks a single message as read (JWT required).
+     * KA: PUT /api/chat/{messageId}/read — მონიშნავს ერთ შეტყობინებას წაკითხულად (საჭიროა JWT).
+     */
     @PutMapping("/{messageId}/read")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void markMessageAsRead(

@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
+/**
+ * EN: Request body for sending a private chat message to another user.
+ * KA: მოთხოვნის სხეული პირადი ჩატის შეტყობინების სხვა მომხმარებელთან გასაგზავნად.
+ */
 public class ChatMessageRequest {
 
     @NotNull(message = "Receiver ID is required")

@@ -7,6 +7,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+/**
+ * EN: Request body for creating or updating a lecture session under a subject.
+ * KA: მოთხოვნის სხეული საგნის ქვეშ ლექციის სესიის შესაქმნელად ან განსაახლებლად.
+ */
 public class LectureRequest {
 
     @NotNull

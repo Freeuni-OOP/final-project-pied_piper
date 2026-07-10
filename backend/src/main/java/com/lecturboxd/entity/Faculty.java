@@ -13,6 +13,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * EN: University faculty/school catalog entry that owns semesters.
+ * KA: უნივერსიტეტის ფაკულტეტის/სკოლის კატალოგის ჩანაწერი, რომელსაც ეკუთვნის სემესტრები.
+ */
 @Entity
 @Table(name = "faculties")
 @EntityListeners(AuditingEntityListener.class)
@@ -22,6 +26,7 @@ public class Faculty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // EN: Display name of the faculty | KA: ფაკულტეტის საჩვენებელი სახელი
     @Column(nullable = false)
     private String name;
 

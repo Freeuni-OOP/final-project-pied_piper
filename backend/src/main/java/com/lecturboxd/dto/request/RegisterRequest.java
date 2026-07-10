@@ -4,6 +4,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * EN: Request body for registering a new user account.
+ * KA: მოთხოვნის სხეული ახალი მომხმარებლის ანგარიშის რეგისტრაციისთვის.
+ */
 public class RegisterRequest {
 
     @NotBlank(message = "Name is required")

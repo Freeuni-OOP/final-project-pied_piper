@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
 
+/**
+ * EN: Response indicating whether the current user follows a given user.
+ * KA: პასუხი, რომელიც აჩვენებს, მიჰყვება თუ არა მიმდინარე მომხმარებელი მოცემულ მომხმარებელს.
+ */
 public class FollowStatusResponse {
 
     private UUID userId;

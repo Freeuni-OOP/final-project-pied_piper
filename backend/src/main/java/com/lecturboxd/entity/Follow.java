@@ -16,6 +16,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
+/**
+ * EN: Social follow edge — one user follows another (unique follower/followed pair).
+ * KA: სოციალური გამოწერის კავშირი — ერთი მომხმარებელი მიჰყვება მეორეს (უნიკალური follower/followed წყვილი).
+ */
 @Entity
 @Table(
         name = "follows",
@@ -28,10 +32,12 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // EN: FK to the user who follows | KA: FK მომხმარებელზე, რომელიც მიჰყვება
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "follower_id", nullable = false)
     private User follower;
 
+    // EN: FK to the user being followed | KA: FK მომხმარებელზე, რომელსაც მიჰყვებიან
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "followed_id", nullable = false)
     private User followed;

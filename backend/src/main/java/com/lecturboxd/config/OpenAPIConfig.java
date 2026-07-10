@@ -8,9 +8,17 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * EN: Defines OpenAPI / Swagger UI metadata and the JWT Bearer security scheme.
+ * KA: განსაზღვრავს OpenAPI / Swagger UI მეტამონაცემებს და JWT Bearer უსაფრთხოების სქემას.
+ */
 @Configuration
 public class OpenAPIConfig {
 
+    /**
+     * EN: Creates the OpenAPI bean with API info and global bearerAuth security requirement.
+     * KA: ქმნის OpenAPI bean-ს API ინფორმაციით და გლობალური bearerAuth უსაფრთხოების მოთხოვნით.
+     */
     @Bean
     public OpenAPI lecturBoxdOpenAPI() {
         final String securitySchemeName = "bearerAuth";

@@ -16,6 +16,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * EN: Academic semester under a faculty (e.g. "1", "2") that groups subjects.
+ * KA: აკადემიური სემესტრი ფაკულტეტის ქვეშ (მაგ. "1", "2"), რომელიც აჯგუფებს საგნებს.
+ */
 @Entity
 @Table(name = "semesters")
 @EntityListeners(AuditingEntityListener.class)
@@ -25,9 +29,11 @@ public class Semester {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // EN: Semester label/number within the faculty | KA: სემესტრის ლეიბლი/ნომერი ფაკულტეტში
     @Column(nullable = false)
     private String number;
 
+    // EN: FK to the owning faculty | KA: FK მფლობელ ფაკულტეტზე
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "faculty_id", nullable = false)
     private Faculty faculty;

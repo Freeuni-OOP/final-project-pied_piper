@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+/**
+ * EN: Lecture log API — mark lectures as watched/logged for the current user and list logs by user.
+ * KA: ლექციის ლოგის API — ლექციების ნანახად/დალოგვა მიმდინარე მომხმარებლისთვის და ლოგების სია მომხმარებლის მიხედვით.
+ */
 @RestController
 public class LectureLogController {
 
@@ -28,6 +32,10 @@ public class LectureLogController {
         this.lectureLogService = lectureLogService;
     }
 
+    /**
+     * EN: POST /api/lectures/{lectureId}/logs — creates a log for the current user (JWT required; body optional).
+     * KA: POST /api/lectures/{lectureId}/logs — ქმნის ლოგს მიმდინარე მომხმარებლისთვის (საჭიროა JWT; სხეული არასავალდებულოა).
+     */
     @PostMapping("/api/lectures/{lectureId}/logs")
     @ResponseStatus(HttpStatus.CREATED)
     public LectureLogResponse createLog(
@@ -35,10 +43,15 @@ public class LectureLogController {
             @PathVariable Long lectureId,
             @Valid @RequestBody(required = false) LectureLogRequest request
     ) {
+        // EN: Empty body is allowed — treat as default empty request | KA: ცარიელი სხეული დაშვებულია — ნაგულისხმევი ცარიელი მოთხოვნა
         LectureLogRequest body = request != null ? request : new LectureLogRequest();
         return lectureLogService.createLog(principal.getId(), lectureId, body);
     }
 
+    /**
+     * EN: GET /api/lectures/{lectureId}/logs/me — returns the current user's log for a lecture (JWT required).
+     * KA: GET /api/lectures/{lectureId}/logs/me — აბრუნებს მიმდინარე მომხმარებლის ლოგს ლექციისთვის (საჭიროა JWT).
+     */
     @GetMapping("/api/lectures/{lectureId}/logs/me")
     public LectureLogResponse getMyLog(
             @AuthenticationPrincipal LecturboxdUserPrincipal principal,
@@ -47,6 +60,10 @@ public class LectureLogController {
         return lectureLogService.getMyLog(principal.getId(), lectureId);
     }
 
+    /**
+     * EN: DELETE /api/lectures/{lectureId}/logs/me — deletes the current user's log for a lecture (JWT required).
+     * KA: DELETE /api/lectures/{lectureId}/logs/me — შლის მიმდინარე მომხმარებლის ლოგს ლექციისთვის (საჭიროა JWT).
+     */
     @DeleteMapping("/api/lectures/{lectureId}/logs/me")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMyLog(
@@ -56,11 +73,19 @@ public class LectureLogController {
         lectureLogService.deleteMyLog(principal.getId(), lectureId);
     }
 
+    /**
+     * EN: GET /api/users/{userId}/logs — paginated lecture logs for a given user.
+     * KA: GET /api/users/{userId}/logs — მოცემული მომხმარებლის ლექციის ლოგები გვერდებად.
+     */
     @GetMapping("/api/users/{userId}/logs")
     public Page<LectureLogResponse> getLogsByUser(@PathVariable UUID userId, Pageable pageable) {
         return lectureLogService.getLogsByUser(userId, pageable);
     }
 
+    /**
+     * EN: DELETE /api/logs/{id} — deletes a log by ID if owned by the current user (JWT required).
+     * KA: DELETE /api/logs/{id} — შლის ლოგს ID-ით, თუ ის მიმდინარე მომხმარებლისაა (საჭიროა JWT).
+     */
     @DeleteMapping("/api/logs/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLog(

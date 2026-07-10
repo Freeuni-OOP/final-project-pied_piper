@@ -16,6 +16,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * EN: Course/subject within a semester — has a lecturer, type, and child lectures.
+ * KA: კურსი/საგანი სემესტრში — აქვს ლექტორი, ტიპი და შვილობილი ლექციები.
+ */
 @Entity
 @Table(name = "subjects")
 @EntityListeners(AuditingEntityListener.class)
@@ -28,15 +32,18 @@ public class Subject {
     @Column(nullable = false)
     private String name;
 
+    // EN: Lecturer / instructor display name | KA: ლექტორის / ინსტრუქტორის საჩვენებელი სახელი
     @Column(nullable = false)
     private String lecturer;
 
+    // EN: Subject delivery type (e.g. mandatory/elective) | KA: საგნის ჩატარების ტიპი (მაგ. სავალდებულო/არჩევითი)
     @Column(nullable = false)
     private String type;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    // EN: FK to the parent semester | KA: FK მშობელ სემესტრზე
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "semester_id", nullable = false)
     private Semester semester;

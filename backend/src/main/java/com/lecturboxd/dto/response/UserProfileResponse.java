@@ -2,6 +2,10 @@ package com.lecturboxd.dto.response;
 
 import java.util.UUID;
 
+/**
+ * EN: Public/profile view of a user including social and activity counters.
+ * KA: მომხმარებლის საჯარო/პროფილის ხედი სოციალური და აქტივობის მთვლელებით.
+ */
 public class UserProfileResponse {
 
     private UUID id;

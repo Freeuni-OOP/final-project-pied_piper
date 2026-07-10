@@ -18,6 +18,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * EN: Direct-message thread between exactly two users (unique pair constraint).
+ * KA: პირდაპირი შეტყობინებების თრედი ზუსტად ორ მომხმარებელს შორის (უნიკალური წყვილის შეზღუდვა).
+ */
 @Entity
 @Table(
         name = "conversations",
@@ -30,10 +34,12 @@ public class Conversation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // EN: FK to the first participant (part of unique pair) | KA: FK პირველ მონაწილეზე (უნიკალური წყვილის ნაწილი)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user1_id", nullable = false)
     private User user1;
 
+    // EN: FK to the second participant (part of unique pair) | KA: FK მეორე მონაწილეზე (უნიკალური წყვილის ნაწილი)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user2_id", nullable = false)
     private User user2;
@@ -42,6 +48,7 @@ public class Conversation {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // EN: Last update time (used to sort conversations by recency) | KA: ბოლო განახლების დრო (საუბრების სიახლის მიხედვით დალაგებისთვის)
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedAt;
@@ -88,7 +95,8 @@ public class Conversation {
     }
 
     /**
-     * Returns the other user in the conversation given one user's ID
+     * EN: Returns the other participant given one user's UUID, or null if the id is not in this conversation.
+     * KA: აბრუნებს მეორე მონაწილეს ერთი მომხმარებლის UUID-ით, ან null-ს თუ id ამ საუბარში არ არის.
      */
     public User getOtherUser(UUID userId) {
         if (user1.getId().equals(userId)) {
