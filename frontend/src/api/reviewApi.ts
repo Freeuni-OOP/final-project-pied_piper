@@ -59,6 +59,10 @@ export async function createReview(
   return res.data;
 }
 
+export async function deleteReview(reviewId: number): Promise<void> {
+  await client.delete(`/api/reviews/${reviewId}`);
+}
+
 export async function getRatingSummary(lectureId: number): Promise<RatingSummary> {
   const res = await client.get(`/api/lectures/${lectureId}/rating-summary`);
   return res.data;

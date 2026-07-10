@@ -5,6 +5,7 @@ import com.lecturboxd.entity.Lecture;
 import com.lecturboxd.entity.Review;
 import com.lecturboxd.entity.User;
 import com.lecturboxd.exception.ConflictException;
+import com.lecturboxd.repository.ActivityRepository;
 import com.lecturboxd.repository.LectureRepository;
 import com.lecturboxd.repository.ReviewRepository;
 import com.lecturboxd.repository.UserRepository;
@@ -38,6 +39,9 @@ class ReviewServiceTest {
 
     @Mock
     private ActivityService activityService;
+
+    @Mock
+    private ActivityRepository activityRepository;
 
     @InjectMocks
     private ReviewService reviewService;

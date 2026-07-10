@@ -4,11 +4,11 @@ import {
   listFaculties,
   listSemesters,
   listSubjects,
-  getSubjectSyllabus,
+  getSubjectLectures,
   Faculty,
   Semester,
   Subject,
-  SubjectSyllabus,
+  SubjectLectures,
 } from '../../../api/lectureApi';
 import BackButton from '../../../components/BackButton';
 
@@ -55,7 +55,7 @@ export default function LectureBrowsePage() {
   const [semesters, setSemesters] = useState<Semester[]>([]);
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
   const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [selectedSubject, setSelectedSubject] = useState<SubjectSyllabus | null>(null);
+  const [selectedSubjectData, setSelectedSubjectData] = useState<SubjectLectures | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -85,7 +85,7 @@ export default function LectureBrowsePage() {
         setSemesters(data);
         setSelectedSemester(null);
         setSubjects([]);
-        setSelectedSubject(null);
+        setSelectedSubjectData(null);
       } catch (err: any) {
         setError(err?.message ?? 'Unable to load semesters.');
       }
@@ -101,7 +101,7 @@ export default function LectureBrowsePage() {
       try {
         const data = await listSubjects(selectedSemester);
         setSubjects(data);
-        setSelectedSubject(null);
+        setSelectedSubjectData(null);
       } catch (err: any) {
         setError(err?.message ?? 'Unable to load subjects.');
       }
@@ -110,22 +110,22 @@ export default function LectureBrowsePage() {
   }, [selectedSemester]);
 
   useEffect(() => {
-    if (!selectedSubject?.id) return;
+    if (!selectedSubjectData?.id) return;
 
     const load = async () => {
       setError(null);
       try {
-        const data = await getSubjectSyllabus(selectedSubject.id);
-        setSelectedSubject(data);
+        const data = await getSubjectLectures(selectedSubjectData.id);
+        setSelectedSubjectData(data);
       } catch (err: any) {
-        setError(err?.message ?? 'Unable to load syllabus.');
+        setError(err?.message ?? 'Unable to load lectures.');
       }
     };
     load();
-  }, [selectedSubject?.id]);
+  }, [selectedSubjectData?.id]);
 
   const handleSubjectClick = (subject: Subject) => {
-    setSelectedSubject({ ...subject, lectures: [] } as SubjectSyllabus);
+    setSelectedSubjectData({ ...subject, lectures: [] } as SubjectLectures);
   };
 
   return (
@@ -141,7 +141,7 @@ export default function LectureBrowsePage() {
           marginBottom: 24,
         }}
       >
-        <h1 style={{ marginBottom: 8 }}>Browse Syllabus</h1>
+        <h1 style={{ marginBottom: 8 }}>Browse Lectures</h1>
         <p style={{ color: '#6b7280', marginBottom: 0 }}>
           Choose a faculty, semester, and subject to open lectures.
         </p>
@@ -249,7 +249,7 @@ export default function LectureBrowsePage() {
                 key={subject.id}
                 type="button"
                 onClick={() => handleSubjectClick(subject)}
-                style={selectedSubject?.id === subject.id ? selectedCardStyle : cardStyle}
+                style={selectedSubjectData?.id === subject.id ? selectedCardStyle : cardStyle}
               >
                 <strong style={{ fontSize: 15 }}>{subject.name}</strong>
               </button>
@@ -258,7 +258,7 @@ export default function LectureBrowsePage() {
         </div>
       )}
 
-      {selectedSubject && (
+      {selectedSubjectData && (
         <div
           style={{
             background: '#fff',
@@ -269,15 +269,15 @@ export default function LectureBrowsePage() {
           }}
         >
           <h2 style={{ marginBottom: 16, fontSize: 18 }}>
-            {selectedSubject.name} — Lectures
+            {selectedSubjectData.name} — Lectures
           </h2>
 
-          {(!selectedSubject.lectures || selectedSubject.lectures.length === 0) && (
+          {(!selectedSubjectData.lectures || selectedSubjectData.lectures.length === 0) && (
             <p style={{ color: '#6b7280' }}>Loading lectures…</p>
           )}
 
           <div style={{ display: 'grid', gap: 12 }}>
-            {selectedSubject.lectures?.map((lecture) => (
+            {selectedSubjectData.lectures?.map((lecture) => (
               <button
                 key={lecture.id}
                 type="button"

@@ -8,6 +8,7 @@ import com.lecturboxd.entity.Review;
 import com.lecturboxd.entity.User;
 import com.lecturboxd.exception.ForbiddenException;
 import com.lecturboxd.exception.ResourceNotFoundException;
+import com.lecturboxd.repository.ActivityRepository;
 import com.lecturboxd.repository.LectureRepository;
 import com.lecturboxd.repository.ReviewRepository;
 import com.lecturboxd.repository.UserRepository;
@@ -38,6 +39,7 @@ class ReviewServiceCoverageTest {
     @Mock private LectureRepository lectureRepository;
     @Mock private UserRepository userRepository;
     @Mock private ActivityService activityService;
+    @Mock private ActivityRepository activityRepository;
 
     @InjectMocks
     private ReviewService reviewService;
@@ -88,6 +90,7 @@ class ReviewServiceCoverageTest {
         verify(reviewRepository, never()).delete(any());
 
         reviewService.deleteReview(owner, 10L);
+        verify(activityRepository).deleteAllByReviewId(10L);
         verify(reviewRepository).delete(review);
 
         when(reviewRepository.findById(99L)).thenReturn(Optional.empty());

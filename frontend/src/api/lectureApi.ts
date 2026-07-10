@@ -30,13 +30,13 @@ export interface Subject {
 	faculty?: string;
 }
 
-export interface SubjectSyllabus {
+export interface SubjectLectures {
 	id: number;
 	name: string;
 	lectures: Lecture[];
 }
 
-// Syllabus browsing endpoints
+// Lecture browsing endpoints
 export async function listFaculties(): Promise<Faculty[]> {
 	const res = await client.get('/api/syllabus/faculties');
 	return res.data;
@@ -52,7 +52,7 @@ export async function listSubjects(semesterId: number): Promise<Subject[]> {
 	return res.data;
 }
 
-export async function getSubjectSyllabus(subjectId: number): Promise<SubjectSyllabus> {
+export async function getSubjectLectures(subjectId: number): Promise<SubjectLectures> {
 	const res = await client.get(`/api/syllabus/subjects/${subjectId}`);
 	return res.data;
 }

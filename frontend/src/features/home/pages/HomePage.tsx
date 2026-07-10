@@ -15,7 +15,7 @@ export default function HomePage() {
           {auth.token ? (
             <>
               <Link to="/lectures" style={{ padding: '0.9rem 1.4rem', background: '#2563eb', color: '#fff', borderRadius: 8, textDecoration: 'none' }}>
-                Browse Syllabus
+                Browse Lectures
               </Link>
               <Link to="/profile" style={{ padding: '0.9rem 1.4rem', background: '#10b981', color: '#fff', borderRadius: 8, textDecoration: 'none' }}>
                 My Profile

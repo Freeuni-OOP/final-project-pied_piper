@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { createReview, getRatingSummary, getReviewsForLecture, Review, RatingSummary } from '../../../api/reviewApi';
+import { createReview, deleteReview, getRatingSummary, getReviewsForLecture, Review, RatingSummary } from '../../../api/reviewApi';
 import useAuth from '../../../auth/useAuth';
 import BackButton from '../../../components/BackButton';
 
@@ -15,6 +15,7 @@ export default function ReviewPage() {
   const [error, setError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [deletingReviewId, setDeletingReviewId] = useState<number | null>(null);
 
   useEffect(() => {
     const id = Number(lectureId);
@@ -63,6 +64,24 @@ export default function ReviewPage() {
       setSubmitError(err?.message ?? err?.data?.message ?? 'Unable to submit review.');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async (reviewId: number) => {
+    if (!auth.token) return;
+
+    setDeletingReviewId(reviewId);
+    try {
+      await deleteReview(reviewId);
+      setReviews((prev) => prev.filter((review) => review.id !== reviewId));
+      const id = Number(lectureId);
+      if (Number.isFinite(id) && id > 0) {
+        setRatingSummary(await getRatingSummary(id));
+      }
+    } catch (err: any) {
+      setError(err?.message ?? err?.data?.message ?? 'Unable to delete review.');
+    } finally {
+      setDeletingReviewId(null);
     }
   };
 
@@ -117,9 +136,21 @@ export default function ReviewPage() {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 16 }}>
                 {reviews.map((review) => (
                   <li key={review.id} style={{ padding: 16, borderRadius: 10, background: '#f8fafc', border: '1px solid #e5e7eb' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                       <strong>{review.author?.name ?? 'Anonymous'}</strong>
-                      <span>{review.rating} ★</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span>{review.rating} ★</span>
+                        {auth.userId && review.author?.id === auth.userId && (
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(review.id)}
+                            disabled={deletingReviewId === review.id}
+                            style={{ padding: '0.35rem 0.7rem', borderRadius: 6, border: '1px solid #dc2626', background: '#fff', color: '#dc2626', cursor: 'pointer' }}
+                          >
+                            {deletingReviewId === review.id ? 'Deleting…' : 'Delete'}
+                          </button>
+                        )}
+                      </div>
                     </div>
                     <p style={{ margin: 0 }}>{review.comment}</p>
                     <small style={{ display: 'block', marginTop: 10, color: '#6b7280' }}>{new Date(review.createdAt).toLocaleString()}</small>

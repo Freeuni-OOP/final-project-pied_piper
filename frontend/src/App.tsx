@@ -15,7 +15,7 @@ function App() {
           {auth.token && (
             <>
               <Link to="/lectures" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
-                Syllabus
+                Lectures
               </Link>
               <Link to="/search" style={{ marginRight: 16, textDecoration: 'none', color: '#374151' }}>
                 Search

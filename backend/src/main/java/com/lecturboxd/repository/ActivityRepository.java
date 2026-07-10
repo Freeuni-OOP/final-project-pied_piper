@@ -33,4 +33,12 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("DELETE FROM Activity a WHERE a.user.id = :userId OR a.review.id IN (SELECT r.id FROM Review r WHERE r.user.id = :userId)")
     void deleteByUserId(@Param("userId") UUID userId);
+
+    /**
+     * EN: Deletes feed activities linked to a review (required before deleting the review).
+     * KA: შლის მიმოხილვასთან დაკავშირებულ ფიდის აქტივობებს (საჭიროა მიმოხილვის წაშლამდე).
+     */
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("DELETE FROM Activity a WHERE a.review.id = :reviewId")
+    void deleteAllByReviewId(@Param("reviewId") Long reviewId);
 }

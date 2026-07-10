@@ -10,6 +10,7 @@ import com.lecturboxd.entity.User;
 import com.lecturboxd.exception.ConflictException;
 import com.lecturboxd.exception.ForbiddenException;
 import com.lecturboxd.exception.ResourceNotFoundException;
+import com.lecturboxd.repository.ActivityRepository;
 import com.lecturboxd.repository.LectureRepository;
 import com.lecturboxd.repository.ReviewRepository;
 import com.lecturboxd.repository.UserRepository;
@@ -27,17 +28,20 @@ public class ReviewService {
     private final LectureRepository lectureRepository;
     private final UserRepository userRepository;
     private final ActivityService activityService;
+    private final ActivityRepository activityRepository;
 
     public ReviewService(
             ReviewRepository reviewRepository,
             LectureRepository lectureRepository,
             UserRepository userRepository,
-            ActivityService activityService
+            ActivityService activityService,
+            ActivityRepository activityRepository
     ) {
         this.reviewRepository = reviewRepository;
         this.lectureRepository = lectureRepository;
         this.userRepository = userRepository;
         this.activityService = activityService;
+        this.activityRepository = activityRepository;
     }
 
     @Transactional
@@ -86,6 +90,7 @@ public class ReviewService {
             throw new ForbiddenException("You do not have permission to delete this review");
         }
 
+        activityRepository.deleteAllByReviewId(reviewId);
         reviewRepository.delete(review);
     }
 

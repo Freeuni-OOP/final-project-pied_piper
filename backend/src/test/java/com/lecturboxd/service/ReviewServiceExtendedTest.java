@@ -13,6 +13,7 @@ import com.lecturboxd.entity.User;
 import com.lecturboxd.exception.ConflictException;
 import com.lecturboxd.exception.ForbiddenException;
 import com.lecturboxd.exception.ResourceNotFoundException;
+import com.lecturboxd.repository.ActivityRepository;
 import com.lecturboxd.repository.LectureLogRepository;
 import com.lecturboxd.repository.LectureRepository;
 import com.lecturboxd.repository.ReviewRepository;
@@ -46,6 +47,8 @@ class ReviewServiceExtendedTest {
     private UserRepository userRepository;
     @Mock
     private ActivityService activityService;
+    @Mock
+    private ActivityRepository activityRepository;
 
     @InjectMocks
     private ReviewService reviewService;
